@@ -1,0 +1,602 @@
+[
+  {
+    "id": 298745,
+    "slug": "pure-600-front-wing",
+    "title": "Pure 600 Front Wing",
+    "compatibility": "One size fits all"
+  },
+  {
+    "id": 297343,
+    "slug": "evo-ha-front-wing-copie",
+    "title": "Foil Full set Evo HA",
+    "compatibility": "Weight of the rider: <75 kg (Front wing: Evo HA750, Stabilizer: Cruiser S ou M); >75 kg (Front wing: Evo HA1000, Stabilizer: Cruiser M)"
+  },
+  {
+    "id": 297163,
+    "slug": "stream",
+    "title": "Stream",
+    "compatibility": "Size (m2) / Recommended wind range (knots): 3 / 20-35; 3,5 / 18-30; 4 / 15-27; 4,5 / 13-25; 5 / 11-22; 5.5 / 9-20; 6 / 8-18"
+  },
+  {
+    "id": 292692,
+    "slug": "silk-foil-front-wing",
+    "title": "Silk Foil Front Wing",
+    "compatibility": "Silk 850: Designed for experienced surf foilers and wing foilers in intermediate wind and wave conditions. Suitable for freewave kite foiling. | Silk 1050: Ideal for experienced wave riders who want performance in lighter conditions when surfing with a foil or wing."
+  },
+  {
+    "id": 292696,
+    "slug": "enduro-glt-foil-full-set",
+    "title": "Enduro GLT Foil Full Set",
+    "compatibility": "We recommend the 80 UHM, 80HM, and 80HR—also possible with the 85 UHM and 85HM. For dock starts and downwind sailing in accessible mode, choose the Cruiser 245; for versatility, choose HA43/HA40; and for performance, choose Ultra Glide 41. Standard fuselage for accessibility and short for maneuverability."
+  },
+  {
+    "id": 293150,
+    "slug": "evo-front-wing-second-choice",
+    "title": "Evo Front Wing Second choice",
+    "compatibility": "Beginner level: Rider weight / Front wing / Strong wind (>20 knots) / Stabilizer: <60 kg (Evo 1250 / Evo 1250 / Cruiser S); 60/75 kg (Evo 1450 / Evo 1250 / Cruiser M); 75/90 kg (Evo 1650 / Evo 1450 / Cruiser M); >90 kg (Evo 1650 / Evo 1650 / Cruiser M / Cruiser L) | Intermediate level: Rider weight / Front wing / Strong wind (>20 kts) / Stabilizer: <60 kg (Evo 1250 / Evo 950 / Cruiser S); 60/75 kg (Evo 1250 / Evo 950 / Cruiser M); 75/90 kg (Evo 1450 / Evo 1250 / Cruiser M); >90 kg (Evo 1650 / Evo 1450 / Cruiser M) | Surfoil / Supfoil / DW: Rider weight / Front wing / Strong wind (>20 knots) / Stabilizer: <60 kg (Evo 1250 / Evo 950 / Cruiser S); 60/75 kg (Evo 1450 / Evo 1250 / Cruiser S / Cruiser M); 75/90 kg (Evo 1450 / Evo 1250 / Cruiser S / Cruiser M); >90 kg (Evo 1650 / Evo 1650 / Cruiser M / Cruiser L)"
+  },
+  {
+    "id": 293146,
+    "slug": "dock-star",
+    "title": "Dock-star",
+    "compatibility": "One size fits all."
+  },
+  {
+    "id": 293142,
+    "slug": "enduro-glt-front-wing",
+    "title": "Enduro GLT Front Wing",
+    "compatibility": "One size fits all"
+  },
+  {
+    "id": 293137,
+    "slug": "evo-ha-front-wing",
+    "title": "Evo HA Front Wing",
+    "compatibility": "Rider weight / Front wing / Stabilizer: <75 kg (Evo HA750 / Cruiser S ou M); >75kg (Evo HA1000 / Cruiser M)"
+  },
+  {
+    "id": 293135,
+    "slug": "boom-clip-on-d-lite",
+    "title": "Boom Clip-On D-Lite",
+    "compatibility": null
+  },
+  {
+    "id": 293130,
+    "slug": "ultra-glide-stabilizer",
+    "title": "Ultra glide Stabilizer",
+    "compatibility": "One size fits all"
+  },
+  {
+    "id": 293125,
+    "slug": "silk-stabilizer-second-choice",
+    "title": "Silk Stabilizer second choice",
+    "compatibility": "Read our article to help you choose the right stabilizer."
+  },
+  {
+    "id": 293120,
+    "slug": "silk-ha-stabilizer-second-choice",
+    "title": "Silk HA Stabilizer second choice",
+    "compatibility": "Read our article to help you choose the right stabilizer."
+  },
+  {
+    "id": 293116,
+    "slug": "uhm-skinny-carbon-mast-second-choice",
+    "title": "UHM Skinny Carbon Mast second choice",
+    "compatibility": "It will mainly depend on what you want…"
+  },
+  {
+    "id": 293111,
+    "slug": "uhm-carbon-mast-second-choice",
+    "title": "UHM carbon mast second choice",
+    "compatibility": "Available in 80 cm, 85 cm, and 95 cm, the UHM carbon mast is ready for all disciplines: surfing, downwing, wing, kite, and SUP. The PCB is integrated directly into the mast. It can be connected to virtually any board on the market equipped with the US double-rail system."
+  },
+  {
+    "id": 293107,
+    "slug": "hm-carbon-mast-second-choice",
+    "title": "HM Carbon Mast second choice",
+    "compatibility": "The length of 85 cm provides great versatility and tolerance in use. It’s the ideal weapon if you spend more than 60% of your time on wing foil and the rest on sup foil, surf foil,…. Its 80 cm length makes it a mast between the surf and wing programs. It’s perfect if you’re on a 50/50 ratio. (Image link included)"
+  },
+  {
+    "id": 293103,
+    "slug": "hr-carbon-mast-second-choice",
+    "title": "HR Carbon Mast second choice",
+    "compatibility": "(Image link included)"
+  },
+  {
+    "id": 293099,
+    "slug": "fuselink-fuselage-second-choice",
+    "title": "Fuselink Fuselage Second choice",
+    "compatibility": "Long: stability, control at high speeds | Short: maneuverability, pumping frequency"
+  },
+  {
+    "id": 293621,
+    "slug": "flyer-front-wing-second-choice",
+    "title": "Flyer front wing Second choice",
+    "compatibility": "75 kg and under: 1500 | 75 kg and above: 1800"
+  },
+  {
+    "id": 293625,
+    "slug": "ultra-fuselink-foil-second-choice",
+    "title": "Ultra Fuselink Foil Second Choice",
+    "compatibility": "One size fits all."
+  },
+  {
+    "id": 293628,
+    "slug": "pure-fuselink-foil-second-choice",
+    "title": "Pure Fuselink Foil Second Choice",
+    "compatibility": "Wind range 10–20 knots: Pure 700 (<75 kg), Pure 900 (>75 kg). Wind range >20 knots: Pure 700 (All sizes)."
+  },
+  {
+    "id": 293632,
+    "slug": "silk-foil-second-choice",
+    "title": "Silk Foil Second Choice",
+    "compatibility": "Silk 650: The foil designed for the best surf foilers and very small riders. Excellent for wing foiling in waves, can be used for kitefoil wave riding and tow-in. Medium to strong conditions. | Silk 850: Designed for experienced surf foilers and wing foilers in intermediate wind and wave conditions. Suitable for freewave kite foiling. | Silk 1050: Ideal for experienced wave riders who want performance in lighter conditions when surfing with a foil or wing."
+  },
+  {
+    "id": 293637,
+    "slug": "enduro-front-wing-second-choix",
+    "title": "Enduro front wing second choix",
+    "compatibility": "Front wing / Program: Enduro 1300 (Ultra light wind/Downwind/Dock start – 85 kg and above); Enduro 1100 (Ultra light wind/Downwind/Dock start – from 85 kg); Enduro 900 (Downwind carving, Wingfoil freefly carving, surffoil petites conditions, dockstart expérimenté); Enduro 700 (Downwind gliding/carving)"
+  },
+  {
+    "id": 293643,
+    "slug": "foil-full-set-ffv-2025-windfoil",
+    "title": "Foil full set FFV 2025 windfoil",
+    "compatibility": "Unique combo: 900 front wing/200 stabiliser/95 TBAR"
+  },
+  {
+    "id": 292477,
+    "slug": "d-lite-boom",
+    "title": "D-Lite Boom",
+    "compatibility": "For a wind range of 10 to 25 knots: <65 kg (4); 65 – 70 kg (4); 70 – 75 kg (5); 75 – 80 kg (5); 80 – 85 kg (5); 85 – 90 kg (6); >90 kg (6). For a wind range >25 knots: <65 kg (–); 65 – 70 kg (–); 70 – 75 kg (–); 75 – 80 kg (4); 80 – 85 kg (4); 85 – 90 kg (4); >90 kg (4)."
+  },
+  {
+    "id": 293647,
+    "slug": "uhm-skinny-carbon-mast",
+    "title": "UHM Skinny Carbon Mast",
+    "compatibility": "It will mainly depend on what you want…"
+  },
+  {
+    "id": 293652,
+    "slug": "diamond-v2-occasion",
+    "title": "DIAMOND V2 occasion",
+    "compatibility": null
+  },
+  {
+    "id": 293656,
+    "slug": "pure-ha-stabiliser",
+    "title": "Pure HA Stabiliser",
+    "compatibility": "Read our article to help you choose the right stabilizer."
+  },
+  {
+    "id": 293661,
+    "slug": "silk-ha-stabilizer",
+    "title": "Silk HA Stabilizer",
+    "compatibility": "Read our article to help you choose the right stabilizer."
+  },
+  {
+    "id": 293935,
+    "slug": "enduro-front-wing-occasion",
+    "title": "Enduro front wing occasion",
+    "compatibility": "Front wing / Program: Enduro 1300 (Ultra light wind/Downwind/Dock start – 85 kg and above); Enduro 1100 (Ultra light wind/Downwind/Dock start – from 85 kg); Enduro 900 (Downwind carving, Wingfoil freefly carving, surffoil petites conditions, dockstart expérimenté); Enduro 700 (Downwind gliding/carving)"
+  },
+  {
+    "id": 293941,
+    "slug": "pulse",
+    "title": "Pulse",
+    "compatibility": "One size fits all."
+  },
+  {
+    "id": 293667,
+    "slug": "sl-s-occasion",
+    "title": "SL-S Occasion",
+    "compatibility": "95: Medium to strong wind, medium/light build | 115: Light to moderate wind, medium to heavy build"
+  },
+  {
+    "id": 293672,
+    "slug": "whitebird-mid-length",
+    "title": "Whitebird Mid length",
+    "compatibility": "Wing foil program – beginner level: <80 Kg (6’6); >80 Kg (6’8). Wing foil program – intermediate/expert level: All sizes (5’8)."
+  },
+  {
+    "id": 293683,
+    "slug": "enduro-foil-full-set",
+    "title": "Enduro foil full set",
+    "compatibility": "Front wing / Program: Enduro 1300 (Ultra light wind/Downwind/Dock start – 85 kg and above); Enduro 1100 (Ultra light wind/Downwind/Dock start – from 85 kg); Enduro 900 (Downwind carving, Wingfoil freefly carving, surffoil petites conditions, dockstart expérimenté); Enduro 700 (Downwind gliding/carving)"
+  },
+  {
+    "id": 293944,
+    "slug": "blackbird-v3",
+    "title": "Blackbird V3",
+    "compatibility": "7’6 x 18”: 75 kg and under | 7’6 x 20”: 85 kg and under | 8’0 x 17” 1/2: 85 kg and under | 8’0 x 19” 1/2: 95 kg and under | 8’4 x 17”: 85 kg and under | 8’4 x 19”: 95 kg and under | 8’4 x 21”: 95 kg and above | 8’8 x 16” 1/2: 85 kg and under | 8’8 x 18” 1/2: 95 kg and under | 8’8 x 20” 1/2: 95 kg and above"
+  },
+  {
+    "id": 293679,
+    "slug": "fire-v2-occasion",
+    "title": "Fire V2 occasion",
+    "compatibility": "Fire V2 / Rider weight: 80 L (-65 Kg: ++, 65 / 75: +); 90 L (-65 Kg: +, 65 / 75: ++, 75 / 85: ++, 85+: +); 100 L (75 / 85: +, 85+: ++)"
+  },
+  {
+    "id": 293492,
+    "slug": "used-ultra-aircraft",
+    "title": "Used Ultra aircraft",
+    "compatibility": "One size fits all."
+  },
+  {
+    "id": 293495,
+    "slug": "d-lite-occasion",
+    "title": "D-Lite Occasion",
+    "compatibility": "For a wind range of 10 to 25 knots: <65 kg (4); 65 – 70 kg (4); 70 – 75 kg (5); 75 – 80 kg (5); 80 – 85 kg (5); 85 – 90 kg (6); >90 kg (6). For a wind range >25 knots: <65 kg (3); 65 – 70 kg (3); 70 – 75 kg (3); 75 – 80 kg (4); 80 – 85 kg (4); 85 – 90 kg (4); >90 kg (4)."
+  },
+  {
+    "id": 293606,
+    "slug": "enduro-front-wing",
+    "title": "Enduro front wing",
+    "compatibility": "Front wing / Program: Enduro 1300 (Ultra light wind/Downwind/Dock start/Parawing – 85 kg and above); Enduro 1100 (Ultra light wind/Downwind/Dock start/Parawing – from 85 kg); Enduro 1000 (Ultra lightwind/Downwind/Dockstart – 75Kg); Enduro 900 (Downwind carving, Wingfoil freefly carving, surffoil petites conditions, dockstart expérimenté); Enduro 800 (Downwind carving, Wingfoil freefly carving, surffoil petites conditions, dockstart expérimenté); Enduro 700 (Downwind gliding/carving)"
+  },
+  {
+    "id": 293585,
+    "slug": "pure-fuselink-foil-occasion",
+    "title": "Pure Fuselink Foil Occasion",
+    "compatibility": "Wind range 10–20 knots: Pure 700 (<75 kg), Pure 900 (>75 kg). Wind range >20 knots: Pure 700 (All sizes)."
+  },
+  {
+    "id": 293605,
+    "slug": "fuselage-switch",
+    "title": "Fuselage Switch",
+    "compatibility": "One size fits all."
+  },
+  {
+    "id": 293575,
+    "slug": "evo-front-wing-occasion",
+    "title": "Evo front wing Occasion",
+    "compatibility": "Beginner level: Rider weight / Front wing / Strong wind (>20 knots) / Stabilizer: <60 kg (Evo 1250 / Evo 1250 / Cruiser S); 60/75 kg (Evo 1450 / Evo 1250 / Cruiser M); 75/90 kg (Evo 1650 / Evo 1450 / Cruiser M); >90 kg (Evo 1650 / Evo 1650 / Cruiser M / Cruiser L) | Intermediate level: Rider weight / Front wing / Strong wind (>20 kts) / Stabilizer: <60 kg (Evo 1250 / Evo 950 / Cruiser S); 60/75 kg (Evo 1250 / Evo 950 / Cruiser M); 75/90 kg (Evo 1450 / Evo 1250 / Cruiser M); >90 kg (Evo 1650 / Evo 1450 / Cruiser M) | Surfoil / Supfoil / DW: Rider weight / Front wing / Strong wind (>20 knots) / Stabilizer: <60 kg (Evo 1250 / Evo 950 / Cruiser S); 60/75 kg (Evo 1450 / Evo 1250 / Cruiser S / Cruiser M); 75/90 kg (Evo 1450 / Evo 1250 / Cruiser S / Cruiser M); >90 kg (Evo 1650 / Evo 1650 / Cruiser M / Cruiser L)"
+  },
+  {
+    "id": 293601,
+    "slug": "boom-diamond-v2",
+    "title": "Boom Diamond V2",
+    "compatibility": "Boom length / Diamond V2 compatible: 720mm (3.0); 720mm (3.5); 830mm (4.0); 830mm (4.5); 830mm (5.0); 830mm (5.5); 830mm (6.0)"
+  },
+  {
+    "id": 293570,
+    "slug": "performer-stabilizer",
+    "title": "Performer Stabilizer",
+    "compatibility": null
+  },
+  {
+    "id": 293567,
+    "slug": "pure-700-900-performer-foil",
+    "title": "Pure 700/900 Performer Foil",
+    "compatibility": "Pure 700: Surf/sup/wing Médium/Hi-wind, waves, downwind extrem (light riders), freestyle | Pure 900: Surf/sup/wing waves, freestyle, freeride, downwind extrem"
+  },
+  {
+    "id": 293589,
+    "slug": "ultra-fuselink-foil-full-set",
+    "title": "Ultra Fuselink Foil Full Set",
+    "compatibility": "Read our article to help you choose the right stabilizer."
+  },
+  {
+    "id": 293581,
+    "slug": "ultra-fuselink-foil",
+    "title": "Ultra Fuselink Foil",
+    "compatibility": "One size fits all."
+  },
+  {
+    "id": 297156,
+    "slug": "diamond-v2-2",
+    "title": "Diamond V2",
+    "compatibility": null
+  },
+  {
+    "id": 293542,
+    "slug": "diamond-v2",
+    "title": "Diamond V2",
+    "compatibility": null
+  },
+  {
+    "id": 293537,
+    "slug": "pure-race-560-occasion",
+    "title": "Pure Race 560 occasion",
+    "compatibility": "One size fits all."
+  },
+  {
+    "id": 293533,
+    "slug": "fixed-t-bar-occasion",
+    "title": "Fixed T-BAR Occasion",
+    "compatibility": null
+  },
+  {
+    "id": 293527,
+    "slug": "wild-occasion",
+    "title": "Wild occasion",
+    "compatibility": "10-20 knots: <65kg (5.2 m), 65-70kg (5.2 m), 70-75kg (5.2 m), 75-80kg (6.2 m), 80-85kg (6.2 m), 85-90kg (7.2 m), >90kg (7.2 m). >20 knots: <65kg (4.2 m), 65-70kg (4.2 m), 70-75kg (4.2 m), 75-80kg (4.2 m), 80-85kg (5.2 m), 85-90kg (5.2 m), >90kg (5.2 m). For a wind range of 10 to 25 knots: <65 kg (5.2), 65 – 70 kg (5.2), 70 – 75 kg (5.2), 75 – 80 kg (6.2), 80 – 85 kg (6.2), 85 – 90 kg (7.2), >90 kg (7.2). For wind speeds >20 knots: <65 kg (4.2), 65 – 70 kg (4.2), 70 – 75 kg (4.2), 75 – 80 kg (4.2), 80 – 85 kg (5.2), 85 – 90 kg (5.2), >90 kg (5.2)."
+  },
+  {
+    "id": 293522,
+    "slug": "carver-front-fender-occasion",
+    "title": "Carver front fender occasion",
+    "compatibility": "For all sizes from 10 knots to 20 knots."
+  },
+  {
+    "id": 293516,
+    "slug": "cruiser-stabilizer-occasion",
+    "title": "Cruiser stabilizer occasion",
+    "compatibility": "Read our article to help you choose the right stabilizer."
+  },
+  {
+    "id": 293509,
+    "slug": "blackbird-76-80-occasion",
+    "title": "Blackbird 7’6/8’0 occasion",
+    "compatibility": "7’6 x 19”: 85 kg and under | 8’0 x 18”: 85 kg and under | 7’6 x 21”: 85 Kg – 95 Kg | 8’0 x 20”: 85 Kg – 95 Kg | 8’0 x 22”: 95 kg and over"
+  },
+  {
+    "id": 293506,
+    "slug": "fire-pro-occasion",
+    "title": "Fire Pro Occasion",
+    "compatibility": "<70kg: Pro 4'5 | Between 70 and 90 kg: Pro 5'0 | >90kg: Pro 5’8"
+  },
+  {
+    "id": 293456,
+    "slug": "pure-fuselink-complete-foil",
+    "title": "Pure Fuselink complete foil",
+    "compatibility": "Wind range 10–20 knots: Pure 700 (<75 kg), Pure 900 (>75 kg). Wind range >20 knots: Pure 700 (All sizes). (Image link included)"
+  },
+  {
+    "id": 293453,
+    "slug": "chipri-pro-occasion",
+    "title": "Chipri Pro occasion",
+    "compatibility": "Chipri pro 3’10: For elite riders looking for a high-performance foil surfboard. Clearly designed for uncompromising wave riding. Can also be used for tow-in, dock start, wake foil, and possibly strapless kite foil. | Chipri pro 4’4: For surf foilers looking for a high-performance wave riding board with a slightly more accessible wave entry than the 3’10. Can be used for wake foiling, tow-in, and dock starts. | Chipri pro 4’8: For larger surf foilers"
+  },
+  {
+    "id": 293444,
+    "slug": "silk-stabilizer-occasion",
+    "title": "Silk Stabilizer occasion",
+    "compatibility": "Read our article to help you choose the right stabilizer."
+  },
+  {
+    "id": 293440,
+    "slug": "flyer-front-wing-occasion",
+    "title": "Flyer front wing occasion",
+    "compatibility": "75 kg and under: 1500 | 75 kg and above: 1800"
+  },
+  {
+    "id": 293435,
+    "slug": "flyer-front-wing",
+    "title": "Flyer front wing",
+    "compatibility": "75 kg and under: 1500 | 75 kg and above: 1800"
+  },
+  {
+    "id": 293483,
+    "slug": "performer-fuselage-occasion",
+    "title": "Performer Fuselage occasion",
+    "compatibility": null
+  },
+  {
+    "id": 293431,
+    "slug": "evo-fuselage-occasion",
+    "title": "Evo Fuselage occasion",
+    "compatibility": "Long: stability, control at high speeds | Short: maneuverability, pumping frequency"
+  },
+  {
+    "id": 293427,
+    "slug": "pure-ha-fuselink-plane-occasion",
+    "title": "Pure HA Fuselink plane occasion",
+    "compatibility": "Pure HA800: Sup/surf foil radical, downwind extrem, wing | Pure HA1100: Sup/surf foil small waves, downwind machine, wing lightwind"
+  },
+  {
+    "id": 293421,
+    "slug": "windfoil-stabilizer-occasion",
+    "title": "windfoil stabilizer occasion",
+    "compatibility": "The 240 stabilizer is a homogeneous stabilizer allowing to sail in all conditions, from light to strong wind. With inertia and power, it will allow to cross all the wind drops of the water. The 200 stabilizer allows you to optimize your performance to get more glide and speed. It is oriented on a slalom/race practice. Both stabilizers are compatible with all front wings—whether they are from the 2022 range or the S and R ranges from previous years."
+  },
+  {
+    "id": 293414,
+    "slug": "tbar-95-cm-occasion",
+    "title": "Tbar 95 cm occasion",
+    "compatibility": "The TBAR (95cm mast/94.5cm body) is designed for a rider looking for performance in freeride/freerace. The TBAR (100 cm mast/105 cm fuselage). It is mainly intended for competitors or people doing up and down wind."
+  },
+  {
+    "id": 293405,
+    "slug": "performer-rs-230-stabilizer-occasion",
+    "title": "Performer RS 230 Stabilizer occasion",
+    "compatibility": null
+  },
+  {
+    "id": 293402,
+    "slug": "fly-48-occasion",
+    "title": "Fly 4’8 occasion",
+    "compatibility": "One size fits all for surf foiling. For other sizes dedicated to wing foiling, see the other Fly models."
+  },
+  {
+    "id": 293398,
+    "slug": "alpha-fuselage-occasion",
+    "title": "Alpha fuselage occasion",
+    "compatibility": null
+  },
+  {
+    "id": 293394,
+    "slug": "fuselink-mast-hr-carbon-occasion",
+    "title": "Fuselink Mast HR carbon occasion",
+    "compatibility": "(Image link included)"
+  },
+  {
+    "id": 293389,
+    "slug": "fuselink-hm-carbon-mast-occasion",
+    "title": "Fuselink HM carbon mast occasion",
+    "compatibility": "The length of 85 cm provides great versatility and tolerance in use. It’s the ideal weapon if you spend more than 60% of your time on wing foil and the rest on sup foil, surf foil,…. Its 80 cm length makes it a mast between the surf and wing programs. It’s perfect if you’re on a 50/50 ratio. (Image link included)"
+  },
+  {
+    "id": 293381,
+    "slug": "fuselink-uhm-carbon-mast-occasion",
+    "title": "Fuselink UHM carbon mast occasion",
+    "compatibility": "Available in 75cm, 80cm, 85cm and 95cm, the UHM carbon mast is ready for all disciplines: surf, downwing, wing, kite and SUP. The PCB is integrated directly into the mast. It can be connected to virtually any board on the market equipped with the US double-rail system. (Image link included)"
+  },
+  {
+    "id": 293375,
+    "slug": "pure-700-900-performer-plane-occasion",
+    "title": "Pure 700/900 Performer plane occasion",
+    "compatibility": "Pure 700: Surf/sup/wing Médium/Hi-wind, waves, downwind extrem (light riders), freestyle | Pure 900: Surf/sup/wing waves, freestyle, freeride, downwind extrem"
+  },
+  {
+    "id": 293369,
+    "slug": "performer-surf-sup-260-stabilizer-occasion",
+    "title": "Performer Surf/Sup 260 stabilizer occasion",
+    "compatibility": null
+  },
+  {
+    "id": 293355,
+    "slug": "pure-stabilizer-occasion",
+    "title": "Pure Stabilizer occasion",
+    "compatibility": "Read our article to help you choose the right stabilizer."
+  },
+  {
+    "id": 293350,
+    "slug": "whitebird-occasion",
+    "title": "Whitebird occasion",
+    "compatibility": "Wing foil program – beginner level: <80 Kg (6’6), >80 Kg (6’8)."
+  },
+  {
+    "id": 293345,
+    "slug": "fuselink-fuselage",
+    "title": "Fuselink Fuselage",
+    "compatibility": "Long: stability, control at high speeds | Short: maneuverability, pumping frequency"
+  },
+  {
+    "id": 293338,
+    "slug": "evo-front-wing",
+    "title": "Evo front wing",
+    "compatibility": "Beginner level: Rider weight / Front wing / Strong wind (>20 knots) / Stabilizer: <60 kg (Evo 1250 / Evo 1250 / Cruiser S); 60/75 kg (Evo 1450 / Evo 1250 / Cruiser M); 75/90 kg (Evo 1650 / Evo 1450 / Cruiser M); >90 kg (Evo 1650 / Evo 1650 / Cruiser M / Cruiser L) | Intermediate level: Rider weight / Front wing / Strong wind (>20 kts) / Stabilizer: <60 kg (Evo 1250 / Evo 950 / Cruiser S); 60/75 kg (Evo 1250 / Evo 950 / Cruiser M); 75/90 kg (Evo 1450 / Evo 1250 / Cruiser M); >90 kg (Evo 1650 / Evo 1450 / Cruiser M) | Surfoil / Supfoil / DW: Rider weight / Front wing / Strong wind (>20 knots) / Stabilizer: <60 kg (Evo 1250 / Evo 950 / Cruiser S); 60/75 kg (Evo 1450 / Evo 1250 / Cruiser S / Cruiser M); 75/90 kg (Evo 1450 / Evo 1250 / Cruiser S / Cruiser M); >90 kg (Evo 1650 / Evo 1650 / Cruiser M / Cruiser L)"
+  },
+  {
+    "id": 293247,
+    "slug": "evo-foil-full-set",
+    "title": "Evo Foil Full Set",
+    "compatibility": "Beginner level: Rider weight / Front wing / Strong wind (>20 knots) / Stabilizer: <60 kg (Evo 1250 / Evo 1250 / Cruiser S); 60/75 kg (Evo 1450 / Evo 1250 / Cruiser M); 75/90 kg (Evo 1650 / Evo 1450 / Cruiser M); >90 kg (Evo 1650 / Evo 1650 / Cruiser M / Cruiser L) | Intermediate level: Rider weight / Front wing / Strong wind (>20 kts) / Stabilizer: <60 kg (Evo 1250 / Evo 950 / Cruiser S); 60/75 kg (Evo 1250 / Evo 950 / Cruiser M); 75/90 kg (Evo 1450 / Evo 1250 / Cruiser M); >90 kg (Evo 1650 / Evo 1450 / Cruiser M) | Surfoil / Supfoil / DW: Rider weight / Front wing / Strong wind (>20 knots) / Stabilizer: <60 kg (Evo 1250 / Evo 950 / Cruiser S); 60/75 kg (Evo 1450 / Evo 1250 / Cruiser S / Cruiser M); 75/90 kg (Evo 1450 / Evo 1250 / Cruiser S / Cruiser M); >90 kg (Evo 1650 / Evo 1650 / Cruiser M / Cruiser L)"
+  },
+  {
+    "id": 293243,
+    "slug": "pure-ha-800-ha-1100-performer-occasion",
+    "title": "Pure HA 800/HA 1100 Performer Occasion",
+    "compatibility": "Pure HA800: Sup/surf foil radical, downwind extrem, wing | Pure HA1100: Sup/surf foil small waves, downwind machine, wing lightwind"
+  },
+  {
+    "id": 293238,
+    "slug": "silk-foil-occasion",
+    "title": "Silk Foil occasion",
+    "compatibility": "Silk 650: The foil designed for the best surf foilers and very small riders. Excellent for wing foiling in waves, can be used for kitefoil wave riding and tow-in. Medium to strong conditions. | Silk 850: Designed for experienced surf foilers and wing foilers in intermediate wind and wave conditions. Suitable for freewave kite foiling. | Silk 1050: Ideal for experienced wave riders who want performance in lighter conditions when surfing with a foil or wing."
+  },
+  {
+    "id": 293235,
+    "slug": "fly-66-74",
+    "title": "Fly 6’6/7’4",
+    "compatibility": "Less than 85 kg: 6’6 | Over 85 kg: 7’4"
+  },
+  {
+    "id": 293226,
+    "slug": "d-lite",
+    "title": "D-Lite",
+    "compatibility": "For a wind range of 10 to 25 knots: <65 kg (4), 65 – 70 kg (4), 70 – 75 kg (5), 75 – 80 kg (5), 80 – 85 kg (5), 85 – 90 kg (6), >90 kg (6). For a wind range >25 knots: <65 kg (3), 65 – 70 kg (3), 70 – 75 kg (3), 75 – 80 kg (4), 80 – 85 kg (4), 85 – 90 kg (4), >90 kg (4). The D-Lite 1.5 and 2.5 are perfect as a complement to a first wing in 4, 5, or 6 m2 or for children."
+  },
+  {
+    "id": 293225,
+    "slug": "clef-torx",
+    "title": "Clef Torx",
+    "compatibility": null
+  },
+  {
+    "id": 293213,
+    "slug": "blackbird-76-80",
+    "title": "Blackbird 7’6/8’0",
+    "compatibility": "7’6 x 19”: 85 kg and under | 8’0 x 18”: 85 kg and under | 7’6 x 21”: 85 Kg – 95 Kg | 8’0 x 20”: 85 Kg – 95 Kg | 8’0 x 22”: 95 kg and over"
+  },
+  {
+    "id": 293094,
+    "slug": "fire-v2",
+    "title": "Fire V2",
+    "compatibility": "Fire V2 / Rider weight: 80 L (-65 Kg: ++, 65 / 75: +); 90 L (-65 Kg: +, 65 / 75: ++, 75 / 85: ++, 85+: +); 100 L (75 / 85: +, 85+: ++)"
+  },
+  {
+    "id": 293086,
+    "slug": "hm-carbon-mast",
+    "title": "HM Carbon Mast",
+    "compatibility": "The length of 85 cm provides great versatility and tolerance in use. It’s the ideal weapon if you spend more than 60% of your time on wing foil and the rest on sup foil, surf foil,…. Its 80 cm length makes it a mast between the surf and wing programs. It’s perfect if you’re on a 50/50 ratio. (Image link included)"
+  },
+  {
+    "id": 293090,
+    "slug": "hr-carbon-mast",
+    "title": "HR carbon mast",
+    "compatibility": "(Image link included)"
+  },
+  {
+    "id": 293085,
+    "slug": "wing-cap",
+    "title": "Wing cap",
+    "compatibility": null
+  },
+  {
+    "id": 293076,
+    "slug": "flyer-full-set",
+    "title": "Flyer Full Set",
+    "compatibility": "75 kg and under: 1500 | 75 kg and above: 1800"
+  },
+  {
+    "id": 293080,
+    "slug": "fire-occasion",
+    "title": "Fire Occasion",
+    "compatibility": ">65 kg (Fire 4’9); 65 – 70 kg (Fire 4’9); 70 – 75 kg (Fire 4’9); 75 – 80 kg (Fire 5’2); 80 – 85 kg (Fire 5’2); 85 – 90 kg (Fire 5’5); 90-95 kg (Fire 5’5); >95 kg (Fire 5’8)"
+  },
+  {
+    "id": 293071,
+    "slug": "fly-tomo-used",
+    "title": "Fly TOMO Used",
+    "compatibility": "Beginner/intermediate level: >65 kg (Fly 5’3); 65 – 70 kg (Fly 5’3); 70 – 75 kg (Fly 5’3); 75 – 80 kg (Fly 5’10); 80 – 85 kg (Fly 5’10); 85 – 90 kg (Fly 6’2); 90-95 kg (Fly 6’2); >95 kg (Fly 6’2). Advanced level: >65 kg (Fly 4’8); 65 – 70 kg (Fly 4’8); 70 – 75 kg (Fly 4’8); 75 – 80 kg (Fly 4’8); 80 – 85 kg (Fly 5’3); 85 – 90 kg (Fly 5’3); 90-95 kg (Fly 5’3); >95 kg (Fly 5’4)"
+  },
+  {
+    "id": 293061,
+    "slug": "fly-occasion",
+    "title": "Fly Occasion",
+    "compatibility": "Beginner/intermediate level: >65 kg (Fly 5’4); 65 – 70 kg (Fly 5’8); 70 – 75 kg (Fly 5’8); 75 – 80 kg (Fly 5’8); 80 – 85 kg (Fly 5’8); 85 – 90 kg (Fly 6’0); 90-95 kg (Fly 6’0); >95 kg (Fly 6’0). Advanced level: >65 kg (Fly 5’2); 65 – 70 kg (Fly 5’2); 70 – 75 kg (Fly 5’2); 75 – 80 kg (Fly 5’4); 80 – 85 kg (Fly 5’4); 85 – 90 kg (Fly 5’4); 90-95 kg (Fly 5’4); >95 kg (Fly 5’4)."
+  },
+  {
+    "id": 292964,
+    "slug": "blackbird-62-64-occasion",
+    "title": "Blackbird 6’2/6’4 Occasion",
+    "compatibility": "WING FOIL (ultra light wind): <75 kg (Blackbird 6’2), >75 kg (Backbird 6’4). SUP Foil: <85 kg (Blackbird 6’2), >85 kg (Backbird 6’4)."
+  },
+  {
+    "id": 292959,
+    "slug": "pure-ha-fuselink-foil",
+    "title": "Pure HA Fuselink Foil",
+    "compatibility": "Pure HA800: Sup/surf foil radical, downwind extrem, wing | Pure HA1100: Sup/surf foil small waves, downwind machine, wing lightwind"
+  },
+  {
+    "id": 292944,
+    "slug": "pure-ha-fuselink-foil-full-set",
+    "title": "Pure HA Fuselink Foil Full Set",
+    "compatibility": "Pure HA800/HA135: Sup/surf foil radical, downwind extrem, wing | Pure HA1100/HA165: Sup/surf foil small waves, downwind machine, wing lightwind. (Image link included)"
+  },
+  {
+    "id": 292902,
+    "slug": "fly-one",
+    "title": "Fly One",
+    "compatibility": "Autonomous rider: <90 Kg (5’8), >90 Kg (5’10). Beginner rider: <75 Kg (5’8); 75 Kg – 85 kg (5’10); 85 Kg – 95 kg (6’2); >95 kg (6’4)."
+  },
+  {
+    "id": 292909,
+    "slug": "uhm-carbon-mast",
+    "title": "UHM Carbon Mast",
+    "compatibility": "Available in 80 cm, 85 cm, and 95 cm, the UHM carbon mast is ready for all disciplines: surfing, downwing, wing, kite, and SUP. The PCB is integrated directly into the mast. It can be connected to virtually any board on the market equipped with the US double-rail system."
+  },
+  {
+    "id": 292915,
+    "slug": "diamond-occasion",
+    "title": "Diamond occasion",
+    "compatibility": "For a wind range of 10 to 25 knots: <65 kg (4); 65 – 70 kg (4); 70 – 75 kg (5); 75 – 80 kg (5); 80 – 85 kg (5); 85 – 90 kg (6); >90 kg (6)."
+  },
+  {
+    "id": 293017,
+    "slug": "whitebird-dw",
+    "title": "Whitebird DW",
+    "compatibility": "Wing foil program – beginner level: <80 Kg (6’6), >80 Kg (6’8). Wing foil program – intermediate/expert level: All sizes (5’8). Sup foil/sup foil downwind program – beginner level: <70 Kg (7’8), >70 Kg (8’2). Sup foil/sup foil downwind program – intermediate/expert level: <70 Kg (6’6), >70 Kg (6’8)."
+  }
+]

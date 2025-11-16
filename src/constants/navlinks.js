@@ -1,0 +1,141 @@
+const NAV_LINKS = [
+  {
+    name: "Wingfoil",
+    href: "/category/foiling/wingfoil",
+    sublinks: [
+      { name: "Foil", id: "wingfoil-foil" },
+      { name: "Mast", id: "wingfoil-mast" },
+      { name: "Front Wing", id: "wingfoil-front-wing" },
+      { name: "Fuselage", id: "wingfoil-fuselage" },
+      { name: "Stabilizer", id: "wingfoil-stabilizer" },
+      { name: "Board", id: "wingfoil-board" },
+      { name: "Wing", id: "wingfoil-wing" },
+      { name: "Package", id: "wingfoil-package" },
+      { name: "Used", id: "wingfoil-used" },
+      { name: "Second Choice", id: "wingfoil-second-choice" },
+      { name: "Accessories", id: "wingfoil-accessories" },
+    ],
+  },
+  {
+    name: "Downwind",
+    href: "/category/foiling/downwind",
+    sublinks: [
+      { name: "Foil", id: "downwind-foil" },
+      { name: "Mast", id: "downwind-mast" },
+      { name: "Front Wing", id: "downwind-front-wing" },
+      { name: "Fuselage", id: "downwind-fuselage" },
+      { name: "Stabilizer", id: "downwind-stabilizer" },
+      { name: "Board", id: "downwind-board" },
+      { name: "Package", id: "downwind-package" },
+      { name: "Accessories", id: "downwind-accessories" },
+    ],
+  },
+  {
+    name: "Prone Foil",
+    href: "/category/foiling/prone-foil",
+    sublinks: [
+      { name: "Foil", id: "prone-foil" },
+      { name: "Mast", id: "prone-mast" },
+      { name: "Front Wing", id: "prone-front-wing" },
+      { name: "Fuselage", id: "prone-fuselage" },
+      { name: "Stabilizer", id: "prone-stabilizer" },
+      { name: "Board", id: "prone-board" },
+      { name: "Accessories", id: "prone-accessories" },
+    ],
+  },
+  {
+    name: "SUP Foil",
+    href: "/category/foiling/sup-foil",
+    sublinks: [
+      { name: "Foil", id: "sup-foil" },
+      { name: "Mast", id: "sup-mast" },
+      { name: "Front Wing", id: "sup-front-wing" },
+      { name: "Fuselage", id: "sup-fuselage" },
+      { name: "Stabilizer", id: "sup-stabilizer" },
+      { name: "Board", id: "sup-board" },
+      { name: "Package", id: "sup-package" },
+      { name: "Accessories", id: "sup-accessories" },
+    ],
+  },
+  {
+    name: "Dockstart",
+    href: "/category/foiling/dockstart",
+    sublinks: [
+      { name: "Foil", id: "dockstart-foil" },
+      { name: "Mast", id: "dockstart-mast" },
+      { name: "Front Wing", id: "dockstart-front-wing" },
+      { name: "Fuselage", id: "dockstart-fuselage" },
+      { name: "Stabilizer", id: "dockstart-stabilizer" },
+      { name: "Board", id: "dockstart-board" },
+      { name: "Package", id: "dockstart-package" },
+      { name: "Accessories", id: "dockstart-accessories" },
+    ],
+  },
+  {
+    name: "Parawing",
+    href: "/category/foiling/parawing",
+    sublinks: [
+      { name: "Foil Fullset", id: "parawing-foil-fullset" },
+      { name: "Board", id: "parawing-board" },
+    ],
+  },
+  {
+    name: "Wakefoil",
+    href: "/category/foiling/wakefoil",
+    sublinks: [
+      { name: "Foil", id: "wakefoil-foil" },
+      { name: "Board", id: "wakefoil-board" },
+    ],
+  },
+  {
+    name: "Windfoil",
+    href: "/category/foiling/windfoil",
+    sublinks: [
+      { name: "Foil", id: "windfoil-foil" },
+      { name: "T Bar", id: "windfoil-t-bar" },
+      { name: "Front Wing", id: "windfoil-front-wing" },
+      { name: "Stabilizer", id: "windfoil-stabilizer" },
+      { name: "Board", id: "windfoil-board" },
+      { name: "Accessories", id: "windfoil-accessories" },
+    ],
+  },
+  {
+    name: "SUP",
+    href: "/category/stand-up-paddle",
+    hasContent: true,
+  },
+  {
+    name: "Windsurf",
+    href: "/category/windsurf",
+    hasContent: true,
+  },
+  {
+    name: "Good Deals",
+    href: "/category/good-deals",
+    sublinks: [
+      { name: "Used", id: "deals-used" },
+      { name: "Second Choice", id: "deals-second-choice" },
+      { name: "End of Line", id: "deals-end-of-line" },
+    ],
+  },
+  {
+    name: "What's New",
+    href: "/category/whats-new",
+    hasContent: false,
+  },
+  {
+    name: "Service",
+    href: "#",
+    isService: true,
+    sublinks: [
+      { name: "Foil Configuration", id: "service-foil-configuration" },
+      { name: "Mast Selection", id: "service-mast-selection" },
+      { name: "Wing Setup", id: "service-wing-setup" },
+      { name: "Equipment Guide", id: "service-equipment-guide" },
+      { name: "Maintenance", id: "service-maintenance" },
+      { name: "Custom Orders", id: "service-custom-orders" },
+    ],
+  },
+];
+
+export default NAV_LINKS;

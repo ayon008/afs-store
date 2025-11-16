@@ -1,0 +1,26 @@
+"use client"
+
+import Header from './sections/header'
+import Sec1 from './sections/sec1'
+import Sec2 from './sections/sec2'  
+import EasyRide from './sections/easy-ride'
+import Sec3 from './sections/sec3'
+
+import Sec5 from './sections/sec5'  
+import Sec6 from './sections/sec6'
+import Sec7 from './sections/sec7'  
+export default function CustomHome() {
+  return (
+    <div>
+      <Header />
+      <Sec1 />
+      <Sec2 />
+      <EasyRide />
+      <Sec3 />  
+
+      <Sec5 />  
+      <Sec6 />
+      <Sec7 />
+    </div>
+  )
+}

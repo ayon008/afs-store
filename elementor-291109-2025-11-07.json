@@ -1,0 +1,295 @@
+{
+  "content": [
+    {
+      "id": "6b22e7a6",
+      "settings": {
+        "border_width": {
+          "unit": "px",
+          "top": "0",
+          "right": "0",
+          "bottom": "1",
+          "left": "0",
+          "isLinked": false
+        },
+        "border_color": "#666666",
+        "border_radius": {
+          "unit": "px",
+          "top": "4",
+          "right": "4",
+          "bottom": "4",
+          "left": "4",
+          "isLinked": true
+        },
+        "layout": "full_width",
+        "content_width": { "unit": "px", "size": 500, "sizes": [] },
+        "gap": "extended",
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "box_shadow_box_shadow": {
+          "horizontal": 5,
+          "vertical": 0,
+          "blur": 10,
+          "spread": 0,
+          "color": "rgba(0,0,0,0.5)"
+        },
+        "overflow": "hidden",
+        "margin": {
+          "unit": "px",
+          "top": "20",
+          "right": 0,
+          "bottom": "20",
+          "left": 0,
+          "isLinked": false
+        },
+        "padding_mobile": {
+          "unit": "px",
+          "top": "20",
+          "right": "14",
+          "bottom": "20",
+          "left": "14",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "616c2cec",
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": null,
+            "padding_mobile": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            },
+            "padding": {
+              "unit": "px",
+              "top": "20",
+              "right": "20",
+              "bottom": "20",
+              "left": "20",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "10a3da2d",
+              "settings": { "layout": "full_width" },
+              "elements": [
+                {
+                  "id": "761dfd03",
+                  "settings": {
+                    "_column_size": 100,
+                    "_inline_size": null,
+                    "padding": {
+                      "unit": "px",
+                      "top": "0",
+                      "right": "0",
+                      "bottom": "0",
+                      "left": "0",
+                      "isLinked": false
+                    },
+                    "padding_tablet": {
+                      "unit": "px",
+                      "top": "0",
+                      "right": "0",
+                      "bottom": "0",
+                      "left": "0",
+                      "isLinked": false
+                    },
+                    "padding_mobile": {
+                      "unit": "px",
+                      "top": "0",
+                      "right": "0",
+                      "bottom": "0",
+                      "left": "0",
+                      "isLinked": false
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "7a609472",
+                      "settings": {
+                        "title": "Sizing guide",
+                        "header_size": "p",
+                        "typography_typography": "custom",
+                        "typography_font_family": "alliance no.2",
+                        "typography_font_size": {
+                          "unit": "px",
+                          "size": 26,
+                          "sizes": []
+                        },
+                        "typography_font_weight": "700",
+                        "align": "left",
+                        "_margin": {
+                          "unit": "px",
+                          "top": "0",
+                          "right": "0",
+                          "bottom": "0",
+                          "left": "0",
+                          "isLinked": true
+                        },
+                        "_padding": {
+                          "unit": "px",
+                          "top": "0",
+                          "right": "0",
+                          "bottom": "10",
+                          "left": "0",
+                          "isLinked": false
+                        },
+                        "_border_width": {
+                          "unit": "px",
+                          "top": "0",
+                          "right": "0",
+                          "bottom": "2",
+                          "left": "0",
+                          "isLinked": false
+                        },
+                        "__globals__": {
+                          "title_color": "globals/colors?id=a83823e",
+                          "_border_color": "globals/colors?id=a83823e"
+                        },
+                        "typography_font_size_mobile": {
+                          "unit": "px",
+                          "size": 22,
+                          "sizes": []
+                        },
+                        "typography_line_height_mobile": {
+                          "unit": "px",
+                          "size": 22,
+                          "sizes": []
+                        },
+                        "_padding_mobile": {
+                          "unit": "px",
+                          "top": "0",
+                          "right": "0",
+                          "bottom": "8",
+                          "left": "0",
+                          "isLinked": false
+                        },
+                        "_background_background": "classic",
+                        "_background_image": {
+                          "url": "https://staging.afs-foiling.com/wp-content/uploads/2025/06/bottom-line.svg",
+                          "id": 290892,
+                          "size": "",
+                          "alt": "",
+                          "source": "library"
+                        },
+                        "_background_position": "bottom left",
+                        "_background_repeat": "repeat-x"
+                      },
+                      "elements": [],
+                      "isInner": false,
+                      "widgetType": "heading",
+                      "elType": "widget"
+                    },
+                    {
+                      "id": "4655e2b3",
+                      "settings": {
+                        "editor": "",
+                        "_element_custom_width": {
+                          "unit": "%",
+                          "size": 0,
+                          "sizes": []
+                        },
+                        "__dynamic__": {
+                          "editor": "[elementor-tag id=\"8892286\" name=\"acf-text\" settings=\"%7B%22key%22%3A%22field_646387d35e4d5%3Acompatibilite%22%7D\"]"
+                        },
+                        "_element_width_mobile": "initial",
+                        "_element_custom_width_mobile": {
+                          "unit": "vw",
+                          "size": 100,
+                          "sizes": []
+                        },
+                        "_background_background": "classic",
+                        "_background_color": "#FFFFFF",
+                        "custom_css": "@media (max-width: 767px) {\r\n}\r\n  selector {\r\n    max-width: 100%;\r\n    width: 100%;\r\n    overflow-x: visible;\r\n   \r\n  }\r\n  \r\nselector{\r\n    max-height: 80vh;\r\n\r\n\r\n}\r\n\r\n  \r\n\r\n\r\n\r\n\r\n\r\n  \r\n/* Dimensions*/\r\n\r\nselector table {\r\n  display: block;\r\n  overflow-x: auto;\r\n  white-space: nowrap;\r\n  max-width: 100%;\r\n  -webkit-overflow-scrolling: touch;\r\n  cursor: grab;\r\n  user-select: none;\r\n}\r\n\r\nselector tbody {\r\n    display: table;\r\n    min-width: 100%;\r\n}\r\n\r\n\r\n\r\nselector th {\r\n\r\ntext-align: left;\r\ncolor: #111;\r\nfont-family: \"Alliance No.2\";\r\nfont-size: 14px;\r\nfont-style: normal;\r\nfont-weight: 500;\r\nline-height: 120%;\r\ntext-align: left;\r\n\r\n}\r\n\r\n\r\nselector td {\r\n\r\ntext-align: left;\r\nfont-family: \"Alliance No.2\";\r\nfont-size: 16px;\r\nfont-style: normal;\r\nfont-weight: 500;\r\nline-height: 130% !important; \r\ncolor: #111 !important;\r\n\r\n\r\n}\r\n\r\n\r\nselector tr{\r\n    border-bottom: 1px solid var(--div-div_sec, #333);\r\n    \r\n}\r\n\r\n\r\n\r\n\r\nselector table tbody>tr:nth-child(odd)>td, table tbody>tr:nth-child(odd)>th {\r\n    background-color: white ;\r\n}\r\n\r\n\r\n\r\n\r\n\r\nselector table td, table th {\r\n    vertical-align: bottom;\r\n    border: 0 !important;\r\n    padding: 10px 20px 10px 0;\r\n}\r\n\r\n\r\nselector  td{\r\n    text-align: left;\r\n}\r\n\r\n\r\n selector th, td {\r\n            text-align: left;\r\n            white-space: nowrap;\r\n\r\n }\r\n\r\n\r\nselector {\r\n    overflow-y: auto;\r\n    cursor: grab;\r\n    user-select: none;\r\n    -webkit-overflow-scrolling: touch;\r\n}\r\n\r\nselector {\r\n    cursor: grabbing;\r\n}\r\n\r\n\r\n\r\nselector:not(:last-of-type) {\r\n    margin-bottom: 20px\r\n}\r\n\r\n\r\n\r\n\r\n@media only screen and (max-width: 767px) {\r\n\r\n\r\n.table-container:not(:last-of-type) {\r\n    margin-bottom: 20px\r\n}\r\n}\r\n\r\n\r\nselector a{\r\n    color: #1D98FF;\r\n}\r\n\r\nselector tr:hover {\r\n    background: transparent !important;\r\n}\r\n      \r\n",
+                        "text_color": "#111111",
+                        "typography_typography": "custom",
+                        "typography_font_family": "alliance no.2",
+                        "typography_font_weight": "600",
+                        "__globals__": { "text_color": "" }
+                      },
+                      "elements": [],
+                      "isInner": false,
+                      "widgetType": "text-editor",
+                      "elType": "widget"
+                    }
+                  ],
+                  "isInner": true,
+                  "elType": "column"
+                }
+              ],
+              "isInner": true,
+              "elType": "section"
+            }
+          ],
+          "isInner": false,
+          "elType": "column"
+        }
+      ],
+      "isInner": false,
+      "elType": "section"
+    }
+  ],
+  "page_settings": {
+    "width": { "unit": "px", "size": 960, "sizes": [] },
+    "overlay": "",
+    "custom_css": "div#elementor-popup-modal-166166 {\r\n    z-index: 9999999999999;\r\n}\r\n\r\nsvg.e-font-icon-svg.e-eicon-close.eicon-close {\r\n    padding: 0;\r\n}",
+    "border_radius": {
+      "unit": "px",
+      "top": "4",
+      "right": "4",
+      "bottom": "4",
+      "left": "4",
+      "isLinked": true
+    },
+    "width_tablet": { "unit": "vw", "size": 95, "sizes": [] },
+    "width_mobile": { "unit": "vw", "size": 100, "sizes": [] },
+    "border_radius_mobile": {
+      "unit": "px",
+      "top": "0",
+      "right": "0",
+      "bottom": "0",
+      "left": "0",
+      "isLinked": true
+    },
+    "close_button_vertical_mobile": { "unit": "px", "size": 38, "sizes": [] },
+    "padding_mobile": {
+      "unit": "px",
+      "top": "10",
+      "right": "6",
+      "bottom": "10",
+      "left": "6",
+      "isLinked": false
+    },
+    "background_background": "classic",
+    "background_color": "#DD494900",
+    "box_shadow_box_shadow_type": "",
+    "close_button_vertical": { "unit": "px", "size": 28, "sizes": [] },
+    "prevent_scroll": "yes",
+    "margin": {
+      "unit": "px",
+      "top": "20",
+      "right": "0",
+      "bottom": "20",
+      "left": "0",
+      "isLinked": false
+    },
+    "close_button_vertical_tablet": { "unit": "px", "size": "", "sizes": [] },
+    "icon_size_mobile": { "unit": "px", "size": 16, "sizes": [] },
+    "margin_tablet": {
+      "unit": "px",
+      "top": "0",
+      "right": "0",
+      "bottom": "0",
+      "left": "0",
+      "isLinked": false
+    }
+  },
+  "version": "0.4",
+  "title": "SIZE GUIDE 2024",
+  "type": "popup"
+}

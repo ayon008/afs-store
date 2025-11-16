@@ -1,0 +1,75 @@
+{
+  "Wingfoil": {
+    "Foil": "category/foiling/wingfoil/foil",
+    "Mast": "category/foiling/wingfoil/mast",
+    "Front Wing": "category/foiling/wingfoil/front-wing",
+    "Fuselage": "category/foiling/wingfoil/fuselage",
+    "Stabilizer": "category/foiling/wingfoil/stabilizer",
+    "Board": "category/foiling/wingfoil/board",
+    "Wing": "category/foiling/wingfoil/wing",
+    "Package": "category/foiling/wingfoil/package",
+    "Used": "category/foiling/wingfoil/used",
+    "Second Choice": "category/foiling/wingfoil/second-choice",
+    "Accessories": "category/foiling/wingfoil/accessories"
+  },
+  "Downwind": {
+    "Foil": "category/foiling/downwind/foil",
+    "Mast": "category/foiling/downwind/mast",
+    "Front Wing": "category/foiling/downwind/front-wing",
+    "Fuselage": "category/foiling/downwind/fuselage",
+    "Stabilizer": "category/foiling/downwind/stabilizer",
+    "Board": "category/foiling/downwind/board",
+    "Package": "category/foiling/downwind/package",
+    "Accessories": "category/foiling/downwind/accessories"
+  },
+  "Prone Foil": {
+    "Foil": "category/foiling/prone-foil/foil",
+    "Mast": "category/foiling/prone-foil/mast",
+    "Front Wing": "category/foiling/prone-foil/front-wing",
+    "Fuselage": "category/foiling/prone-foil/fuselage",
+    "Stabilizer": "category/foiling/prone-foil/stabilizer",
+    "Board": "category/foiling/prone-foil/board",
+    "Accessories": "category/foiling/prone-foil/accessories"
+  },
+  "SUP Foil": {
+    "Foil": "category/foiling/sup-foil/foil",
+    "Mast": "category/foiling/sup-foil/mast",
+    "Front Wing": "category/foiling/sup-foil/front-wing",
+    "Fuselage": "category/foiling/sup-foil/fuselage",
+    "Stabilizer": "category/foiling/sup-foil/stabilizer",
+    "Board": "category/foiling/sup-foil/board",
+    "Package": "category/foiling/sup-foil/package",
+    "Accessories": "category/foiling/sup-foil/accessories"
+  },
+  "Dockstart": {
+    "Foil": "category/foiling/dockstart/foil",
+    "Mast": "category/foiling/dockstart/mast",
+    "Front Wing": "category/foiling/dockstart/front-wing",
+    "Fuselage": "category/foiling/dockstart/fuselage",
+    "Stabilizer": "category/foiling/dockstart/stabilizer",
+    "Board": "category/foiling/dockstart/board",
+    "Package": "category/foiling/dockstart/package",
+    "Accessories": "category/foiling/dockstart/accessories"
+  },
+  "Parawing": {
+    "Foil Fullset": "category/foiling/parawing/foil-fullset",
+    "Board": "category/foiling/parawing/board"
+  },
+  "Wakefoil": {
+    "Foil": "category/foiling/wakefoil/foil",
+    "Board": "category/foiling/wakefoil/board"
+  },
+  "Windfoil": {
+    "Foil": "category/foiling/windfoil/foil",
+    "T Bar": "category/foiling/windfoil/t-bar",
+    "Front Wing": "category/foiling/windfoil/front-wing",
+    "Stabilizer": "category/foiling/windfoil/stabilizer",
+    "Board": "category/foiling/windfoil/board",
+    "Accessories": "category/foiling/windfoil/accessories"
+  },
+  "Good Deals": {
+    "Used": "category/good-deals/used",
+    "Second Choice": "category/good-deals/second-choice",
+    "End of Line": "category/good-deals/end-of-line"
+  }
+}

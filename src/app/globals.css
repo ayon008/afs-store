@@ -1,0 +1,88 @@
+/* globals.css */
+@import "tailwindcss";
+@tailwind utilities;
+
+@config "../../tailwind.config.mjs";
+
+/* Font imports */
+@font-face {
+  font-family: 'Alliance No.2';
+  src: url('/fonts/AllianceNo2-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Alliance No.2';
+  src: url('/fonts/AllianceNo2-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Alliance No.2';
+  src: url('/fonts/AllianceNo2-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Alliance';
+  src: url('/fonts/AllianceRegular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Alliance';
+  src: url('/fonts/AllianceSemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Alliance';
+  src: url('/fonts/AllianceBold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+};
+
+/* CSS Reset */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+/* Turn off horizontal scrolling */
+html, body {
+  overflow-x: hidden;
+}
+
+.body-scroll-lock {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+/* Set Alliance No.2 as the default font family */
+body {
+  font-family: var(--font-alliance-no2), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Typography styles */
+.typography-default {
+  font-family: "Alliance No.2", var(--font-alliance-no2), ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 16px;
+  color: rgb(255, 255, 255);
+}

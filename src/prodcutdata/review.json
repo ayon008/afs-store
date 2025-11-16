@@ -1,0 +1,946 @@
+[
+  {
+    "id": 298745,
+    "slug": "pure-600-front-wing",
+    "title_rendered": "Pure 600 Front Wing",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 297343,
+    "slug": "evo-ha-front-wing-copie",
+    "title_rendered": "Foil Full set Evo HA",
+    "thumbnail_one": "https://staging.afs-foiling.com/wp-content/uploads/2025/05/maxresdefault-28.jpg",
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false,
+    "review_title": "ANDY BIGGS WATERSPORTS",
+    "video_url": "https://www.youtube.com/watch?v=UKcAyxiDsCE"
+  },
+  {
+    "id": 297163,
+    "slug": "stream",
+    "title_rendered": "Stream",
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false,
+    "review_heading_tow": "",
+    "video_url_if_has_tow": "",
+    "review_heading_three": "",
+    "video_url_if_has_three": "",
+    "review_heading_four": "",
+    "video_url_if_has_four": "",
+    "thumbnail_one": "https://staging.afs-foiling.com/wp-content/uploads/2025/07/foiling-maz-review-scaled.png",
+    "review_title": "Foiling Magazine review",
+    "video_url": "https://www.thefoilingmagazine.com/test-center/afs-stream/"
+  },
+  {
+    "id": 292692,
+    "slug": "silk-foil-front-wing",
+    "title_rendered": "Silk Foil Front Wing",
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false,
+    "thumbnail_one": "https://staging.afs-foiling.com/wp-content/uploads/2025/07/maxresdefault-35.jpg",
+    "review_title": "The Foil Kook",
+    "video_url": "https://youtu.be/iXxuJMKhEYU?feature=shared"
+  },
+  {
+    "id": 292696,
+    "slug": "enduro-glt-foil-full-set",
+    "title_rendered": "Enduro GLT Foil Full Set",
+    "thumbnail_one": "https://staging.afs-foiling.com/wp-content/uploads/2025/06/maxresdefault-34.jpg",
+    "thumbnail_three": false,
+    "thumbnail_four": false,
+    "thumbnail_tow": "https://staging.afs-foiling.com/wp-content/uploads/2025/06/enduroglt-dockstar.png",
+    "review_title": "Testing Gwen Le Tutour's Foil",
+    "video_url": "https://www.youtube.com/watch?v=mlROK1vi-sc",
+    "review_heading_tow": "Tonic Mag",
+    "video_url_if_has_tow": "https://www.tonicmag.com/issue25/?page=89"
+  },
+  {
+    "id": 293150,
+    "slug": "evo-front-wing-second-choice",
+    "title_rendered": "Evo Front Wing Second choice",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293146,
+    "slug": "dock-star",
+    "title_rendered": "Dock-star",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293142,
+    "slug": "enduro-glt-front-wing",
+    "title_rendered": "Enduro GLT Front Wing",
+    "thumbnail_one": "https://staging.afs-foiling.com/wp-content/uploads/2025/06/maxresdefault-34.jpg",
+    "thumbnail_three": false,
+    "thumbnail_four": false,
+    "thumbnail_tow": "https://staging.afs-foiling.com/wp-content/uploads/2025/06/enduroglt-dockstar.png",
+    "review_title": "Testing Gwen Le Tutour's Foil",
+    "video_url": "https://www.youtube.com/watch?v=mlROK1vi-sc",
+    "review_heading_tow": "Tonic Mag",
+    "video_url_if_has_tow": "https://www.tonicmag.com/issue25/?page=89"
+  },
+  {
+    "id": 293137,
+    "slug": "evo-ha-front-wing",
+    "title_rendered": "Evo HA Front Wing",
+    "thumbnail_one": "https://staging.afs-foiling.com/wp-content/uploads/2025/05/maxresdefault-28.jpg",
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false,
+    "review_title": "ANDY BIGGS WATERSPORTS",
+    "video_url": "https://www.youtube.com/watch?v=UKcAyxiDsCE"
+  },
+  {
+    "id": 293135,
+    "slug": "boom-clip-on-d-lite",
+    "title_rendered": "Boom Clip-On D-Lite",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293130,
+    "slug": "ultra-glide-stabilizer",
+    "title_rendered": "Ultra glide Stabilizer",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293125,
+    "slug": "silk-stabilizer-second-choice",
+    "title_rendered": "Silk Stabilizer second choice",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293120,
+    "slug": "silk-ha-stabilizer-second-choice",
+    "title_rendered": "Silk HA Stabilizer second choice",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293116,
+    "slug": "uhm-skinny-carbon-mast-second-choice",
+    "title_rendered": "UHM Skinny Carbon Mast second choice",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293111,
+    "slug": "uhm-carbon-mast-second-choice",
+    "title_rendered": "UHM carbon mast second choice",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293107,
+    "slug": "hm-carbon-mast-second-choice",
+    "title_rendered": "HM Carbon Mast second choice",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293103,
+    "slug": "hr-carbon-mast-second-choice",
+    "title_rendered": "HR Carbon Mast second choice",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293099,
+    "slug": "fuselink-fuselage-second-choice",
+    "title_rendered": "Fuselink Fuselage Second choice",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293621,
+    "slug": "flyer-front-wing-second-choice",
+    "title_rendered": "Flyer front wing Second choice",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293625,
+    "slug": "ultra-fuselink-foil-second-choice",
+    "title_rendered": "Ultra Fuselink Foil Second Choice",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293628,
+    "slug": "pure-fuselink-foil-second-choice",
+    "title_rendered": "Pure Fuselink Foil Second Choice",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293632,
+    "slug": "silk-foil-second-choice",
+    "title_rendered": "Silk Foil Second Choice",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293637,
+    "slug": "enduro-front-wing-second-choix",
+    "title_rendered": "Enduro front wing second choix",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293643,
+    "slug": "foil-full-set-ffv-2025-windfoil",
+    "title_rendered": "Foil full set FFV 2025 windfoil",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 292477,
+    "slug": "d-lite-boom",
+    "title_rendered": "D-Lite Boom",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293647,
+    "slug": "uhm-skinny-carbon-mast",
+    "title_rendered": "UHM Skinny Carbon Mast",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293652,
+    "slug": "diamond-v2-occasion",
+    "title_rendered": "DIAMOND V2 occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293656,
+    "slug": "pure-ha-stabiliser",
+    "title_rendered": "Pure HA Stabiliser",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293661,
+    "slug": "silk-ha-stabilizer",
+    "title_rendered": "Silk HA Stabilizer",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293935,
+    "slug": "enduro-front-wing-occasion",
+    "title_rendered": "Enduro front wing occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293941,
+    "slug": "pulse",
+    "title_rendered": "Pulse",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293667,
+    "slug": "sl-s-occasion",
+    "title_rendered": "SL-S Occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293672,
+    "slug": "whitebird-mid-length",
+    "title_rendered": "Whitebird Mid length",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293683,
+    "slug": "enduro-foil-full-set",
+    "title_rendered": "Enduro foil full set",
+    "thumbnail_one": "https://staging.afs-foiling.com/wp-content/uploads/2024/10/maxresdefault-27.jpg",
+    "thumbnail_tow": "https://staging.afs-foiling.com/wp-content/uploads/2024/10/maxresdefault-26.jpg",
+    "thumbnail_three": "https://staging.afs-foiling.com/wp-content/uploads/2023/04/hqdefault.jpg",
+    "thumbnail_four": false,
+    "review_title": "HADOU ENDURO",
+    "video_url": "https://www.youtube.com/watch?v=Xh9mmDExedk",
+    "review_heading_tow": "ENDURO GWEN LE TUTOUR",
+    "video_url_if_has_tow": "https://www.youtube.com/watch?v=3GEN4JsQmWA",
+    "review_heading_three": "Andy Bigg Watersports",
+    "video_url_if_has_three": "https://www.youtube.com/watch?v=8Mf-D-pKrZ8"
+  },
+  {
+    "id": 293944,
+    "slug": "blackbird-v3",
+    "title_rendered": "Blackbird V3",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293679,
+    "slug": "fire-v2-occasion",
+    "title_rendered": "Fire V2 occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293492,
+    "slug": "used-ultra-aircraft",
+    "title_rendered": "Used Ultra aircraft",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293495,
+    "slug": "d-lite-occasion",
+    "title_rendered": "D-Lite Occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293606,
+    "slug": "enduro-front-wing",
+    "title_rendered": "Enduro front wing",
+    "thumbnail_one": "https://staging.afs-foiling.com/wp-content/uploads/2024/10/maxresdefault-27.jpg",
+    "thumbnail_tow": "https://staging.afs-foiling.com/wp-content/uploads/2024/10/maxresdefault-26.jpg",
+    "thumbnail_three": "https://staging.afs-foiling.com/wp-content/uploads/2023/04/hqdefault.jpg",
+    "thumbnail_four": false,
+    "review_title": "HADOU ENDURO",
+    "video_url": "https://www.youtube.com/watch?v=Xh9mmDExedk",
+    "review_heading_tow": "ENDURO GWEN LE TUTOUR",
+    "video_url_if_has_tow": "https://www.youtube.com/watch?v=3GEN4JsQmWA",
+    "review_heading_three": "Andy Big Watersports",
+    "video_url_if_has_three": "https://www.youtube.com/watch?v=8Mf-D-pKrZ8"
+  },
+  {
+    "id": 293585,
+    "slug": "pure-fuselink-foil-occasion",
+    "title_rendered": "Pure Fuselink Foil Occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293605,
+    "slug": "fuselage-switch",
+    "title_rendered": "Fuselage Switch",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293575,
+    "slug": "evo-front-wing-occasion",
+    "title_rendered": "Evo front wing Occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293601,
+    "slug": "boom-diamond-v2",
+    "title_rendered": "Boom Diamond V2",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293570,
+    "slug": "performer-stabilizer",
+    "title_rendered": "Performer Stabilizer",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293567,
+    "slug": "pure-700-900-performer-foil",
+    "title_rendered": "Pure 700/900 Performer Foil",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293589,
+    "slug": "ultra-fuselink-foil-full-set",
+    "title_rendered": "Ultra Fuselink Foil Full Set",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293581,
+    "slug": "ultra-fuselink-foil",
+    "title_rendered": "Ultra Fuselink Foil",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 297156,
+    "slug": "diamond-v2-2",
+    "title_rendered": "Diamond V2",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293542,
+    "slug": "diamond-v2",
+    "title_rendered": "Diamond V2",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293537,
+    "slug": "pure-race-560-occasion",
+    "title_rendered": "Pure Race 560 occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293533,
+    "slug": "fixed-t-bar-occasion",
+    "title_rendered": "Fixed T-BAR Occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293527,
+    "slug": "wild-occasion",
+    "title_rendered": "Wild occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293522,
+    "slug": "carver-front-fender-occasion",
+    "title_rendered": "Carver front fender occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293516,
+    "slug": "cruiser-stabilizer-occasion",
+    "title_rendered": "Cruiser stabilizer occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293509,
+    "slug": "blackbird-76-80-occasion",
+    "title_rendered": "Blackbird 7’6/8’0 occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293506,
+    "slug": "fire-pro-occasion",
+    "title_rendered": "Fire Pro Occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293456,
+    "slug": "pure-fuselink-complete-foil",
+    "title_rendered": "Pure Fuselink complete foil",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293453,
+    "slug": "chipri-pro-occasion",
+    "title_rendered": "Chipri Pro occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293444,
+    "slug": "silk-stabilizer-occasion",
+    "title_rendered": "Silk Stabilizer occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293440,
+    "slug": "flyer-front-wing-occasion",
+    "title_rendered": "Flyer front wing occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293435,
+    "slug": "flyer-front-wing",
+    "title_rendered": "Flyer front wing",
+    "thumbnail_one": "https://staging.afs-foiling.com/wp-content/uploads/2024/03/maxresdefault-32.jpg",
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false,
+    "review_title": "GWEN LE TUTOUR",
+    "video_url": "https://www.youtube.com/watch?v=SX-qHw7UPxE"
+  },
+  {
+    "id": 293483,
+    "slug": "performer-fuselage-occasion",
+    "title_rendered": "Performer Fuselage occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293431,
+    "slug": "evo-fuselage-occasion",
+    "title_rendered": "Evo Fuselage occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293427,
+    "slug": "pure-ha-fuselink-plane-occasion",
+    "title_rendered": "Pure HA Fuselink plane occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293421,
+    "slug": "windfoil-stabilizer-occasion",
+    "title_rendered": "windfoil stabilizer occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293414,
+    "slug": "tbar-95-cm-occasion",
+    "title_rendered": "Tbar 95 cm occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293405,
+    "slug": "performer-rs-230-stabilizer-occasion",
+    "title_rendered": "Performer RS 230 Stabilizer occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293402,
+    "slug": "fly-48-occasion",
+    "title_rendered": "Fly 4’8 occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293398,
+    "slug": "alpha-fuselage-occasion",
+    "title_rendered": "Alpha fuselage occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293394,
+    "slug": "fuselink-mast-hr-carbon-occasion",
+    "title_rendered": "Fuselink Mast HR carbon occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293389,
+    "slug": "fuselink-hm-carbon-mast-occasion",
+    "title_rendered": "Fuselink HM carbon mast occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293381,
+    "slug": "fuselink-uhm-carbon-mast-occasion",
+    "title_rendered": "Fuselink UHM carbon mast occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293375,
+    "slug": "pure-700-900-performer-plane-occasion",
+    "title_rendered": "Pure 700/900 Performer plane occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293369,
+    "slug": "performer-surf-sup-260-stabilizer-occasion",
+    "title_rendered": "Performer Surf/Sup 260 stabilizer occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293355,
+    "slug": "pure-stabilizer-occasion",
+    "title_rendered": "Pure Stabilizer occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293350,
+    "slug": "whitebird-occasion",
+    "title_rendered": "Whitebird occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293345,
+    "slug": "fuselink-fuselage",
+    "title_rendered": "Fuselink Fuselage",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293338,
+    "slug": "evo-front-wing",
+    "title_rendered": "Evo front wing",
+    "thumbnail_one": "https://staging.afs-foiling.com/wp-content/uploads/2024/02/maxresdefault-30.jpg",
+    "thumbnail_tow": "https://staging.afs-foiling.com/wp-content/uploads/2024/02/maxresdefault-31.jpg",
+    "thumbnail_three": false,
+    "thumbnail_four": false,
+    "review_title": "HADOU",
+    "video_url": "https://www.youtube.com/watch?v=l8fYgXrtpkY",
+    "review_heading_tow": "THOMAS",
+    "video_url_if_has_tow": "https://youtu.be/iUwhLIOLAJk?feature=shared"
+  },
+  {
+    "id": 293247,
+    "slug": "evo-foil-full-set",
+    "title_rendered": "Evo Foil Full Set",
+    "thumbnail_one": "https://staging.afs-foiling.com/wp-content/uploads/2024/02/maxresdefault-30.jpg",
+    "thumbnail_tow": "https://staging.afs-foiling.com/wp-content/uploads/2024/02/maxresdefault-31.jpg",
+    "thumbnail_four": false,
+    "thumbnail_three": false,
+    "review_title": "HADOU",
+    "video_url": "https://www.youtube.com/watch?v=l8fYgXrtpkY",
+    "review_heading_tow": "THOMAS",
+    "video_url_if_has_tow": "https://www.youtube.com/watch?v=iUwhLIOLAJk"
+  },
+  {
+    "id": 293243,
+    "slug": "pure-ha-800-ha-1100-performer-occasion",
+    "title_rendered": "Pure HA 800/HA 1100 Performer Occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293238,
+    "slug": "silk-foil-occasion",
+    "title_rendered": "Silk Foil occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293235,
+    "slug": "fly-66-74",
+    "title_rendered": "Fly 6’6/7’4",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293226,
+    "slug": "d-lite",
+    "title_rendered": "D-Lite",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293225,
+    "slug": "clef-torx",
+    "title_rendered": "Clef Torx"
+  },
+  {
+    "id": 293213,
+    "slug": "blackbird-76-80",
+    "title_rendered": "Blackbird 7’6/8’0",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293094,
+    "slug": "fire-v2",
+    "title_rendered": "Fire V2",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293086,
+    "slug": "hm-carbon-mast",
+    "title_rendered": "HM Carbon Mast",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293090,
+    "slug": "hr-carbon-mast",
+    "title_rendered": "HR carbon mast",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293085,
+    "slug": "wing-cap",
+    "title_rendered": "Wing cap"
+  },
+  {
+    "id": 293076,
+    "slug": "flyer-full-set",
+    "title_rendered": "Flyer Full Set",
+    "thumbnail_one": "https://staging.afs-foiling.com/wp-content/uploads/2024/03/maxresdefault-32.jpg",
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false,
+    "review_title": "GWEN LE TUTOUR",
+    "video_url": "https://www.youtube.com/watch?v=SX-qHw7UPxE"
+  },
+  {
+    "id": 293080,
+    "slug": "fire-occasion",
+    "title_rendered": "Fire Occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293071,
+    "slug": "fly-tomo-used",
+    "title_rendered": "Fly TOMO Used",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293061,
+    "slug": "fly-occasion",
+    "title_rendered": "Fly Occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 292964,
+    "slug": "blackbird-62-64-occasion",
+    "title_rendered": "Blackbird 6’2/6’4 Occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 292959,
+    "slug": "pure-ha-fuselink-foil",
+    "title_rendered": "Pure HA Fuselink Foil",
+    "thumbnail_one": "https://staging.afs-foiling.com/wp-content/uploads/2023/11/maxresdefault-29.jpg",
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false,
+    "review_title": "GWEN LE TUTOUR",
+    "video_url": "https://www.youtube.com/watch?v=C6I0s7cGgyU"
+  },
+  {
+    "id": 292944,
+    "slug": "pure-ha-fuselink-foil-full-set",
+    "title_rendered": "Pure HA Fuselink Foil Full Set",
+    "thumbnail_one": "https://staging.afs-foiling.com/wp-content/uploads/2023/11/maxresdefault-29.jpg",
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false,
+    "review_title": "GWEN LE TUTOUR",
+    "video_url": "https://www.youtube.com/watch?v=C6I0s7cGgyU"
+  },
+  {
+    "id": 292902,
+    "slug": "fly-one",
+    "title_rendered": "Fly One",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 292909,
+    "slug": "uhm-carbon-mast",
+    "title_rendered": "UHM Carbon Mast",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 292915,
+    "slug": "diamond-occasion",
+    "title_rendered": "Diamond occasion",
+    "thumbnail_one": false,
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false
+  },
+  {
+    "id": 293017,
+    "slug": "whitebird-dw",
+    "title_rendered": "Whitebird DW",
+    "thumbnail_one": "https://staging.afs-foiling.com/wp-content/uploads/2023/10/maxresdefault-33.jpg",
+    "thumbnail_tow": false,
+    "thumbnail_three": false,
+    "thumbnail_four": false,
+    "review_title": "TONIC MAG",
+    "video_url": "https://www.youtube.com/watch?v=TkoHmnuM-P8"
+  }
+]
