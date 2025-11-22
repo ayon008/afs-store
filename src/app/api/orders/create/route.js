@@ -37,9 +37,9 @@ export async function POST(req) {
     request.requestBody({
       intent: 'CAPTURE',
       purchase_units: [{
-        amount: { 
+        amount: {
           currency_code: 'EUR', // Changed to EUR for European store
-          value: wooOrderTotal 
+          value: wooOrderTotal
         },
         invoice_id: wooOrderId.toString(),
         description: `Order #${wooOrderId} from AFS Foiling`,
@@ -68,3 +68,5 @@ export async function POST(req) {
     );
   }
 }
+
+

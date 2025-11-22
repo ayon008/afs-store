@@ -1,6 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 
+
+const decodeEntities = (str = "") =>
+  str.replace(/&#(\d+);/g, (_, n) => String.fromCharCode(n))
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">");
+
 export default function BlogCard({ blog }) {
   return (
     <div className="w-full">
@@ -40,7 +49,7 @@ export default function BlogCard({ blog }) {
             color: "rgba(17, 17, 17, 0.75)",
           }}
         >
-          {blog.title}
+          {decodeEntities(blog.title)}
         </h2>
 
         {/* Description (limited to 3 lines with ellipsis) */}

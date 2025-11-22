@@ -4,6 +4,7 @@
 
 @config "../../tailwind.config.mjs";
 
+
 /* Font imports */
 @font-face {
   font-family: 'Alliance No.2';
@@ -51,7 +52,9 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-};
+}
+
+;
 
 /* CSS Reset */
 * {
@@ -60,10 +63,12 @@
 
 html {
   scrollbar-gutter: stable;
+  scroll-behavior: smooth;
 }
 
 /* Turn off horizontal scrolling */
-html, body {
+html,
+body {
   overflow-x: hidden;
 }
 
@@ -71,6 +76,32 @@ html, body {
   overflow: hidden;
   position: fixed;
   width: 100%;
+}
+
+
+.global-h1 {
+  @apply font-bold lg:text-[clamp(4.375rem,0.9028rem+3.4722vw,3.125rem)] md:text-[clamp(2.625rem,1.1328rem+3.1128vw,3.125rem)] text-[42px]
+ lg:leading-[110%] leading-[100%] lg:tracking-[-0.01em] tracking-[-0.01em] md:leading-[120%];
+}
+
+.global-h2 {
+      @apply font-alliance font-bold leading-[110%] tracking-[-0.01em] text-[36px] md:text-[clamp(2.25rem,1.5078rem+1.5504vw,2.5rem)] lg:text-[clamp(2.5rem,1.3889rem+1.7361vw,3.125rem)];
+}
+
+.prose h2 {
+  @apply font-alliance font-bold leading-[110%] tracking-[-0.01em] text-[36px] md:text-[clamp(2.25rem,1.5078rem+1.5504vw,2.5rem)] lg:text-[clamp(2.5rem,1.3889rem+1.7361vw,3.125rem)] mb-10;
+}
+
+.global-padding {
+  @apply px-[clamp(1.25rem,-33.75rem+43.75vw,10rem)]
+}
+
+.global-margin {
+  @apply lg:mb-[clamp(7.5rem,-12.5rem+25vw,12.5rem)] mb-[80px]
+}
+
+.global-p {
+  @apply lg:text-[22px] md:text-[19px] text-base leading-[120%]
 }
 
 /* Set Alliance No.2 as the default font family */

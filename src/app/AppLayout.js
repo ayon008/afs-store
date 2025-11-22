@@ -25,20 +25,22 @@ function LayoutContent({ children }) {
       <main className="flex-grow">{children}</main>
       {pathname.startsWith('/product') && <FeatureBar />}
       {pathname === '/made-in-france' && <FeatureBar />}
-      {pathname !== '/' && 
-        pathname !== '/service/foilcharacteristics' && 
+      {pathname !== '/' &&
+        pathname !== '/service/foilcharacteristics' &&
         pathname !== '/login' &&
         pathname !== '/register' &&
         pathname !== '/made-in-france' &&
         !pathname.startsWith('/account') &&
         !pathname.startsWith('/product') &&
-        <FaqSection />}
+        // 
+        <></>
+      }
 
       <Footer />
     </div>
   )
 }
-  
+
 export default function AppLayout({ children }) {
   // keep this simple: always render the full layout
   return (
