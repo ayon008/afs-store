@@ -112,8 +112,33 @@ const BlogContent = ({ blog }) => {
     // Handle navigation click - only change clicked state, don't affect scroll tracking
     const handleNavClick = (id) => {
         setClickedId(id);
-        setActiveId(null)
+        setActiveId(null);
     };
+
+    // When a user manually scrolls/uses touch/keyboard, clear the clicked state
+    useEffect(() => {
+        if (!clickedId) return;
+
+        const clearClicked = () => {
+            setClickedId(null);
+        };
+
+        const onKeyDown = (e) => {
+            // common navigation keys that indicate user scroll intent
+            const keys = ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '];
+            if (keys.includes(e.key)) clearClicked();
+        };
+
+        window.addEventListener('wheel', clearClicked, { passive: true });
+        window.addEventListener('touchstart', clearClicked, { passive: true });
+        window.addEventListener('keydown', onKeyDown);
+
+        return () => {
+            window.removeEventListener('wheel', clearClicked);
+            window.removeEventListener('touchstart', clearClicked);
+            window.removeEventListener('keydown', onKeyDown);
+        };
+    }, [clickedId]);
 
     // console.log(activeId);
 
