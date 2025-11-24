@@ -11,9 +11,9 @@ export default function AboutVideoSection() {
     "AFS’s mission is to offer the best-performing foils, boards and wings, while guaranteeing first-rate accessibility and stability. To ensure that all riders can practice their sport in complete safety, whatever the conditions and whatever their riding style (freeride, carving, downwind, surf foil, etc.). These products are designed and manufactured in Brittany, France, by Foil And Co. French manufacturing using the most advanced techniques to offer you the best quality!";
 
   return (
-    <section className="bg-black text-white py-12 px-4 sm:px-6 lg:px-10 font-['Inter']">
+    <section className="bg-black text-white font-['Inter'] global-padding py-10">
       {/* Mobile Layout */}
-      <div className="block md:hidden max-w-2xl mx-auto flex flex-col gap-6">
+      <div className="md:hidden max-w-2xl mx-auto flex flex-col gap-6">
         <div>
           <h2
             style={{
@@ -63,39 +63,24 @@ export default function AboutVideoSection() {
       </div>
 
       {/* Desktop Layout */}
-      <div className="hidden md:flex max-w-7xl mx-auto flex-row gap-10 items-start">
+      <div className="hidden md:flex flex-row gap-10 lg:items-center xl:items-end justify-between">
         <div
-          className="md:w-1/2 flex flex-col justify-end items-start space-y-4 h-full pl-8"
-          style={{
-            paddingRight: "40px",
-            transform: "translateY(100px) translateX(-100px)",
-          }}
+          className="md:w-1/2"
         >
-          <h2
-            style={{
-              fontFamily: '"alliance no.2", sans-serif',
-              fontSize: "40px",
-              fontWeight: 700,
-              lineHeight: "44px",
-              color: "rgb(255, 255, 255)",
-            }}
-          >
-            {title}
-          </h2>
-          <p
-            style={{
-              fontFamily: '"alliance no.2", sans-serif',
-              fontSize: "18px",
-              fontWeight: 500,
-              lineHeight: "26px",
-              color: "rgba(255, 255, 255, 0.8)",
-            }}
-          >
-            {description}
-          </p>
+          <div className="md:max-w-[855px] flex flex-col justify-end items-start space-y-4 h-full">
+            <h2 className="global-h2"
+            >
+              {title}
+            </h2>
+            <p
+              className="global-p text-white/70"
+            >
+              {description}
+            </p>
+          </div>
         </div>
 
-        <div className="md:w-1/2 aspect-video relative rounded-xl overflow-hidden shadow-2xl">
+        <div className="md:w-1/2 md:max-w-[655px] aspect-video relative overflow-hidden rounded-sm">
           <img
             src={thumbnailPlaceholderUrl}
             alt="Factory Tour Preview"

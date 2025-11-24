@@ -1,7 +1,7 @@
 "use client"
 
 import { usePathname } from "next/navigation"
-import Navbar from "../components/Navbar"
+// import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 import VhUpdater from "../components/utils/VhUpdater"
 import { ContentProvider } from "../context/ContentContext"
@@ -11,7 +11,7 @@ import { NavigationProvider } from "../context/NavigationContext"
 import TopBar from "../components/TopBar"
 import FaqSection from "../components/FaqSection"
 import FeatureBar from "../constants/FeatureBar"
-
+import NavBar from "../Shared/NavBar/NavBar.jsx"
 function LayoutContent({ children }) {
   const { isLoggedIn } = useAuth()
   const pathname = usePathname()
@@ -21,8 +21,9 @@ function LayoutContent({ children }) {
       {isLoggedIn && <TopBar />}
       <VhUpdater />
       {/* <Navbar /> */}
+      <NavBar />
       {/* <HamburgerMenu /> */}
-      <main className="flex-grow">{children}</main>
+      <main className="flex-grow lg:pt-[157px] z-20">{children}</main>
       {pathname.startsWith('/product') && <FeatureBar />}
       {pathname === '/made-in-france' && <FeatureBar />}
       {pathname !== '/' &&

@@ -182,7 +182,6 @@ export default function Navbar() {
       {isHoveringNavOrSub && hoveredLink !== null && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-30 transition-all duration-200"></div>
       )}
-
       <nav
         ref={navbarRef}
         className="fixed top-0 left-0 w-full z-50 bg-black text-white shadow-lg"
@@ -190,139 +189,137 @@ export default function Navbar() {
         onMouseLeave={handleMouseLeaveNav}
       >
         <div className="py-2 border-b border-gray-600">
-          <Container>
-            <div className="flex justify-between items-center h-14">
+          <div className="flex justify-between items-center h-14">
+            <button
+              className="flex md:hidden p-2 rounded-full hover:bg-gray-700 transition-colors duration-200"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <Menu className="w-6 h-6 text-white" />
+            </button>
+
+            <Link href="/" className="hidden md:flex items-center">
+              <Image
+                src="/logo.svg"
+                alt="Alpago Properties Clone"
+                width={150}
+                height={45}
+                priority
+                className="ml-6"
+              />
+            </Link>
+
+            <div className="flex items-center space-x-3 md:space-x-4 mr-6">
+              {/* Desktop Search */}
               <button
-                className="flex md:hidden p-2 rounded-full hover:bg-gray-700 transition-colors duration-200"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                onClick={() => setIsSearchOpen(true)}
+                className="hidden md:flex items-center bg-[#3d3d3d] rounded-full h-9 w-64 px-3"
               >
-                <Menu className="w-6 h-6 text-white" />
+                <Search className="w-5 h-5 mr-2 text-white opacity-90" />
+                <span className="bg-[#3d3d3d] w-full text-sm text-white text-left">
+                  Search for...
+                </span>
               </button>
 
-              <Link href="/" className="hidden md:flex items-center">
-                <Image
-                  src="/logo.svg"
-                  alt="Alpago Properties Clone"
-                  width={150}
-                  height={45}
-                  priority
-                  className="ml-6"
-                />
-              </Link>
+              {/* Mobile Search */}
+              <button
+                type="button"
+                onClick={() => setIsSearchOpen(true)}
+                className="flex md:hidden items-center bg-[#3d3d3d] rounded-full h-8 px-2"
+                aria-label="Open search"
+              >
+                <Search className="w-4 h-4 text-white" />
+              </button>
 
-              <div className="flex items-center space-x-3 md:space-x-4 mr-6">
-                {/* Desktop Search */}
-                <button
-                  onClick={() => setIsSearchOpen(true)}
-                  className="hidden md:flex items-center bg-[#3d3d3d] rounded-full h-9 w-64 px-3"
-                >
-                  <Search className="w-5 h-5 mr-2 text-white opacity-90" />
-                  <span className="bg-[#3d3d3d] w-full text-sm text-white text-left">
-                    Search for...
-                  </span>
-                </button>
-
-                {/* Mobile Search */}
-                <button
-                  type="button"
-                  onClick={() => setIsSearchOpen(true)}
-                  className="flex md:hidden items-center bg-[#3d3d3d] rounded-full h-8 px-2"
-                  aria-label="Open search"
-                >
-                  <Search className="w-4 h-4 text-white" />
-                </button>
-
-                {/* Profile/User */}
-                {user ? (
-                  <div className="relative flex items-center" ref={profileRef}>
-                    <button
-                      onClick={() => setIsProfileOpen((s) => !s)}
-                      aria-expanded={isProfileOpen}
-                      aria-haspopup="true"
-                      className="flex items-center gap-2 rounded-full p-2 text-sm font-medium text-gray-100 transition-all duration-300 
+              {/* Profile/User */}
+              {user ? (
+                <div className="relative flex items-center" ref={profileRef}>
+                  <button
+                    onClick={() => setIsProfileOpen((s) => !s)}
+                    aria-expanded={isProfileOpen}
+                    aria-haspopup="true"
+                    className="flex items-center gap-2 rounded-full p-2 text-sm font-medium text-gray-100 transition-all duration-300 
              hover:bg-gray-800/60 backdrop-blur-md 
              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900
              focus:ring-[rgba(186,230,253,0.6)] dark:focus:ring-[rgba(196,181,253,0.6)]"
-                    >
-                      <UserCircle className="h-6 w-6 text-gray-200" />
-                      <span className="hidden md:inline">
-                        {user.name || "Account"}
-                      </span>
-                      <ChevronDown className="h-4 w-4 text-gray-400" />
-                    </button>
-
-                    {isProfileOpen && (
-                      <div
-                        className="absolute right-0 top-full z-50 mt-2 w-56 origin-top-right rounded-lg bg-white py-2 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none"
-                        role="menu"
-                        aria-orientation="vertical"
-                      >
-                        <Link
-                          href="/account"
-                          className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100"
-                          role="menuitem"
-                        >
-                          <CircleUserRound className="h-5 w-5 text-gray-500" />
-                          <span>Profile</span>
-                        </Link>
-                        <Link
-                          href="/account/orders"
-                          className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100"
-                          role="menuitem"
-                        >
-                          <ScrollText className="h-5 w-5 text-gray-500" />
-                          <span>Orders</span>
-                        </Link>
-
-                        {/* Divider */}
-                        <div className="my-2 h-px bg-gray-200" />
-
-                        <button
-                          onClick={async () => {
-                            setIsProfileOpen(false);
-                            try {
-                              await logout();
-                            } catch (e) { }
-                          }}
-                          className="flex w-full items-center gap-3 px-4 py-2 text-left text-sm text-red-600 transition-colors hover:bg-red-50"
-                          role="menuitem"
-                        >
-                          <LogOut className="h-5 w-5" />
-                          <span>Logout</span>
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <Link
-                    href="/login"
-                    className="flex items-center justify-center p-1 md:p-2 rounded-full hover:bg-gray-700 transition-colors duration-200"
                   >
-                    <User className="w-4 h-4 md:w-5 md:h-5 text-white" />
-                  </Link>
-                )}
+                    <UserCircle className="h-6 w-6 text-gray-200" />
+                    <span className="hidden md:inline">
+                      {user.name || "Account"}
+                    </span>
+                    <ChevronDown className="h-4 w-4 text-gray-400" />
+                  </button>
 
-                {/* Cart */}
-                <button
-                  onClick={() => setIsCartOpen(true)}
-                  className="flex items-center justify-center relative p-1 md:p-2 rounded-full hover:bg-gray-700 transition-colors duration-200"
+                  {isProfileOpen && (
+                    <div
+                      className="absolute right-0 top-full z-50 mt-2 w-56 origin-top-right rounded-lg bg-white py-2 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none"
+                      role="menu"
+                      aria-orientation="vertical"
+                    >
+                      <Link
+                        href="/account"
+                        className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100"
+                        role="menuitem"
+                      >
+                        <CircleUserRound className="h-5 w-5 text-gray-500" />
+                        <span>Profile</span>
+                      </Link>
+                      <Link
+                        href="/account/orders"
+                        className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100"
+                        role="menuitem"
+                      >
+                        <ScrollText className="h-5 w-5 text-gray-500" />
+                        <span>Orders</span>
+                      </Link>
+
+                      {/* Divider */}
+                      <div className="my-2 h-px bg-gray-200" />
+
+                      <button
+                        onClick={async () => {
+                          setIsProfileOpen(false);
+                          try {
+                            await logout();
+                          } catch (e) { }
+                        }}
+                        className="flex w-full items-center gap-3 px-4 py-2 text-left text-sm text-red-600 transition-colors hover:bg-red-50"
+                        role="menuitem"
+                      >
+                        <LogOut className="h-5 w-5" />
+                        <span>Logout</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  href="/login"
+                  className="flex items-center justify-center p-1 md:p-2 rounded-full hover:bg-gray-700 transition-colors duration-200"
                 >
-                  <ShoppingCart className="w-4 h-4 md:w-5 md:h-5 text-white" />
-                  <span className="absolute -top-1 -right-2 text-xs font-bold bg-white text-black rounded-full h-4 w-4 flex items-center justify-center pointer-events-none">
-                    {totalQty || 0}
-                  </span>
-                </button>
+                  <User className="w-4 h-4 md:w-5 md:h-5 text-white" />
+                </Link>
+              )}
 
-                {/* Language */}
-                <button className="hidden md:flex items-center justify-center text-sm font-extrabold p-2 rounded-full hover:bg-gray-700 transition-colors duration-200">
-                  <span className="fi fi-fr fis mr-2 scale-125"></span>
-                  <span className="text-white text-[0.95rem] font-extrabold tracking-wide">
-                    FR
-                  </span>
-                </button>
-              </div>
+              {/* Cart */}
+              <button
+                onClick={() => setIsCartOpen(true)}
+                className="flex items-center justify-center relative p-1 md:p-2 rounded-full hover:bg-gray-700 transition-colors duration-200"
+              >
+                <ShoppingCart className="w-4 h-4 md:w-5 md:h-5 text-white" />
+                <span className="absolute -top-1 -right-2 text-xs font-bold bg-white text-black rounded-full h-4 w-4 flex items-center justify-center pointer-events-none">
+                  {totalQty || 0}
+                </span>
+              </button>
+
+              {/* Language */}
+              <button className="hidden md:flex items-center justify-center text-sm font-extrabold p-2 rounded-full hover:bg-gray-700 transition-colors duration-200">
+                <span className="fi fi-fr fis mr-2 scale-125"></span>
+                <span className="text-white text-[0.95rem] font-extrabold tracking-wide">
+                  FR
+                </span>
+              </button>
             </div>
-          </Container>
+          </div>
         </div>
 
         <div className="hidden md:block py-2 border-t border-gray-500 relative">
@@ -371,7 +368,7 @@ export default function Navbar() {
             <div
               onMouseEnter={handleMouseEnterSub}
               onMouseLeave={handleMouseLeaveSub}
-              className="fixed left-1/2 -translate-x-1/2 bg-white border-t border-gray-300 py-4 w-full max-w-[100%] flex justify-center items-center z-50"
+              className={`fixed left-1/2 -translate-x-1/2 bg-white border-t border-gray-300 py-4 w-full max-w-[100%] flex justify-center items-center z-50 top-[${navbarHeight}]`}
               style={{ top: navbarHeight }}
             >
               {NAV_LINKS[hoveredLink].sublinks.map((sub, subIdx) => (
@@ -424,3 +421,4 @@ export default function Navbar() {
     </>
   );
 }
+
