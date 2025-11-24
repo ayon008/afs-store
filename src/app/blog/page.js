@@ -1,7 +1,40 @@
 import Head from "next/head";
 import Image from "next/image";
-import BlogCard from "../../components/BlogCard";
-import { getPosts } from "@/lib/wp";
+import BlogCard from "../../components/BlogCard"
+import { getPosts } from "../../lib/wp";
+import Link from "next/link";
+
+
+
+export const metadata = {
+  title: "Blog - Foiling Tips & Gear Reviews",
+  description:
+    "Discover foiling tips, industry information, tutorials, and expert gear reviews for riders of all experience levels.",
+  openGraph: {
+    title: "Blog - Foiling Tips & Gear Reviews",
+    description:
+      "Explore foiling tips, tutorials, and expert gear reviews for all riders.",
+    url: `${process.env.NEXT_PUBLIC_APP_URL}/blog`,
+    siteName: "AFS Foiling",
+    images: [
+      {
+        url: "/images/blogs/paraglider.png",
+        width: 1200,
+        height: 630,
+        alt: "Foiling Tips & Blog Header",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog - Foiling Tips & Gear Reviews",
+    description:
+      "Discover foiling tips, tutorials, and expert gear reviews for riders of all levels.",
+    images: ["/images/blogs/paraglider.png"],
+  },
+};
+
 
 export default async function BlogPage() {
   let blogs = [];
@@ -21,30 +54,37 @@ export default async function BlogPage() {
     blogs = [];
   }
 
+  const BreadCums = () => {
+    return (
+      <div className='absolute top-6 z-20 global-padding uppercase'>
+        <div className='font-semibold text-sm text-white/50'>
+          <Link className='inline' href={'/'}>Accueil</Link> / <Link className='inline text-white' href={'/blog'}>Blog</Link>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <Head>
-        <title>Blog - Foiling Tips & Gear Reviews</title>
-      </Head>
-
-      <header className="relative h-[280px] md:h-[380px] w-full">
+    <div className="min-h-screen">
+      <div className="w-full global-margin relative h-[384px]">
         <Image
           src="/images/blogs/paraglider.png"
           alt="Paraglider"
           fill
           className="object-cover brightness-100"
           quality={100}
+          priority
         />
+        <BreadCums />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white">
-          <h1 className="text-[70px] font-bold mt-3">Blog</h1>
-          <p className="mt-2 text-[18px] text-white font-[750] max-w-2xl px-6">
-            Discover foiling tips, industry information and gear reviews for riders of all levels.
+          <h1 className="global-h1">Blog</h1>
+          <p className="mt-2 text-[18px] text-white font-semibold max-w-md px-6">
+            Découvrez des conseils sur le foiling, des informations sur l’industrie et des revues de matériel pour les riders de tous niveaux.
           </p>
         </div>
-      </header>
+      </div>
 
-      <main className="w-full px-2 sm:px-4 md:px-6 py-10">
+      <main className="w-full global-padding global-margin">
         {error && (
           <div className="mb-8 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
             <p>Error loading blog posts: {error}</p>

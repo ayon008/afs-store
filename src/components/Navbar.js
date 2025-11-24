@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import Container from "./Container";
-import NAV_LINKS from "../constants/navlinks";
 import {
   User,
   Search,
@@ -27,6 +26,7 @@ import ServiceSubbar from "./ServiceSubbar";
 import HamburgerMenu from "./HamburgerMenu";
 import SearchOverlay from "./search";
 import { createSlug } from "../utils/slugUtils";
+import NAV_LINKS from "../constants/navlinks";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -45,6 +45,29 @@ export default function Navbar() {
   const profileRef = useRef(null);
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
+  const [NAV_LINKS, setLinks] = useState([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/menuItems`);
+      const data = await response.json();
+      let menuData = data.data;
+      menuData = menuData.map((data) => {
+        return {
+          name: data?.title,
+          href: data?.url,
+          sublinks: data?.children.map((singleData) => {
+            return {
+              name: singleData.title,
+              id: singleData.id
+            }
+          })
+        }
+      })
+      setLinks(menuData)
+    };
+    loadData()
+  }, [])
 
   useEffect(() => {
     function onDocClick(e) {
@@ -259,7 +282,7 @@ export default function Navbar() {
                             setIsProfileOpen(false);
                             try {
                               await logout();
-                            } catch (e) {}
+                            } catch (e) { }
                           }}
                           className="flex w-full items-center gap-3 px-4 py-2 text-left text-sm text-red-600 transition-colors hover:bg-red-50"
                           role="menuitem"
@@ -312,9 +335,9 @@ export default function Navbar() {
                 onMouseLeave={handleMouseLeaveNav}
               >
                 <Link
-                  href={link.href}
+                  href={link.href || ""}
                   className="text-[16px] font-semibold tracking-wide flex items-center justify-center relative"
-                  style={{ padding: "12px 15px 13px" }}
+                  style={{ padding: "12px 12px 13px" }}
                   onClick={() => {
                     if (link.sublinks && link.sublinks.length > 0) {
                       updateNavigation(link.name, link.sublinks[0]);
@@ -355,11 +378,10 @@ export default function Navbar() {
                 <button
                   key={subIdx}
                   onClick={() => handleSublinkClick(sub.id)}
-className={`text-black font-['Alliance_No.2'] text-[16px] font-bold tracking-wide mx-3 transition-colors duration-200 ${
-                    selectedSublink === sub.id
-                      ? "text-blue-600"
-                      : "hover:text-gray-600"
-                  }`}
+                  className={`text-black font-['Alliance_No.2'] text-[16px] font-bold tracking-wide mx-3 transition-colors duration-200 ${selectedSublink === sub.id
+                    ? "text-blue-600"
+                    : "hover:text-gray-600"
+                    }`}
                 >
                   {sub.name}
                 </button>

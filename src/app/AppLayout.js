@@ -20,7 +20,7 @@ function LayoutContent({ children }) {
     <div className={`flex flex-col min-h-screen relative ${isLoggedIn ? "pt-10" : ""}`}>
       {isLoggedIn && <TopBar />}
       <VhUpdater />
-      <Navbar />
+      {/* <Navbar /> */}
       {/* <HamburgerMenu /> */}
       <main className="flex-grow">{children}</main>
       {pathname.startsWith('/product') && <FeatureBar />}

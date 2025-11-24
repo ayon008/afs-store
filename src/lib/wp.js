@@ -38,7 +38,7 @@ export async function getPosts(options = {}) {
   try {
     const baseUrl = WP_BASE_URL.replace(/\/$/, '');
     const apiUrl = `${baseUrl}/wp-json/wp/v2/posts`;
-    
+
     // If fetchAll is true, we'll paginate through all posts
     if (fetchAll) {
       let allPosts = [];
@@ -166,10 +166,10 @@ function transformPosts(posts) {
 
     // Format date to match dummy blog format
     const postDate = new Date(post.date);
-    const formattedDate = postDate.toLocaleDateString('en-US', { 
-      day: 'numeric', 
-      month: 'long', 
-      year: 'numeric' 
+    const formattedDate = postDate.toLocaleDateString('en-US', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
     }).toUpperCase();
 
     return {
@@ -216,7 +216,7 @@ export async function getPost(identifier, bySlug = false) {
   try {
     const baseUrl = WP_BASE_URL.replace(/\/$/, '');
     let apiUrl;
-    
+
     if (bySlug) {
       apiUrl = `${baseUrl}/wp-json/wp/v2/posts?slug=${identifier}&_embed=true`;
     } else {
@@ -265,10 +265,10 @@ export async function getPost(identifier, bySlug = false) {
 
     // Format date to match dummy blog format
     const postDate = new Date(post.date);
-    const formattedDate = postDate.toLocaleDateString('en-US', { 
-      day: 'numeric', 
-      month: 'long', 
-      year: 'numeric' 
+    const formattedDate = postDate.toLocaleDateString('en-US', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
     }).toUpperCase();
 
     return {
@@ -317,7 +317,7 @@ export async function getCategories(options = {}) {
   try {
     const baseUrl = WP_BASE_URL.replace(/\/$/, '');
     const apiUrl = `${baseUrl}/wp-json/wp/v2/categories`;
-    
+
     const params = new URLSearchParams({
       per_page: '100', // Get all categories
       orderby: 'name',

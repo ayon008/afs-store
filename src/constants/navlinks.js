@@ -139,3 +139,36 @@ const NAV_LINKS = [
 ];
 
 export default NAV_LINKS;
+
+// utils/getMenu.js
+// export async function getMenu() {
+//   try {
+//     const response = await fetch(
+//       `${process.env.NEXT_PUBLIC_APP_URL}/api/menuItems`,
+//       {
+//         // optional caching if running in Next.js server environment
+//         next: { revalidate: 3600 }
+//       }
+//     );
+//     { }
+//     if (!response.ok) {
+//       throw new Error("Failed to fetch menu");
+//     }
+
+//     const data = await response.json();
+//     data.map((d) => {
+//       return (
+//         {
+//           name: d.title,
+//           href: d.url,
+//           subLinks: d.children.map((c) => { return { name: c.title, id: c.id } })
+//         }
+//       )
+//     })
+
+//     return data; // <-- returning the data
+//   } catch (err) {
+//     console.error("Menu fetch error:", err);
+//     return null; // or throw err;
+//   }
+// }

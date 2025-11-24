@@ -4,6 +4,7 @@ import moment from "moment";
 import BlogContent from "../../../components/BlogContent/BlogContent"
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import { getPosts } from "@/lib/wp";
 
 
 export async function generateMetadata({ params }) {
@@ -58,6 +59,39 @@ export async function generateMetadata({ params }) {
     };
 }
 
+export const revalidate = 60;
+
+export async function generateStaticParams() {
+    const blogs = await getPosts({
+        fetchAll: true,
+        orderby: "date",
+        order: "desc",
+    });
+
+    return blogs.map(blog => ({
+        slug: blog.slug,
+    }));
+}
+
+export const getCategories = async (id = null) => {
+    try {
+        const base = `${process.env.WP_BASE_URL.replace(/\/$/, "")}/wp-json/wp/v2/categories`;
+
+        const url = id
+            ? `${base}/${id}?_embed`
+            : `${base}?_embed&per_page=100`; // fetch all
+
+        const res = await fetch(url, { cache: 'no-cache' });
+
+        if (!res.ok) {
+            throw new Error(`Failed to fetch categories${id ? ` with ID ${id}` : ""}`);
+        }
+        return await res.json();
+    } catch (err) {
+        console.error("Error in getCategories():", err);
+        return id ? null : [];
+    }
+};
 
 export const decodeEntities = (str = "") =>
     str.replace(/&#(\d+);/g, (_, n) => String.fromCharCode(n))
@@ -86,10 +120,9 @@ const page = async ({ params }) => {
 
     // Author Name
     const authorName = decodeEntities(blog?._embedded.author[0].name); // "Antonin"
-
-    console.log(blogTitle);
-    console.log(blog);
-
+    const categoryId = blog.categories[0];
+    const categoryData = await getCategories(categoryId);
+    const categoryName = categoryData.name;
 
     if (!blog) {
         return (
@@ -105,11 +138,20 @@ const page = async ({ params }) => {
         );
     }
 
+    const BreadCums = () => {
+        return (
+            <div className='absolute top-6 z-20 global-padding uppercase'>
+                <div className='font-semibold text-sm text-white/50'>
+                    <Link className='inline' href={'/'}>Accueil</Link> / <Link className='inline' href={'/blog'}>Blog</Link> / <Link href={`/blog/categories/${categoryId}`} className='inline'>{categoryName}</Link> / <span className='text-white'>{blogTitle}</span>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className='w-full relative'>
             {/* HERO SECTION */}
-            <header className="relative h-fit w-full overflow-hidden">
+            <header className="relative h-fit w-full overflow-hidden global-margin">
                 <Image
                     src={featuredImage}
                     alt={alt}
@@ -118,6 +160,7 @@ const page = async ({ params }) => {
                     priority
                     className="object-cover w-full aspect-[1264/780] max-h-[780px] object-center"
                 />
+                <BreadCums />
                 <div className='absolute inset-0 bg-black/40 z-10  backdrop-blur-[4px]'></div>
                 <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 w-full p-8 text-white gap-10 mb-20 flex items-start justify-between global-padding">
                     <h1 className="global-h1">
@@ -131,7 +174,7 @@ const page = async ({ params }) => {
                     </div>
                 </div>
             </header>
-            <div className='max-w-[1920px] mx-auto'>
+            <div className='global-padding'>
                 <BlogContent blog={blog} />
             </div>
         </div>
