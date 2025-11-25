@@ -214,7 +214,7 @@ const Navbar = () => {
                                     })}
                                 </ul>
                                 {detailsDiv &&
-                                    <div className='bg-white/95 h-[calc(100vh-230px)] overflow-y-scroll global-padding scroll-smooth hide-scrollbar-y'>
+                                    <div className='bg-white/95 max-h-fit h-fit overflow-y-scroll global-padding scroll-smooth hide-scrollbar-y'>
                                         <div className='text-black/75 flex items-start justify-center gap-10'>
                                             <div className='space-y-5'>
                                                 <div className='mt-[22px] space-y-1'>
