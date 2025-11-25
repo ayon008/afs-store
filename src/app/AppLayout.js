@@ -23,7 +23,7 @@ function LayoutContent({ children }) {
       {/* <Navbar /> */}
       <NavBar />
       {/* <HamburgerMenu /> */}
-      <main className="flex-grow lg:pt-[157px] z-20">{children}</main>
+      <main className="flex-grow lg:pt-[157px] pt-[64px] z-20">{children}</main>
       {pathname.startsWith('/product') && <FeatureBar />}
       {pathname === '/made-in-france' && <FeatureBar />}
       {pathname !== '/' &&

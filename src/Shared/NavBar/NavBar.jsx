@@ -1,13 +1,14 @@
 "use client"
-import { Search, ShoppingCart, UserCircle } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Search } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import SearchOverlay from "../../components/search";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useCart } from '../../components/cart-provider';
 import "flag-icons/css/flag-icons.min.css";
 import parse from "html-react-parser";
-
+import Menu from '../../icons/Menu';
+import gsap from 'gsap';
 
 const Navbar = () => {
     // Search Open
@@ -22,6 +23,12 @@ const Navbar = () => {
     const [hoverId, setHoverId] = useState(null);
     // Show Secondary white div and add Clicked Item Name [2nd Nav]
     const [detailsDiv, setDetailsDiv] = useState(null);
+    // Mobile On Off State
+    const [isOpen, setIsOpen] = useState(false);
+    // Nav Ref for Mobile
+    const navRef = useRef(null);
+    // 2nd Ref
+    const secondRef = useRef(null);
 
     // console.log(NAV_LINKS);
 
@@ -51,6 +58,29 @@ const Navbar = () => {
         loadData()
     }, []);
 
+
+    // GSAP animation for navbar (slide from right)
+    useEffect(() => {
+        if (!navRef.current) return;
+        gsap.to(navRef.current, {
+            x: isOpen ? "0%" : "-100%",
+            opacity: isOpen ? 1 : 0,
+            duration: 0.45,
+            ease: "power2.inOut",
+        });
+    }, [isOpen]);
+
+
+    useEffect(() => {
+        if (!secondRef.current && !hoverId) return;
+        gsap.to(secondRef.current, {
+            x: hoverId ? "0%" : "100%",
+            opacity: hoverId ? 1 : 0,
+            duration: 0.45,
+            ease: "power2.inOut",
+        });
+    }, [hoverId]);
+
     const subLinks = NAV_LINKS.find((Nav) => Nav?.name == hoverId);
     const productList = subLinks?.sublinks?.find((sub) => sub.name === detailsDiv)?.products;
     const [hoverImageLink, setHoverImageLink] = useState("");
@@ -66,8 +96,8 @@ const Navbar = () => {
 
     return (
         <>
-            <div className='fixed left-0 right-0 top-0 h-[157px] bg-black z-40'></div>
-            <nav className='fixed left-0 right-0 top-0 z-50 bg-black text-white w-full'>
+            <div className='fixed left-0 right-0 top-0 h-[157px] bg-black z-40 hidden md:block'></div>
+            <nav className='fixed left-0 right-0 top-0 md:z-50 z-[110] bg-black text-white w-full'>
                 {/* Logo and Search Part */}
                 <div className='py-[16px] global-padding border-b border-gray-600 w-full flex items-center justify-between' onMouseEnter={() => handleShow(null)}>
                     {/* Logo */}
@@ -81,10 +111,16 @@ const Navbar = () => {
                             className=""
                         />
                     </Link>
+
+                    {/* Menu */}
+                    <Menu isOpen={isOpen} setIsOpen={setIsOpen} />
+
+
                     {/* 2nd Part */}
                     <div className='flex items-center gap-2'>
                         {/* Search Button */}
-                        <div className='relative mr-4'>
+                        <Search className="w-5 h-5 md:hidden block" />
+                        <div className='relative mr-4 hidden md:block'>
                             <input
                                 onClick={() => setIsSearchOpen(true)}
                                 className="hidden md:flex items-center bg-[#3d3d3d] rounded-full h-9 w-64 px-3 placeholder:text-white placeholder:text-sm placeholder:pl-6 placeholder:font-semibold"
@@ -137,7 +173,7 @@ const Navbar = () => {
                         </button>
                     </div>
                 </div>
-                {/* NAV LINKS */}
+                {/* NAV LINKS  Desktop*/}
                 <div className="hidden md:flex flex-col h-full relative">
                     <div className="flex justify-center items-center whitespace-nowrap px-4 h-full">
                         {NAV_LINKS.map((link, idx) => (
@@ -164,7 +200,7 @@ const Navbar = () => {
                 {
                     hoverId !== 'Service' ?
                         <>
-                            <div onMouseLeave={() => handleShow(null)} className='bg-white/95 text-black'>
+                            <div onMouseLeave={() => handleShow(null)} className='bg-white/95 text-black md:block hidden'>
                                 <ul className='flex items-center justify-center'>
                                     {subLinks?.sublinks?.map((children, i) => {
                                         return (
@@ -225,7 +261,7 @@ const Navbar = () => {
                         :
                         <>
                             {/* Service Section */}
-                            <div className='bg-white w-full h-fit'>
+                            <div className='bg-white w-full h-fit md:block hidden'>
                                 <div className='grid grid-cols-6 text-black/75 global-padding pt-[22px]'>
                                     <div>
                                         <p className='text-[16px] font-semibold tracking-wide'>Choisir</p>
@@ -292,7 +328,7 @@ const Navbar = () => {
                             </div>
                         </>
                 }
-
+                {/* Nav Links Mobile */}
             </nav>
             <SearchOverlay
                 isOpen={isSearchOpen}
@@ -302,7 +338,64 @@ const Navbar = () => {
             {/* Add bg blur */}
             {
                 hoverId &&
-                <div className="absolute inset-0 z-30 backdrop-blur-sm" onMouseEnter={() => handleShow(null)}></div>
+                <div className="absolute inset-0 z-30 backdrop-blur-sm md:block hidden" onMouseEnter={() => handleShow(null)}></div>
+            }
+            {/* 1st slide */}
+            <div ref={navRef} className='fixed inset-0 transform -translate-x-full opacity-0 h-screen text-black/75 z-[60] bg-white md:hidden block' >
+                <div className='pt-[80px] px-6'>
+                    <p className='text-[12px] leading-[100%] font-bold uppercase text-[#999999]'>Products</p>
+                    <ul className='mt-5 space-y-4'>
+                        {
+                            NAV_LINKS.map((link, idx) => (
+                                <li onClick={() => handleShow(link.name)} key={idx} className='text-[22px] font-semibold leading-[100%] tracking-[-0.01em] flex items-center justify-between'>
+                                    <span>{link.name}</span>
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M7.5 5L12.5 10L7.5 15" stroke="#111111" strokeOpacity="0.75" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="round" />
+                                    </svg>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </div>
+            </div>
+            {/* 2nd slide */}
+            <div ref={secondRef} className='fixed inset-0 transform translate-x-full opacity-0 h-screen text-black/75 z-[110] bg-white p-6 block md:hidden'>
+                <p onClick={() => handleShow(null)} className='text-[12px] leading-[100%] font-bold uppercase text-[#999999]'><ArrowLeft className='inline mr-1' />{hoverId}</p>
+                <ul className='mt-5 space-y-4'>
+                    {
+                        subLinks?.sublinks?.map((children, i) => (
+                            <li onClick={() => setDetailsDiv(children.name)} key={i} className='text-[22px] font-semibold leading-[100%] tracking-[-0.01em] flex items-center justify-between'>
+                                <span>{children.name}</span>
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7.5 5L12.5 10L7.5 15" stroke="#111111" strokeOpacity="0.75" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="round" />
+                                </svg>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+            {/* 3rd Part */}
+            {
+                detailsDiv &&
+                <div className='fixed inset-0 h-screen text-black/75 z-[120] bg-white p-6 block md:hidden'>
+                    <p onClick={()=>setDetailsDiv(null)} className='text-[12px] leading-[100%] font-bold uppercase text-[#999999]'><ArrowLeft className='inline mr-1' />{detailsDiv}</p>
+                    <div className='mt-5'>
+                        <h4 className='font-semibold text-base leading-[110%]'>{hoverId}</h4>
+                        <h3 className='font-semibold text-[28px] leading-[100%]'>{detailsDiv}</h3>
+                    </div>
+                    <ul className='mt-5 space-y-6'>
+                        {productList.map((product, i) => (
+                            <li key={i}>
+                                <div className='text-[22px] font-semibold leading-[100%] tracking-[-0.01em] flex items-center justify-between'>
+                                    <span>{product.name}</span>
+                                </div>
+                                <p className="font-semibold text-xs leading-[100%] price-wrapper mt-1">
+                                    {parse(product.price)}
+                                </p>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             }
         </>
     );
