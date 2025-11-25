@@ -108,19 +108,33 @@ const page = async ({ params }) => {
     );
     const data = await response.json();
     const blog = data[0];
+    // If the blog is undefined, bail early to avoid later operations that assume the blog exists
+    if (!blog) {
+        return (
+            <div className="max-w-3xl mx-auto p-10 text-center bg-[#f4f4f4] min-h-screen">
+                <h1 className="text-3xl font-bold mb-4">Blog not found 😢</h1>
+                <Link
+                    href="/blog"
+                    className="text-blue-600 hover:text-blue-800 underline flex items-center justify-center gap-2"
+                >
+                    <ArrowRight size={16} className="rotate-180" /> Back to blogs
+                </Link>
+            </div>
+        );
+    }
     // Date
-    const date = moment(blog.date).format("MMMM DD, YYYY");
+    const date = moment(blog?.date || new Date()).format("MMMM DD, YYYY");
 
     // featured image 
     const featuredImage = blog?._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
-    const alt = blog._embedded["wp:featuredmedia"][0].alt_text;
+    const alt = blog?._embedded?.["wp:featuredmedia"]?.[0]?.alt_text ?? '';
 
     // Title
     const blogTitle = decodeEntities(blog?.title?.rendered);
 
     // Author Name
-    const authorName = decodeEntities(blog?._embedded.author[0].name); // "Antonin"
-    const categoryId = blog.categories[0];
+    const authorName = decodeEntities(blog?._embedded?.author?.[0]?.name ?? ''); // "Antonin"
+    const categoryId = blog?.categories?.[0];
     const categoryData = await getCategories(categoryId);
     const categoryName = categoryData?.name ?? 'Unknown Category';
 
