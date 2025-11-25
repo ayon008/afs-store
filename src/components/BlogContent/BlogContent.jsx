@@ -66,7 +66,7 @@ const BlogContent = ({ blog }) => {
             gsap.to(stickyRef.current, {
                 scrollTrigger: {
                     trigger: stickyRef.current,
-                    start: "top 20px",
+                    start: "top 200px",
                     endTrigger: contentRef.current,
                     end: `bottom bottom`,
                     pin: true,

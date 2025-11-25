@@ -35,6 +35,8 @@ const Navbar = () => {
                 return {
                     name: data?.title,
                     href: data?.url,
+                    button_one: data?.button_one,
+                    button_two: data?.button_two,
                     sublinks: data?.children.map((singleData) => {
                         return {
                             name: singleData.title,
@@ -160,54 +162,135 @@ const Navbar = () => {
                 </div>
                 {/* Show the White Part of the  NavLink */}
                 {
-                    hoverId &&
-                    <>
-                        <div onMouseLeave={() => handleShow(null)} className='bg-white/95 text-black'>
-                            <ul className='flex items-center justify-center'>
-                                {subLinks?.sublinks?.map((children, i) => {
-                                    return (
-                                        <li
-                                            onClick={() => setDetailsDiv(children.name)}
-                                            className={`text-[16px] font-semibold tracking-wide cursor-pointer ${detailsDiv === children.name ? 'border-b border-b-black' : ''}`} style={{ padding: "24px 12px 24px" }}
-                                            key={i}>
-                                            {children.name}
-                                        </li>
-                                    )
-                                })}
-                            </ul>
-                            {detailsDiv &&
-                                <div className='bg-white/95 h-[calc(100vh-230px)] text-black/75 flex items-start justify-center overflow-y-auto gap-5'>
-                                    <div className='space-y-5'>
-                                        <div className='mt-[22px] space-y-1'>
-                                            <h4 className='font-semibold text-base leading-[110%]'>{hoverId}</h4>
-                                            <h3 className='font-semibold text-[28px] leading-[100%]'>{detailsDiv}</h3>
-                                        </div>
-                                        <div className='flex items-start justify-center pb-[22px]'>
-                                            <div className="grid [grid-auto-flow:column] [grid-template-rows:repeat(4,1fr)] gap-y-5 [grid-auto-columns:1fr] flex-1 h-fit">
-                                                {productList.map((product, i) => (
-                                                    <div key={i} className='max-w-[270px]'>
-                                                        <h5 onMouseEnter={() => setHoverImageLink(product.image)} className="text-lg leading-[130%] font-semibold cursor-pointer hover:text-[#1D98FF] hover:underline">
-                                                            {product.name}
-                                                        </h5>
+                    hoverId !== 'Service' ?
+                        <>
+                            <div onMouseLeave={() => handleShow(null)} className='bg-white/95 text-black'>
+                                <ul className='flex items-center justify-center'>
+                                    {subLinks?.sublinks?.map((children, i) => {
+                                        return (
+                                            <li
+                                                onClick={() => setDetailsDiv(children.name)}
+                                                className={`text-[16px] font-semibold tracking-wide cursor-pointer ${detailsDiv === children.name ? 'border-b border-b-black' : ''}`} style={{ padding: "24px 12px 24px" }}
+                                                key={i}>
+                                                {children.name}
+                                            </li>
+                                        )
+                                    })}
+                                </ul>
+                                {detailsDiv &&
+                                    <div className='bg-white/95 h-[calc(100vh-230px)] overflow-y-scroll global-padding scroll-smooth hide-scrollbar-y'>
+                                        <div className='text-black/75 flex items-start justify-center gap-10'>
+                                            <div className='space-y-5'>
+                                                <div className='mt-[22px] space-y-1'>
+                                                    <h4 className='font-semibold text-base leading-[110%]'>{hoverId}</h4>
+                                                    <h3 className='font-semibold text-[28px] leading-[100%]'>{detailsDiv}</h3>
+                                                </div>
+                                                <div className='flex items-start justify-center pb-[22px]'>
+                                                    <div className="grid [grid-auto-flow:column] [grid-template-rows:repeat(4,1fr)] gap-5 grid-cols-[max-content_max-content_max-content] flex-1 xl:h-[160px] 2xl:h-full xl:overflow-y-auto 2xl:overflow-y-hidden scroll-smooth scroll-bar pr-10">
+                                                        {productList.map((product, i) => (
+                                                            <div key={i} className='max-w-[270px] w-fit'>
+                                                                <h5 onMouseEnter={() => setHoverImageLink(product.image)} className="text-lg leading-[130%] font-semibold cursor-pointer hover:text-[#1D98FF] hover:underline">
+                                                                    {product.name}
+                                                                </h5>
 
-                                                        <p className="font-semibold text-xs leading-[100%] price-wrapper mt-1">
-                                                            {parse(product.price)}
-                                                        </p>
+                                                                <p className="font-semibold text-xs leading-[100%] price-wrapper mt-1">
+                                                                    {parse(product.price)}
+                                                                </p>
+                                                            </div>
+                                                        ))}
                                                     </div>
-                                                ))}
+                                                </div>
+                                            </div>
+                                            {/* Product Image */}
+                                            <div className='max-w-[380px] mt-[22px]'>
+                                                {
+                                                    hoverImageLink &&
+                                                    <img src={hoverImageLink} className='w-full h-full object-cover' alt='' />
+                                                }
                                             </div>
                                         </div>
+                                        <div className='flex items-center justify-center'>
+                                            {/* {subLinks?.button_one && <button>
+                                            <Link href={''} className='text-black/75'>
+                                                {subLinks?.button_one.label}
+                                            </Link>
+                                        </button>} */}
+
+                                            <button className='text-black'>Ayon</button>
+                                        </div>
                                     </div>
-                                    <div className='max-w-[380px] mt-[22px] h-[300px]'>
-                                        {
-                                            hoverImageLink &&
-                                            <img src={hoverImageLink} className='w-full h-full object-cover' alt='' />
-                                        }
+                                }
+                            </div>
+                        </>
+                        :
+                        <>
+                            {/* Service Section */}
+                            <div className='bg-white w-full h-fit'>
+                                <div className='grid grid-cols-6 text-black/75 global-padding pt-[22px]'>
+                                    <div>
+                                        <p className='text-[16px] font-semibold tracking-wide'>Choisir</p>
+                                        <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#1D98FF]">
+                                            <li className='cursor-pointer'>Configurateur foil</li>
+                                            <li className='cursor-pointer'>Best match stab</li>
+                                            <li className='cursor-pointer'>Comparateur 3 stabs / aile avant</li>
+                                            <li className='cursor-pointer'>Comparatif mât</li>
+                                            <li className='cursor-pointer'>Construction planche</li>
+                                            <li className='cursor-pointer'>Reprise matériel</li>
+                                            <li className='cursor-pointer'>Caractéristiques des foils</li>
+                                            <li className='cursor-pointer'>Taille des vis</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p className='text-[16px] font-semibold tracking-wide'>Payer</p>
+                                        <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#1D98FF]">
+                                            <li className='cursor-pointer'>Options paiement</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p className='text-[16px] font-semibold tracking-wide'>Expédition et livraison</p>
+                                        <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#1D98FF]">
+                                            <li className='cursor-pointer'>Suivi de commande</li>
+                                            <li className='cursor-pointer'>Envoi et livraison</li>
+                                            <li className='cursor-pointer'>Retours</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p className='text-[16px] font-semibold tracking-wide'>Réparation et maintenance</p>
+                                        <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#1D98FF]">
+                                            <li className='cursor-pointer'>Support</li>
+                                            <li className='cursor-pointer'>Demande de SAV</li>
+                                            <li className='cursor-pointer'>Garantie</li>
+                                            <li className='cursor-pointer'>Notice d'utilisation</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p className='text-[16px] font-semibold tracking-wide'>Contact</p>
+                                        <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#1D98FF]">
+                                            <li className='cursor-pointer'>Mail</li>
+                                            <li className='cursor-pointer'>Whatsapp</li>
+                                            <li className='cursor-pointer'>Réserver un appel avec un expert AFS</li>
+                                            <li className='cursor-pointer'>Venir nous rendre visite</li>
+                                            <li className='cursor-pointer'>Evenements</li>
+                                            <li className='cursor-pointer'>Blog</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p className='text-[16px] font-semibold tracking-wide'>Equipe</p>
+                                        <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#1D98FF]">
+                                            <li className='cursor-pointer'>Equipe de travail</li>
+                                            <li className='cursor-pointer'>Ambassadeurs</li>
+                                            <li className='cursor-pointer'>Map revendeurs</li>
+                                        </ul>
                                     </div>
                                 </div>
-                            }
-                        </div>
-                    </>
+                                <div className='flex items-center justify-center gap-2 text-black/75 py-2'>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M19 5L5 19M19 5H6.4M19 5V17.6" stroke="black" stroke-width="2" />
+                                    </svg>
+                                    <span className='text-[#1D98FF] font-semibold cursor-pointer'> Visite de l’usine</span>
+                                </div>
+                            </div>
+                        </>
                 }
 
             </nav>

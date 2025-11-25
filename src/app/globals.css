@@ -79,6 +79,37 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Hide vertical scrollbar while keeping scrolling functionality */
+.hide-scrollbar-y {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.hide-scrollbar-y::-webkit-scrollbar {
+  width: 0px;
+  /* Safari and Chrome - hides vertical scrollbar */
+}
+
+
+/* Chrome */
+.scroll-bar::-webkit-scrollbar {
+  width: 2px;
+}
+
+.scroll-bar::-webkit-scrollbar-track {
+  background: #d1d5db;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 0;
+  border: none;
+  min-width: 2px;
+}
+
+
 /* Turn off horizontal scrolling */
 html,
 body {
