@@ -36,6 +36,7 @@ export default function Menu({ isOpen, setIsOpen }) {
         type="button"
         aria-label="Toggle navigation menu"
         aria-controls="mobile-navigation"
+        aria-expanded={isOpen}
         onClick={toggleMenu}
       >
         <div ref={top} className="h-[2px] w-8 bg-white"></div>

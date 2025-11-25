@@ -341,7 +341,7 @@ const Navbar = () => {
                 <div className="absolute inset-0 z-30 backdrop-blur-sm md:block hidden" onMouseEnter={() => handleShow(null)}></div>
             }
             {/* 1st slide */}
-            <div ref={navRef} className='fixed inset-0 transform -translate-x-full opacity-0 h-screen text-black/75 z-[60] bg-white md:hidden block' >
+            <div id="mobile-navigation" ref={navRef} className='fixed inset-0 transform translate-x-full opacity-0 h-screen text-black/75 z-[60] bg-white md:hidden block' >
                 <div className='pt-[80px] px-6'>
                     <p className='text-[12px] leading-[100%] font-bold uppercase text-[#999999]'>Products</p>
                     <ul className='mt-5 space-y-4'>

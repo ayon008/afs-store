@@ -27,8 +27,7 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
-    "**/*.tsx",
-    "src/app/product/fly/page.js"
+    "**/*.tsx"
   ],
   "exclude": [
     "node_modules"

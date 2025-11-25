@@ -309,7 +309,7 @@ export async function getPost(identifier, bySlug = false) {
  * @param {Object} options - Query options
  * @returns {Promise<Array>} Array of category objects
  */
-export async function getCategories(options = {}) {
+export async function getCategories(options = {}, fetchOpts = { next: { revalidate: 60 } }) {
   if (!WP_BASE_URL) {
     throw new Error('WP_BASE_URL not configured');
   }
@@ -328,8 +328,11 @@ export async function getCategories(options = {}) {
     const url = `${apiUrl}?${params.toString()}`;
     console.log(`[getCategories] Fetching: ${url}`);
 
+    // Default to an ISR-friendly cache policy so this function is safe to use
+    // during build-time/static prerendering (generateStaticParams).
     const response = await fetch(url, {
-      cache: 'no-store',
+      // Allow callers to override by passing fetchOpts
+      ...fetchOpts,
       headers: {
         'Content-Type': 'application/json',
       }

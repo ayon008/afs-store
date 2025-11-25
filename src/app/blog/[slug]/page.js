@@ -122,7 +122,7 @@ const page = async ({ params }) => {
     const authorName = decodeEntities(blog?._embedded.author[0].name); // "Antonin"
     const categoryId = blog.categories[0];
     const categoryData = await getCategories(categoryId);
-    const categoryName = categoryData.name;
+    const categoryName = categoryData?.name ?? 'Unknown Category';
 
     if (!blog) {
         return (

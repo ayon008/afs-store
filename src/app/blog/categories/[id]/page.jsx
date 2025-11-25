@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 
 
-export const categoryPost = async (id) => {
+const categoryPost = async (id) => {
     try {
         if (!id) throw new Error("Category ID is required");
 
@@ -100,7 +100,7 @@ const page = async ({ params }) => {
     const { id } = await params;
     const blogs = await categoryPost(id);
     const categoryData = await getCategories(id);
-    const categoryName = categoryData.name;
+    const categoryName = categoryData?.name ?? 'Unknown Category';
 
     console.log(blogs, 'category');
 
