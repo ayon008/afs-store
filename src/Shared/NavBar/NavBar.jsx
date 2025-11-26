@@ -10,15 +10,14 @@ import parse from "html-react-parser";
 import Menu from '../../icons/Menu';
 import gsap from 'gsap';
 
-const Navbar = () => {
+const Navbar = ({ NAV_LINKS }) => {
     // Search Open
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     // Shopping Cart
     const [isCartOpen, setIsCartOpen] = useState(false);
     // 
     const { totalQty } = useCart();
-    // All THe Nav Data
-    const [NAV_LINKS, setNAV_LINKS] = useState([]);
+
     // Hover Id [First Nav];
     const [hoverId, setHoverId] = useState(null);
     // Show Secondary white div and add Clicked Item Name [2nd Nav]
@@ -29,34 +28,6 @@ const Navbar = () => {
     const navRef = useRef(null);
     // 2nd Ref
     const secondRef = useRef(null);
-
-    // console.log(NAV_LINKS);
-
-
-    useEffect(() => {
-        const loadData = async () => {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/menuItems`);
-            const data = await response.json();
-            let menuData = data.data;
-            menuData = menuData.map((data) => {
-                return {
-                    name: data?.title,
-                    href: data?.url,
-                    button_one: data?.button_one,
-                    button_two: data?.button_two,
-                    sublinks: data?.children.map((singleData) => {
-                        return {
-                            name: singleData.title,
-                            id: singleData.id,
-                            products: singleData.menu_products
-                        }
-                    })
-                }
-            })
-            setNAV_LINKS(menuData)
-        };
-        loadData()
-    }, []);
 
 
     // GSAP animation for navbar (slide from right)
@@ -81,7 +52,7 @@ const Navbar = () => {
         });
     }, [hoverId]);
 
-    const subLinks = NAV_LINKS.find((Nav) => Nav?.name == hoverId);
+    const subLinks = NAV_LINKS?.find((Nav) => Nav?.name == hoverId);
     const productList = subLinks?.sublinks?.find((sub) => sub.name === detailsDiv)?.products;
     const [hoverImageLink, setHoverImageLink] = useState("");
 
@@ -176,7 +147,7 @@ const Navbar = () => {
                 {/* NAV LINKS  Desktop*/}
                 <div className="hidden md:flex flex-col h-full relative">
                     <div className="flex justify-center items-center whitespace-nowrap px-4 h-full">
-                        {NAV_LINKS.map((link, idx) => (
+                        {NAV_LINKS?.map((link, idx) => (
                             <div
                                 key={idx}
                                 className="relative group h-full"
@@ -223,7 +194,7 @@ const Navbar = () => {
                                                 </div>
                                                 <div className='flex items-start justify-center pb-[22px]'>
                                                     <div className="grid [grid-auto-flow:column] [grid-template-rows:repeat(4,1fr)] gap-5 grid-cols-[max-content_max-content_max-content] flex-1 xl:h-[160px] 2xl:h-full xl:overflow-y-auto 2xl:overflow-y-hidden scroll-smooth scroll-bar pr-10">
-                                                        {productList.map((product, i) => (
+                                                        {productList?.map((product, i) => (
                                                             <div key={i} className='max-w-[270px] w-fit'>
                                                                 <h5 onMouseEnter={() => setHoverImageLink(product.image)} className="text-lg leading-[130%] font-semibold cursor-pointer hover:text-[#1D98FF] hover:underline">
                                                                     {product.name}
@@ -346,7 +317,7 @@ const Navbar = () => {
                     <p className='text-[12px] leading-[100%] font-bold uppercase text-[#999999]'>Products</p>
                     <ul className='mt-5 space-y-4'>
                         {
-                            NAV_LINKS.map((link, idx) => (
+                            NAV_LINKS?.map((link, idx) => (
                                 <li onClick={() => handleShow(link.name)} key={idx} className='text-[22px] font-semibold leading-[100%] tracking-[-0.01em] flex items-center justify-between'>
                                     <span>{link.name}</span>
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -378,13 +349,13 @@ const Navbar = () => {
             {
                 detailsDiv &&
                 <div className='fixed inset-0 h-screen text-black/75 z-[120] bg-white p-6 block md:hidden'>
-                    <p onClick={()=>setDetailsDiv(null)} className='text-[12px] leading-[100%] font-bold uppercase text-[#999999]'><ArrowLeft className='inline mr-1' />{detailsDiv}</p>
+                    <p onClick={() => setDetailsDiv(null)} className='text-[12px] leading-[100%] font-bold uppercase text-[#999999]'><ArrowLeft className='inline mr-1' />{detailsDiv}</p>
                     <div className='mt-5'>
                         <h4 className='font-semibold text-base leading-[110%]'>{hoverId}</h4>
                         <h3 className='font-semibold text-[28px] leading-[100%]'>{detailsDiv}</h3>
                     </div>
                     <ul className='mt-5 space-y-6'>
-                        {productList.map((product, i) => (
+                        {productList?.map((product, i) => (
                             <li key={i}>
                                 <div className='text-[22px] font-semibold leading-[100%] tracking-[-0.01em] flex items-center justify-between'>
                                     <span>{product.name}</span>
