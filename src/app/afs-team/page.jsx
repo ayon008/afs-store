@@ -54,13 +54,14 @@ const page = async () => {
                     <div className='lg:my-[80px] my-[40px]'>
                         <h1 className='global-h1 text-center relative'>L'équipe Foil And Co.</h1>
                     </div>
-                    <div className='flex items-start gap-10 global-margin'>
-                        <div className='w-[60%] relative'>
+                    {/* First Image Section */}
+                    <div className='flex items-start gap-10 global-margin flex-col lg:flex-row'>
+                        <div className='lg:w-[60%] relative'>
                             <Image src={teamImage} alt='Our Team' className='mx-auto rounded-md object-cover' />
                         </div>
-                        <div className='pt-10 w-[40%]'>
-                            <div className='max-w-[520px]'>
-                                <h2 className='text-[36px] font-bold leading-[110%] tracking-[-0.01em]'>Des collaborateurs animés par une même passion</h2>
+                        <div className='lg:pt-10 lg:w-[40%]'>
+                            <div className='max-w-[520px] lg:text-left text-center'>
+                                <h2 className='lg:text-[36px] text-[32px] font-bold leading-[110%] tracking-[-0.01em]'>Des collaborateurs animés par une même passion</h2>
                                 <p className='text-lg font-semibold mt-6'>Chez Foil And Co., notre équipe partage une passion commune pour l’innovation et l’excellence. Chaque membre contribue à faire avancer notre mission avec engagement, créativité et expertise, afin de vous offrir des produits et services de qualité. Découvrez les visages de ceux qui oeuvrent à la production de vos équipements favoris.</p>
                             </div>
                         </div>
@@ -74,8 +75,8 @@ const page = async () => {
             <div className='px-5 global-margin'>
                 <div className='bg-black p-10 rounded-lg relative'>
                     {/* TEXT ABOVE EVERYTHING */}
-                    <p className='text-[clamp(3.125rem,.9028rem+3.4722vw,4.375rem)] 
-                            leading-[110%] font-semibold max-w-[1330px] text-white 
+                    <p className='lg:text-[clamp(3.125rem,.9028rem+3.4722vw,4.375rem)] text-[32px] tracking-[-.3px]
+                            lg:leading-[110%] leading-[100%] font-semibold max-w-[1330px] text-white 
                             text-center uppercase z-30 relative mx-auto'>
                         <span className='text-[#1D98FF]'>Révélez votre potentiel avec nous !</span> Nous sommes à la recherches de personnes talentueuses et passionées voulant imposer de nouveaux standards dans le monde du foil et de l'équipement des sports nautiques. <span className='text-[#1D98FF]'>Rejoignez l'équipe aujourd'hui !</span>
                     </p>
@@ -91,7 +92,7 @@ const page = async () => {
 
                     {/* IMAGES BEHIND */}
                     <div className='z-10 absolute w-fit h-fit left-[5%] bottom-[8%]'>
-                        <Image src={image1} className='w-[250px] h-[250px]' />
+                        <Image src={image1} className='lg:w-[250px] lg:h-[250px]' />
                     </div>
 
                     <div className='z-10 absolute w-fit h-fit right-[5%] top-[8%]'>

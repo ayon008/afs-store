@@ -35,12 +35,12 @@ const TeamImage = ({ src, text, hoverSrc }) => {
             />
 
             {/* Text */}
-            <p className='absolute left-1/2 -translate-x-1/2 top-[40%] -translate-y-[40%]
+            <p className='absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 lg:top-[40%] lg:-translate-y-[40%]
                 group-hover:top-[70%] group-hover:-translate-y-[70%]
                 group-hover:mix-blend-difference
                 transition-all duration-500
                 [transition-timing-function:cubic-bezier(.23,1,.32,1)]
-                text-center text-white text-[50px] font-semibold leading-[110%] z-20 mix-blend-normal'>
+                text-center text-white lg:text-[50px] text-[28px] font-semibold lg:leading-[110%] leading-[100%] z-20 mix-blend-normal'>
                 {text}
             </p>
         </div>

@@ -16,13 +16,14 @@ import TeamCard from "../Card/TeamCard";
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 gsap.registerPlugin(ScrollTrigger)
 
 const Team = ({ data }) => {
   const { administration, marketing, burue, logistique, commerce, production_foil, production_plances } = data;
   const teamRef = useRef(null);
   const contentRef = useRef(null)
+  const [activeId, setActiveId] = useState(null);
 
   useGSAP(() => {
     if (!teamRef.current && !contentRef.current) return;
@@ -40,7 +41,7 @@ const Team = ({ data }) => {
 
   return (
     <div className="flex items-start justify-between relative h-full min-h-screen">
-      <div className="w-[18%] z-30 h-fit">
+      <div className="lg:w-[18%] w-0 hidden lg:block z-30 h-fit">
         <div ref={teamRef}>
           <h3 className="text-xl uppercase font-semibold">Équipe AFS</h3>
           <ul className="mt-4 space-y-6 text-gray-400">
@@ -53,13 +54,15 @@ const Team = ({ data }) => {
           </ul>
         </div>
       </div>
-      <div className="w-[82%] mt-4" ref={contentRef}>
-        <div className="w-fit mx-auto flex items-center gap-3 mb-10">
-          <p className="global-h1">40</p>
-          <p className="text-[30px] font-bold leading-[110%] tracking-[-0.01em]">
-            le nombre de <br />
-            collaborateurs chez Foil And Co.
-          </p>
+      <div className="lg:w-[82%] w-full mt-4" ref={contentRef}>
+        <div className="flex items-center justify-center w-[90%] mx-auto">
+          <div className="mb-10 flex items-center justify-center lg:gap-3 gap-[6px]">
+            <p className="global-h1">40</p>
+            <p className="lg:text-[30px] text-2xl font-bold leading-[110%] tracking-[-0.01em]">
+              le nombre de <br />
+              collaborateurs chez Foil And Co.
+            </p>
+          </div>
         </div>
 
         {/* Production Foils */}
