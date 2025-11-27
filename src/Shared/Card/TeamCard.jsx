@@ -38,17 +38,17 @@ const TeamCard = ({ member }) => {
                 height={492}
             />
 
-            <div className='absolute left-0 right-0 bottom-0 p-4 z-10'>
-                <div className='px-4 pt-4'>
-                    <p className='font-bold text-[21px]'>{name}</p>
-                    <p className='text-lg font-medium'>{jobTitle}</p>
+            <div className='absolute left-0 right-0 bottom-0 px-4 pt-4 pb-6 z-10'>
+                <div className='px-4 pt-4 space-y-2'>
+                    <p className='font-bold text-[21px] leading-[100%]'>{name}</p>
+                    <p className='text-lg font-medium leading-[125%]'>{jobTitle}</p>
                 </div>
             </div>
 
-            <div className='absolute left-0 right-0 bottom-0 p-4 hidden group-hover:block backdrop-blur-[10px] z-30'>
-                <div className='px-4 pt-4'>
-                    <p className='font-bold text-[21px]'>{name}</p>
-                    <p className='text-lg font-medium'>{jobTitle}</p>
+            <div className='absolute left-0 right-0 bottom-0 px-4 pt-4 pb-6 hidden group-hover:block backdrop-blur-[10px] z-30'>
+                <div className='px-4 pt-4 space-y-2'>
+                    <p className='font-bold text-[21px] leading-[100%]'>{name}</p>
+                    <p className='text-lg font-medium leading-[125%]'>{jobTitle}</p>
                 </div>
             </div>
         </div>
