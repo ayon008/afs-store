@@ -67,7 +67,7 @@ const Navbar = ({ NAV_LINKS }) => {
 
     return (
         <>
-            <div className='fixed left-0 right-0 top-0 h-[157px] bg-black z-40 hidden md:block'></div>
+            <div className='fixed left-0 right-0 top-0 h-[70px] bg-black z-40 hidden md:block'></div>
             <nav className='fixed left-0 right-0 top-0 md:z-50 z-[110] bg-black text-white w-full'>
                 {/* Logo and Search Part */}
                 <div className='py-[16px] global-padding border-b border-gray-600 w-full flex items-center justify-between' onMouseEnter={() => handleShow(null)}>

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 const TeamImage = ({ src, text, hoverSrc }) => {
     return (
-        <div className="relative w-full h-full group" id={text}>
+        <div className="relative w-full h-full group">
 
             {/* Base Image */}
             <Image

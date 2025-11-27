@@ -63,103 +63,116 @@ const Team = ({ data }) => {
         </div>
 
         {/* Production Foils */}
-        <TeamImage
-          hoverSrc={hoverImage}
-          src={image}
-          text={"Production foils"}
-        />
-        <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 gap-5 my-8">
-          {production_foil?.map((member, i) => {
-            return (
-              <div key={i}>
-                <TeamCard member={member} />
-              </div>
-            );
-          })}
+        <div id="foil">
+          <TeamImage
+            hoverSrc={hoverImage}
+            src={image}
+            text={"Production foils"}
+          />
+          <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 gap-5 my-8">
+            {production_foil?.map((member, i) => {
+              return (
+                <div key={i}>
+                  <TeamCard member={member} />
+                </div>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Production Foil */}
-        <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 gap-6"></div>
-        <TeamImage
-          src={image2}
-          hoverSrc={hoverImage2}
-          text={"Production planches"}
-        />
-        <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 gap-5 my-8">
-          {production_plances?.map((member, i) => {
-            return (
-              <div key={i}>
-                <TeamCard member={member} />
-              </div>
-            );
-          })}
+        {/* Production Plances */}
+        <div id="plances">
+          <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 gap-6"></div>
+          <TeamImage
+            src={image2}
+            hoverSrc={hoverImage2}
+            text={"Production planches"}
+          />
+          <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 gap-5 my-8">
+            {production_plances?.map((member, i) => {
+              return (
+                <div key={i}>
+                  <TeamCard member={member} />
+                </div>
+              );
+            })}
+          </div>
         </div>
 
-
-        {/* Burue */}
-        <TeamImage
-          src={image3}
-          hoverSrc={hoverImage3}
-          text={"Bureau d’étude"}
-        />
-        <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 gap-5 my-8">
-          {burue?.map((member, i) => {
-            return (
-              <div key={i}>
-                <TeamCard member={member} />
-              </div>
-            );
-          })}
+        <div id="burue">
+          {/* Burue */}
+          <TeamImage
+            src={image3}
+            hoverSrc={hoverImage3}
+            text={"Bureau d’étude"}
+          />
+          <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 gap-5 my-8">
+            {burue?.map((member, i) => {
+              return (
+                <div key={i}>
+                  <TeamCard member={member} />
+                </div>
+              );
+            })}
+          </div>
         </div>
-        <TeamImage src={image4} hoverSrc={hoverImage4} text={"LOGISTIQUE"} />
-        {/*Logisitc member-role=2133  */}
-        <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 gap-5 my-8">
-          {logistique?.map((member, i) => {
-            return (
-              <div key={i}>
-                <TeamCard member={member} />
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Commerce */}
-        <p className="text-center global-h2">Commerce</p>
-        <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 gap-5 my-8">
-          {commerce?.map((member, i) => {
-            return (
-              <div key={i}>
-                <TeamCard member={member} />
-              </div>
-            );
-          })}
-        </div>
-        {/* Marketing */}
-        <TeamImage src={image5} hoverSrc={hoverImage5} text={"MARKETING"} />
-        <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 gap-5 my-8">
-          {marketing?.map((member, i) => {
-            return (
-              <div key={i}>
-                <TeamCard member={member} />
-              </div>
-            );
-          })}
+        <div id="logistic">
+          <TeamImage src={image4} hoverSrc={hoverImage4} text={"LOGISTIQUE"} />
+          {/*Logisitc member-role=2133  */}
+          <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 gap-5 my-8">
+            {logistique?.map((member, i) => {
+              return (
+                <div key={i}>
+                  <TeamCard member={member} />
+                </div>
+              );
+            })}
+          </div>
         </div>
 
-        <TeamImage
-          src={image6}
-          hoverSrc={hoverImage6}
-          text={"ADMINISTRATION"}
-        />
-        {/* Administration member-role=2485 */}
-        <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 gap-5 my-8">
-          {administration?.map((member, i) => {
-            return (
-              <div key={i}>
-                <TeamCard member={member} />
-              </div>
-            );
-          })}
+        <div id="commerce">
+          {/* Commerce */}
+          <p className="text-center global-h2">Commerce</p>
+          <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 gap-5 my-8">
+            {commerce?.map((member, i) => {
+              return (
+                <div key={i}>
+                  <TeamCard member={member} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <div id="marketing">
+          {/* Marketing */}
+          <TeamImage src={image5} hoverSrc={hoverImage5} text={"MARKETING"} />
+          <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 gap-5 my-8">
+            {marketing?.map((member, i) => {
+              return (
+                <div key={i}>
+                  <TeamCard member={member} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div id="administration">
+          <TeamImage
+            src={image6}
+            hoverSrc={hoverImage6}
+            text={"ADMINISTRATION"}
+          />
+          {/* Administration member-role=2485 */}
+          <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 gap-5 my-8">
+            {administration?.map((member, i) => {
+              return (
+                <div key={i}>
+                  <TeamCard member={member} />
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
