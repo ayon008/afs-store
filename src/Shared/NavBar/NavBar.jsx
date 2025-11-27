@@ -154,7 +154,7 @@ const Navbar = ({ NAV_LINKS }) => {
                                 <Link
                                     href={link.href || ""}
                                     className="text-[16px] font-semibold tracking-wide flex items-center justify-center relative"
-                                    style={{ padding: "22px clamp(.875rem,.4464rem+.6696vw,1.25rem) 24px" }}
+                                    style={{ padding: "28px 12px 28px" }}
                                 >
                                     <span className="absolute top-0 bottom-0 left-0 w-full h-full bg-white opacity-0 group-hover:opacity-100 transition-all duration-200"></span>
                                     <span className="relative z-10 text-white group-hover:text-black">
