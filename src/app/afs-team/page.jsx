@@ -30,7 +30,7 @@ const page = () => {
                 </div>
                 <div className='flex items-start gap-10 global-margin'>
                     <div className='w-[60%] relative'>
-                        <Image src={teamImage} alt='Our Team' className='mx-auto rounded-md aspect-[] object-cover' />
+                        <Image src={teamImage} alt='Our Team' className='mx-auto rounded-md object-cover' />
                     </div>
                     <div className='pt-10 w-[40%]'>
                         <div className='max-w-[520px]'>

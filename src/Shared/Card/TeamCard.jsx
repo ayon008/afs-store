@@ -16,14 +16,14 @@ const TeamCard = ({ member }) => {
 
     return (
         <div onMouseEnter={() => setHoverImg(secondPhotoUrl)} onMouseLeave={() => setHoverImg(photoUrl)} className='h-auto w-full relative rounded-sm overflow-hidden group text-white aspect-[351/492]'>
-            <Image src={hoverImg} height={492} width={351} alt={name} className='w-full h-full object-cover object-center scale-100 group-hover:scale-105 transition-all duration-500 z-10 aspect-[351/492]' />
+            <Image src={hoverImg} height={492} width={351} alt={name} className='w-full h-full object-cover object-center scale-100 group-hover:scale-105 transition-all duration-500 [transition-timing-function:cubic-bezier(0.4,0,0.2,1)] z-10 aspect-[351/492]' />
             <div className='absolute left-0 right-0 bottom-0 pb-8 z-10'>
                 <div className='px-4 pt-4'>
                     <p className='font-bold text-[21px]'>{name}</p>
                     <p className='text-lg font-medium'>{jobTitle}</p>
                 </div>
             </div>
-            <div className='absolute left-0 right-0 bottom-0 pb-8 hidden group-hover:block backdrop-blur-sm z-30'>
+            <div className='absolute left-0 right-0 bottom-0 pb-8 hidden group-hover:block backdrop-blur-[10px] z-30'>
                 <div className='px-4 pt-4'>
                     <p className='font-bold text-[21px]'>{name}</p>
                     <p className='text-lg font-medium'>{jobTitle}</p>
