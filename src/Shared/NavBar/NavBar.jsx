@@ -67,7 +67,6 @@ const Navbar = ({ NAV_LINKS }) => {
 
     return (
         <>
-            {/* <div className='fixed left-0 right-0 top-0 h-[70px] bg-black z-40 hidden md:block'></div> */}
             <nav className='fixed left-0 right-0 top-0 md:z-50 z-[110] bg-black text-white w-full'>
                 {/* Logo and Search Part */}
                 <div className='py-[16px] global-padding border-b border-gray-600 w-full flex items-center justify-between' onMouseEnter={() => handleShow(null)}>
@@ -156,8 +155,8 @@ const Navbar = ({ NAV_LINKS }) => {
                                     className="text-[16px] font-semibold tracking-wide flex items-center justify-center relative"
                                     style={{ padding: "22px 12px 24px" }}
                                 >
-                                    <span className={`absolute top-0 bottom-0 left-0 w-full h-full bg-white/95 opacity-0 group-hover:opacity-100 transition-all duration-200 ${hoverId && "bg-white/95"}`}></span>
-                                    <span className="relative z-10 text-white group-hover:text-black">
+                                    <span className={`absolute top-0 bottom-0 left-0 w-full h-full bg-white/95 opacity-0 group-hover:opacity-100 transition-all duration-200 ${hoverId === link.name && "bg-white/95 opacity-100 text-black"}`}></span>
+                                    <span className={`relative z-10 ${hoverId === link.name ? 'text-black' : 'text-white'}`}>
                                         {link.name}
                                     </span>
                                 </Link>
