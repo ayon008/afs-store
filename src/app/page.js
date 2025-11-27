@@ -21,7 +21,6 @@ export default function Home() {
         <CustomerServiceSwiper />
         <MoreAboutAFS />
         <AFSNewsSection />
-        <FeatureBar />
     </div>
   );
 }

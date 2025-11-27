@@ -3,6 +3,10 @@ import Link from 'next/link';
 import React from 'react';
 import teamImage from "../../assets/images/Team/1A4A82C8-D73A-4826-B627-E39C082F1173.jpg.webp"
 import Team from '../../Shared/Team/Team';
+import { getTeamMember } from '../../funtions/getTeamMember';
+import image1 from "../../assets/images/Team/Rectangle-4-32.png";
+import image2 from "../../assets/images/Team/Rectangle-6.png"
+import FeatureBar from '../../constants/FeatureBar';
 
 export const metadata = {
     title: 'AFS L’équipe - AFS Foiling',
@@ -20,28 +24,82 @@ const BreadCums = () => {
 }
 
 
-const page = () => {
+const page = async () => {
+    // Administration member-role=2485
+    const administration = await getTeamMember(2135);
+    // Marketing member-role=2122
+    const marketing = await getTeamMember(2122);
+
+    // Logistique member-role=2133
+    const logistique = await getTeamMember(2133);
+
+    // Burue member-role=2132
+    const burue = await getTeamMember(2132);
+
+    // production-plances = 2131
+    const production_plances = await getTeamMember(2131);
+
+    // production-foil = 2129
+    const production_foil = await getTeamMember(2129);
+
+    // Commerce member-role=2134
+    const commerce = await getTeamMember(2134);
+
+
     return (
-        <div className='bg-white global-padding relative pt-4'>
-            <div>
-                <BreadCums />
-                <div className='lg:my-[80px] my-[40px]'>
-                    <h1 className='global-h1 text-center relative'>L'équipe Foil And Co.</h1>
-                </div>
-                <div className='flex items-start gap-10 global-margin'>
-                    <div className='w-[60%] relative'>
-                        <Image src={teamImage} alt='Our Team' className='mx-auto rounded-md object-cover' />
+        <div>
+            <div className='bg-white global-padding relative pt-4'>
+                <div>
+                    <BreadCums />
+                    <div className='lg:my-[80px] my-[40px]'>
+                        <h1 className='global-h1 text-center relative'>L'équipe Foil And Co.</h1>
                     </div>
-                    <div className='pt-10 w-[40%]'>
-                        <div className='max-w-[520px]'>
-                            <h2 className='text-[36px] font-bold leading-[110%] tracking-[-0.01em]'>Des collaborateurs animés par une même passion</h2>
-                            <p className='text-lg font-semibold mt-6'>Chez Foil And Co., notre équipe partage une passion commune pour l’innovation et l’excellence. Chaque membre contribue à faire avancer notre mission avec engagement, créativité et expertise, afin de vous offrir des produits et services de qualité. Découvrez les visages de ceux qui oeuvrent à la production de vos équipements favoris.</p>
+                    <div className='flex items-start gap-10 global-margin'>
+                        <div className='w-[60%] relative'>
+                            <Image src={teamImage} alt='Our Team' className='mx-auto rounded-md object-cover' />
+                        </div>
+                        <div className='pt-10 w-[40%]'>
+                            <div className='max-w-[520px]'>
+                                <h2 className='text-[36px] font-bold leading-[110%] tracking-[-0.01em]'>Des collaborateurs animés par une même passion</h2>
+                                <p className='text-lg font-semibold mt-6'>Chez Foil And Co., notre équipe partage une passion commune pour l’innovation et l’excellence. Chaque membre contribue à faire avancer notre mission avec engagement, créativité et expertise, afin de vous offrir des produits et services de qualité. Découvrez les visages de ceux qui oeuvrent à la production de vos équipements favoris.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div className='global-margin'>
+                    <Team data={{ administration, marketing, logistique, burue, production_plances, production_foil, commerce }} />
+                </div>
             </div>
-            {/* Team Content */}
-            <Team />
+            {/* */}
+            <div className='px-5'>
+                <div className='bg-black p-10 rounded-lg relative'>
+                    {/* TEXT ABOVE EVERYTHING */}
+                    <p className='text-[clamp(3.125rem,.9028rem+3.4722vw,4.375rem)] 
+                            leading-[110%] font-semibold max-w-[1330px] text-white 
+                            text-center uppercase z-30 relative mx-auto'>
+                        <span className='text-[#1D98FF]'>Révélez votre potentiel avec nous !</span> Nous sommes à la recherches de personnes talentueuses et passionées voulant imposer de nouveaux standards dans le monde du foil et de l'équipement des sports nautiques. <span className='text-[#1D98FF]'>Rejoignez l'équipe aujourd'hui !</span>
+                    </p>
+
+                    <Link href='/' className='flex items-center justify-center mt-20'>
+                        <button className='uppercase text-white text-base flex items-center gap-1 font-medium bg-[#1D98FF] px-5 py-3 rounded-xs z-30 relative'>
+                            <span>voir les postes</span>
+                            <svg width="20" height="20" className='text-white' viewBox="0 0 24 24" fill="none">
+                                <path d="M19 5L5 19M19 5H6.4M19 5V17.6" stroke="white" strokeWidth="2" />
+                            </svg>
+                        </button>
+                    </Link>
+
+                    {/* IMAGES BEHIND */}
+                    <div className='z-10 absolute w-fit h-fit left-[5%] bottom-[8%]'>
+                        <Image src={image1} className='w-[250px] h-[250px]' />
+                    </div>
+
+                    <div className='z-10 absolute w-fit h-fit right-[5%] top-[8%]'>
+                        <Image src={image2} className='w-[250px] h-[250px]' />
+                    </div>
+                </div>
+            </div>
+            <FeatureBar />
         </div>
     );
 };

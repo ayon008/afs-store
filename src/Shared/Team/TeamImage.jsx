@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 const TeamImage = ({ src, text, hoverSrc }) => {
     return (
-        <div className="relative w-fit h-fit group" id={text}>
+        <div className="relative w-full h-full group" id={text}>
 
             {/* Base Image */}
             <Image
@@ -13,10 +13,10 @@ const TeamImage = ({ src, text, hoverSrc }) => {
                 placeholder='blur'
                 loading="lazy"
                 className="
-                    mx-auto rounded-md 
+                    rounded-md 
                     transition-opacity duration-500
                     [transition-timing-function:cubic-bezier(.23,1,.32,1)]
-                    opacity-100 group-hover:opacity-0
+                    opacity-100 w-full group-hover:opacity-0
                 "
             />
 
@@ -27,10 +27,10 @@ const TeamImage = ({ src, text, hoverSrc }) => {
                 placeholder='blur'
                 loading="lazy"
                 className="
-                    mx-auto rounded-md absolute inset-0 
+                    rounded-md absolute inset-0 
                     transition-opacity duration-500
                     [transition-timing-function:cubic-bezier(.23,1,.32,1)]
-                    opacity-0 group-hover:opacity-100
+                    opacity-0 w-full group-hover:opacity-100
                 "
             />
 

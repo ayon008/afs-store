@@ -10,7 +10,7 @@ const TeamCard = ({ member }) => {
     const secondPhotoUrl = memberData?.casual_image?.url || photoUrl;
 
     return (
-        <div className='text-white aspect-[351/392] bg-[#11111199] w-full h-auto group relative overflow-hidden rounded-sm'>
+        <div className='text-white aspect-[351/484] bg-[#11111199] w-full h-auto group relative overflow-hidden rounded-sm'>
             {/* 1st Image */}
             <Image
                 src={photoUrl}

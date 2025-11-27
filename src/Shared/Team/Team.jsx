@@ -1,4 +1,4 @@
-import React from "react";
+"use client"
 import TeamImage from "./TeamImage";
 import image from "../../assets/images/Team/Rectangle-10.jpg";
 import hoverImage from "../../assets/images/Team/Rectangle-11-1.jpg.webp";
@@ -12,45 +12,48 @@ import image5 from "../../assets/images/Team/DSC9878-scaled.jpg";
 import hoverImage5 from "../../assets/images/Team/Rectangle-16.jpg.webp";
 import image6 from "../../assets/images/Team/Rectangle-17.jpg";
 import hoverImage6 from "../../assets/images/Team/Rectangle-18.jpg.webp";
-import { getTeamMember } from "../../funtions/getTeamMember";
 import TeamCard from "../Card/TeamCard";
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useRef } from 'react';
+gsap.registerPlugin(ScrollTrigger)
 
+const Team = ({ data }) => {
+  const { administration, marketing, burue, logistique, commerce, production_foil, production_plances } = data;
+  const teamRef = useRef(null);
+  const contentRef = useRef(null)
 
-const Team = async () => {
-  // Administration member-role=2485
-  const administration = await getTeamMember(2135);
-  // Marketing member-role=2122
-  const marketing = await getTeamMember(2122);
+  useGSAP(() => {
+    if (!teamRef.current && !contentRef.current) return;
+    gsap.to(teamRef.current, {
+      scrollTrigger: {
+        trigger: teamRef.current,
+        endTrigger: contentRef.current,
+        start: "top 170px",
+        end: "bottom bottom",
+        pin: true
+      }
+    })
+  })
 
-  // Logistique member-role=2133
-  const logistique = await getTeamMember(2133);
-
-  // Burue member-role=2132
-  const burue = await getTeamMember(2132);
-
-  // production-plances = 2131
-  const production_plances = await getTeamMember(2131);
-
-  // production-foil = 2129
-  const production_foil = await getTeamMember(2129);
-
-  // Commerce member-role=2134
-  const commerce = await getTeamMember(2134);
 
   return (
-    <div className="flex items-start justify-between">
-      <div className="w-[18%]">
-        <h3 className="text-xl uppercase font-semibold">Équipe AFS</h3>
-        <ul className="mt-4 space-y-6 text-gray-400">
-          <li className="uppercase font-semibold hover:text-black text-base leading-[130%] cursor-pointer">Production foils</li>
-          <li className="uppercase font-semibold hover:text-black text-base leading-[130%] cursor-pointer">Bureau d’étude</li>
-          <li className="uppercase font-semibold hover:text-black text-base leading-[130%] cursor-pointer">LOGISTIQUE</li>
-          <li className="uppercase font-semibold hover:text-black text-base leading-[130%] cursor-pointer">Commerce</li>
-          <li className="uppercase font-semibold hover:text-black text-base leading-[130%] cursor-pointer">MARKETING</li>
-          <li className="uppercase font-semibold hover:text-black text-base leading-[130%] cursor-pointer">ADMINISTRATION</li>
-        </ul>
+    <div className="flex items-start justify-between relative h-full min-h-screen">
+      <div className="w-[18%] z-30 h-fit">
+        <div ref={teamRef}>
+          <h3 className="text-xl uppercase font-semibold">Équipe AFS</h3>
+          <ul className="mt-4 space-y-6 text-gray-400">
+            <li className="uppercase font-semibold hover:text-black text-base leading-[130%] cursor-pointer">Production foils</li>
+            <li className="uppercase font-semibold hover:text-black text-base leading-[130%] cursor-pointer">Bureau d’étude</li>
+            <li className="uppercase font-semibold hover:text-black text-base leading-[130%] cursor-pointer">LOGISTIQUE</li>
+            <li className="uppercase font-semibold hover:text-black text-base leading-[130%] cursor-pointer">Commerce</li>
+            <li className="uppercase font-semibold hover:text-black text-base leading-[130%] cursor-pointer">MARKETING</li>
+            <li className="uppercase font-semibold hover:text-black text-base leading-[130%] cursor-pointer">ADMINISTRATION</li>
+          </ul>
+        </div>
       </div>
-      <div className="w-[82%] mt-4">
+      <div className="w-[82%] mt-4" ref={contentRef}>
         <div className="w-fit mx-auto flex items-center gap-3 mb-10">
           <p className="global-h1">40</p>
           <p className="text-[30px] font-bold leading-[110%] tracking-[-0.01em]">
