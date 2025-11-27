@@ -1,4 +1,4 @@
-
+"use server"
 export const getMenuItems = async () => {
     try {
         const response = await fetch(`${process.env.WP_BASE_URL}/wp-json/custom/v1/menus/2118`, { next: { revalidate: 3600 } });

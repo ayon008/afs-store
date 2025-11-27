@@ -28,7 +28,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/Shared/Team/Team.jsx"  ],
   "exclude": [
     "node_modules"
   ]
