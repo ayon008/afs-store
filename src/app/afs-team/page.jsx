@@ -71,7 +71,7 @@ const page = async () => {
                 </div>
             </div>
             {/* */}
-            <div className='px-5'>
+            <div className='px-5 global-margin'>
                 <div className='bg-black p-10 rounded-lg relative'>
                     {/* TEXT ABOVE EVERYTHING */}
                     <p className='text-[clamp(3.125rem,.9028rem+3.4722vw,4.375rem)] 
