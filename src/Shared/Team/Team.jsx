@@ -34,6 +34,9 @@ const Team = async () => {
   // production-foil = 2129
   const production_foil = await getTeamMember(2129);
 
+  // Commerce member-role=2134
+  const commerce = await getTeamMember(2134);
+
   return (
     <div className="flex items-start justify-between">
       <div className="w-[18%]">
@@ -109,6 +112,18 @@ const Team = async () => {
         {/*Logisitc member-role=2133  */}
         <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 gap-5 my-8">
           {logistique?.map((member, i) => {
+            return (
+              <div key={i}>
+                <TeamCard member={member} />
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Commerce */}
+        <p className="text-center global-h2">Commerce</p>
+        <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 gap-5 my-8">
+          {commerce?.map((member, i) => {
             return (
               <div key={i}>
                 <TeamCard member={member} />
