@@ -67,7 +67,7 @@ const Navbar = ({ NAV_LINKS }) => {
 
     return (
         <>
-            <div className='fixed left-0 right-0 top-0 h-[70px] bg-black z-40 hidden md:block'></div>
+            {/* <div className='fixed left-0 right-0 top-0 h-[70px] bg-black z-40 hidden md:block'></div> */}
             <nav className='fixed left-0 right-0 top-0 md:z-50 z-[110] bg-black text-white w-full'>
                 {/* Logo and Search Part */}
                 <div className='py-[16px] global-padding border-b border-gray-600 w-full flex items-center justify-between' onMouseEnter={() => handleShow(null)}>
@@ -156,7 +156,7 @@ const Navbar = ({ NAV_LINKS }) => {
                                     className="text-[16px] font-semibold tracking-wide flex items-center justify-center relative"
                                     style={{ padding: "22px 12px 24px" }}
                                 >
-                                    <span className="absolute top-0 bottom-0 left-0 w-full h-full bg-white opacity-0 group-hover:opacity-100 transition-all duration-200"></span>
+                                    <span className={`absolute top-0 bottom-0 left-0 w-full h-full bg-white/95 opacity-0 group-hover:opacity-100 transition-all duration-200 ${hoverId && "bg-white/95"}`}></span>
                                     <span className="relative z-10 text-white group-hover:text-black">
                                         {link.name}
                                     </span>
@@ -307,7 +307,7 @@ const Navbar = ({ NAV_LINKS }) => {
             {/* Add bg blur */}
             {
                 hoverId &&
-                <div className="absolute inset-0 z-30 backdrop-blur-sm md:block hidden" onMouseEnter={() => handleShow(null)}></div>
+                <div className="absolute inset-0 z-30 backdrop-blur-[10px] md:block hidden" onMouseEnter={() => handleShow(null)}></div>
             }
             {/* 1st slide */}
             <div id="mobile-navigation" ref={navRef} className='fixed inset-0 transform translate-x-full opacity-0 h-screen text-black/75 z-[60] bg-white md:hidden block' >
