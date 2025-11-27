@@ -73,30 +73,32 @@ const page = async () => {
             </div>
             {/* */}
             <div className='px-5 global-margin'>
-                <div className='bg-black p-10 rounded-lg relative'>
-                    {/* TEXT ABOVE EVERYTHING */}
-                    <p className='lg:text-[clamp(3.125rem,.9028rem+3.4722vw,4.375rem)] text-[32px] tracking-[-.3px]
-                            lg:leading-[110%] leading-[100%] font-semibold max-w-[1330px] text-white 
+                <div className='relative bg-black rounded-[10px] p-10'>
+                    <div className='max-w-[1920px] mx-auto relative'>
+                        {/* IMAGES BEHIND */}
+                        <div className='z-10 relative lg:absolute lg:top-10 lg:right-10  overflow-hidden rounded-[4px]'>
+                            <Image src={image1} className='lg:w-[250px] lg:h-[250px] w-[40%] h-[40%] max-w-[250px] ml-auto' />
+                        </div>
+                        <div>
+                            {/* TEXT ABOVE EVERYTHING */}
+                            <p className='lg:text-[clamp(3.125rem,.9028rem+3.4722vw,4.375rem)] text-[32px] tracking-[-.3px]
+                            lg:leading-[110%] leading-[100%] font-semibold max-w-[1600px] text-white 
                             text-center uppercase z-30 relative mx-auto'>
-                        <span className='text-[#1D98FF]'>Révélez votre potentiel avec nous !</span> Nous sommes à la recherches de personnes talentueuses et passionées voulant imposer de nouveaux standards dans le monde du foil et de l'équipement des sports nautiques. <span className='text-[#1D98FF]'>Rejoignez l'équipe aujourd'hui !</span>
-                    </p>
+                                <span className='text-[#1D98FF]'>Révélez votre potentiel avec nous !</span> Nous sommes à la recherches de personnes talentueuses et passionées voulant imposer de nouveaux standards dans le monde du foil et de l'équipement des sports nautiques. <span className='text-[#1D98FF]'>Rejoignez l'équipe aujourd'hui !</span>
+                            </p>
 
-                    <Link href='/' className='flex items-center justify-center mt-20'>
-                        <button className='uppercase text-white text-base flex items-center gap-1 font-medium bg-[#1D98FF] px-5 py-3 rounded-xs z-30 relative'>
-                            <span>voir les postes</span>
-                            <svg width="20" height="20" className='text-white' viewBox="0 0 24 24" fill="none">
-                                <path d="M19 5L5 19M19 5H6.4M19 5V17.6" stroke="white" strokeWidth="2" />
-                            </svg>
-                        </button>
-                    </Link>
-
-                    {/* IMAGES BEHIND */}
-                    <div className='z-10 absolute w-fit h-fit left-[5%] bottom-[8%]'>
-                        <Image src={image1} className='lg:w-[250px] lg:h-[250px]' />
-                    </div>
-
-                    <div className='z-10 absolute w-fit h-fit right-[5%] top-[8%]'>
-                        <Image src={image2} className='w-[250px] h-[250px]' />
+                            <Link href='/' className='flex items-center justify-center lg:mt-10 mt-5'>
+                                <button className='uppercase text-white text-base flex items-center gap-1 font-medium bg-[#1D98FF] lg:px-4 lg:py-[14px] px-2 py-2 rounded-[4px] z-30 relative'>
+                                    <span>voir les postes</span>
+                                    <svg width="20" height="20" className='text-white' viewBox="0 0 24 24" fill="none">
+                                        <path d="M19 5L5 19M19 5H6.4M19 5V17.6" stroke="white" strokeWidth="2" />
+                                    </svg>
+                                </button>
+                            </Link>
+                        </div>
+                        <div className='z-10 relative lg:absolute lg:left-10 lg:bottom-10 overflow-hidden rounded-[4px]'>
+                            <Image src={image2} className='lg:w-[250px] lg:h-[250px] w-[40%] h-[40%] max-w-[250px]' />
+                        </div>
                     </div>
                 </div>
             </div>
