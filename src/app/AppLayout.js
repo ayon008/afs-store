@@ -16,9 +16,6 @@ async function LayoutContent({ children }) {
   // const pathname = usePathname()
   const NAV_LINKS = await getMenuItems();
 
-  console.log('NAV_LINKS', NAV_LINKS);
-
-
 
   return (
     // ${isLoggedIn ? "pt-10" : ""}
@@ -28,7 +25,7 @@ async function LayoutContent({ children }) {
       {/* <Navbar /> */}
       <NavBar NAV_LINKS={NAV_LINKS} />
       {/* <HamburgerMenu /> */}
-      <main className="flex-grow lg:pt-[157px] pt-[64px] z-20">{children}</main>
+      <main className="flex-grow lg:pt-[139px] pt-[64px] z-20">{children}</main>
       {/* {pathname.startsWith('/product') && <FeatureBar />}
       {pathname === '/made-in-france' && <FeatureBar />}
       {pathname !== '/' &&
