@@ -144,6 +144,10 @@ body {
   @apply lg:mb-[clamp(7.5rem,-12.5rem+25vw,12.5rem)] mb-[80px]
 }
 
+.global-padding-top {
+  @apply lg:pt-[clamp(7.5rem,-12.5rem+25vw,12.5rem)] pt-[80px]
+}
+
 .global-p {
   @apply lg:text-[22px] md:text-[19px] text-base leading-[120%]
 }

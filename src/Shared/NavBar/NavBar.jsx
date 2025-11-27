@@ -85,8 +85,6 @@ const Navbar = ({ NAV_LINKS }) => {
 
                     {/* Menu */}
                     <Menu isOpen={isOpen} setIsOpen={setIsOpen} />
-
-
                     {/* 2nd Part */}
                     <div className='flex items-center gap-2'>
                         {/* Search Button */}
@@ -185,45 +183,45 @@ const Navbar = ({ NAV_LINKS }) => {
                                     })}
                                 </ul>
                                 {detailsDiv &&
-                                    <div className='bg-white/95 max-h-fit h-fit overflow-y-scroll global-padding scroll-smooth hide-scrollbar-y'>
-                                        <div className='text-black/75 flex items-start justify-center gap-10'>
-                                            <div className='space-y-5'>
-                                                <div className='mt-[22px] space-y-1'>
-                                                    <h4 className='font-semibold text-base leading-[110%]'>{hoverId}</h4>
-                                                    <h3 className='font-semibold text-[28px] leading-[100%]'>{detailsDiv}</h3>
-                                                </div>
-                                                <div className='flex items-start justify-center pb-[22px]'>
-                                                    <div className="grid [grid-auto-flow:column] [grid-template-rows:repeat(4,1fr)] gap-5 grid-cols-[max-content_max-content_max-content] flex-1 xl:h-[160px] 2xl:h-full xl:overflow-y-auto 2xl:overflow-y-hidden scroll-smooth scroll-bar pr-10">
-                                                        {productList?.map((product, i) => (
-                                                            <div key={i} className='max-w-[270px] w-fit'>
-                                                                <h5 onMouseEnter={() => setHoverImageLink(product.image)} className="text-lg leading-[130%] font-semibold cursor-pointer hover:text-[#1D98FF] hover:underline">
-                                                                    {product.name}
-                                                                </h5>
+                                    <div className='h-[calc(100vh-230px)] overflow-y-auto scroll-smooth hide-scrollbar-y overscroll-contain'>
+                                        <div className='bg-white/95 h-fit pb-10  global-padding'>
+                                            <div className='text-black/75 flex items-start justify-center gap-10'>
+                                                <div className='space-y-5'>
+                                                    <div className='mt-[22px] space-y-1'>
+                                                        <h4 className='font-semibold text-base leading-[110%]'>{hoverId}</h4>
+                                                        <h3 className='font-semibold text-[28px] leading-[100%]'>{detailsDiv}</h3>
+                                                    </div>
+                                                    <div className='flex items-start justify-center pb-[22px]'>
+                                                        <div className="grid [grid-auto-flow:column] [grid-template-rows:repeat(4,1fr)] gap-5 grid-cols-[max-content_max-content_max-content] flex-1 xl:h-[160px] 2xl:h-full xl:overflow-y-auto 2xl:overflow-y-hidden scroll-smooth scroll-bar pr-10">
+                                                            {productList?.map((product, i) => (
+                                                                <div key={i} className='max-w-[270px] w-fit'>
+                                                                    <h5 onMouseEnter={() => setHoverImageLink(product.image)} className="text-lg leading-[130%] font-semibold cursor-pointer hover:text-[#1D98FF] hover:underline">
+                                                                        {product.name}
+                                                                    </h5>
 
-                                                                <p className="font-semibold text-xs leading-[100%] price-wrapper mt-1">
-                                                                    {parse(product.price)}
-                                                                </p>
-                                                            </div>
-                                                        ))}
+                                                                    <p className="font-semibold text-xs leading-[100%] price-wrapper mt-1">
+                                                                        {parse(product.price)}
+                                                                    </p>
+                                                                </div>
+                                                            ))}
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                {/* Product Image */}
+                                                <div className='mt-[22px]'>
+                                                    {
+                                                        hoverImageLink &&
+                                                        <img src={hoverImageLink} className='max-w-[380px] h-full object-cover' alt='' />
+                                                    }
+                                                </div>
                                             </div>
-                                            {/* Product Image */}
-                                            <div className='max-w-[380px] mt-[22px]'>
-                                                {
-                                                    hoverImageLink &&
-                                                    <img src={hoverImageLink} className='w-full h-full object-cover' alt='' />
-                                                }
-                                            </div>
-                                        </div>
-                                        <div className='flex items-center justify-center'>
-                                            {/* {subLinks?.button_one && <button>
+                                            <div className='flex items-center justify-center'>
+                                                {/* {subLinks?.button_one && <button>
                                             <Link href={''} className='text-black/75'>
                                                 {subLinks?.button_one.label}
                                             </Link>
                                         </button>} */}
-
-                                            <button className='text-black'>Ayon</button>
+                                            </div>
                                         </div>
                                     </div>
                                 }

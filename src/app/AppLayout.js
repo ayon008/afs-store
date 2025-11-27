@@ -16,6 +16,9 @@ async function LayoutContent({ children }) {
   // const pathname = usePathname()
   const NAV_LINKS = await getMenuItems();
 
+  console.log('NAV_LINKS',NAV_LINKS);
+  
+
 
   return (
     // ${isLoggedIn ? "pt-10" : ""}
