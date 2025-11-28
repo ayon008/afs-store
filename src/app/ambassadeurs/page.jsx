@@ -16,7 +16,7 @@ const BreadCums = () => {
 
 
 // All ambassadors
-export const allAmbassadors = async () => {
+const allAmbassadors = async () => {
     try {
         const response = await fetch(`${process.env.WP_BASE_URL}/wp-json/wp/v2/ambassador?per_page=100&_embed`, {
             next: { revalidate: 3600 }
