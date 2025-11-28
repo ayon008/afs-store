@@ -23,8 +23,7 @@ const FilterTab = ({ name, isActive, onClick }) => {
   );
 };
 
-const App = ({ categories, activeTab, setActiveTab, countries, country, setCountry,countryName,setCountryName }) => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+const App = ({ categories, activeTab, setActiveTab, countries, country, setCountry, countryName, setCountryName }) => {
 
   // ✅ Added dropdown open/close state and selected country
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -38,30 +37,16 @@ const App = ({ categories, activeTab, setActiveTab, countries, country, setCount
   `;
 
   return (
-    <div className="h-[80px] bg-white font-sans flex items-center">
+    <div className="bg-white font-sans flex items-center">
       {/* Filter Bar */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3 w-full bg-white">
-        {/* Mobile Menu Button */}
-        <button
-          className="lg:hidden p-2 bg-gray-100 text-gray-700 hover:bg-gray-200"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-expanded={isMobileMenuOpen}
-          aria-controls="filter-menu"
-        >
-          <Menu className="w-5 h-5" />
-          <span className="ml-2 font-medium text-sm">Filters</span>
-        </button>
-
         {/* Filter Tabs */}
         <div
           id="filter-menu"
           className={`
-            w-full lg:w-auto
-            flex flex-col lg:flex-row gap-2
+            w-auto
+            flex flex-wrap flex-row gap-2
             transition-all duration-300 ease-in-out
-            ${isMobileMenuOpen
-              ? "max-h-96 opacity-100"
-              : "max-h-0 lg:max-h-full opacity-0 lg:opacity-100 overflow-hidden"}
           `}
         >
           <FilterTab

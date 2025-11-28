@@ -8,8 +8,8 @@ const Map = ({ setCountry, setCountryName, country }) => {
     }
 
     return (
-        <div className='overflow-x-scroll'>
-            <svg width="100%" height="578" className='' viewBox="0 0 1156 578" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div className='lg:overflow-x-hidden overflow-x-scroll'>
+            <svg width="100%" height="578" className='min-w-[920px]' viewBox="0 0 1156 578" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_91_31651)">
                     <rect width="100%" height="578" fill="white"></rect>
 
@@ -21,7 +21,7 @@ const Map = ({ setCountry, setCountryName, country }) => {
                         style={{ "--cx": "528px", "--cy": "180px" }}
                     >
                         <circle
-                            className={`map_anim_circle ${country === 2141 && "hidden"}`}
+                            className={`map_anim_circle`}
                             cx="528"
                             cy="180"
                             r="15"
@@ -33,7 +33,7 @@ const Map = ({ setCountry, setCountryName, country }) => {
 
                     {/* France */}
                     <g
-                        className={`map_anim_circle ${country === 2136 && "hidden"}`}
+                        className={`map_anim_circle`}
                         onClick={() => handleSet(2136, "FRANCE")}
                         data-location="france"
                         style={{ "--cx": "574px", "--cy": "192px" }}
@@ -51,7 +51,7 @@ const Map = ({ setCountry, setCountryName, country }) => {
 
                     {/* Spain */}
                     <g
-                        className={`map_anim_circle ${country === 2140 && "hidden"}`}
+                        className={`map_anim_circle`}
                         onClick={() => handleSet(2140, "SPAIN")}
                         data-location="spain"
                         style={{ "--cx": "536px", "--cy": "237px" }}
@@ -69,7 +69,7 @@ const Map = ({ setCountry, setCountryName, country }) => {
 
                     {/* Germany */}
                     <g
-                        className={`map_anim_circle ${country === 2139 && "hidden"}`}
+                        className={`map_anim_circle`}
                         onClick={() => handleSet(2139, "GERMANY")}
                         data-location="germany"
                         style={{ "--cx": "579px", "--cy": "148px" }}
@@ -87,7 +87,7 @@ const Map = ({ setCountry, setCountryName, country }) => {
 
                     {/* Polynesie Francaise */}
                     <g
-                        className={`map_anim_circle ${country === 2137 && "hidden"}`}
+                        className={`map_anim_circle`}
                         onClick={() => handleSet(2137, "Polynesie Francaise")}
                         data-location="polynesie-francaise"
                         style={{ "--cx": "63px", "--cy": "376px" }}
@@ -105,7 +105,7 @@ const Map = ({ setCountry, setCountryName, country }) => {
 
                     {/* USA */}
                     <g
-                        className={`map_anim_circle ${country === 2138 && "hidden"}`}
+                        className={`map_anim_circle`}
                         onClick={() => handleSet(2138, "USA")}
                         data-location="usa"
                         style={{ "--cx": "229px", "--cy": "238px" }}

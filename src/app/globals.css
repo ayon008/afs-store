@@ -124,12 +124,12 @@ body {
 
 
 .map-region {
-    cursor: pointer;
-    transition: fill 0.3s ease;
+  cursor: pointer !important;
+  transition: fill 0.3s ease !important;
 }
 
 .map-region:hover {
-    fill: #008CFE;
+  fill: #008CFE !important;
 }
 
 .global-blue {

@@ -28,6 +28,6 @@ export const allAmbassadors = async (activeTab, country) => {
 
     console.log("Fetching URL:", url);
 
-    const response = await fetch(url, { next: { revalidate: 3600 } });
+    const response = await fetch(url, { cache: "no-cache" });
     return await response.json();
 };
