@@ -1,25 +1,27 @@
 "use client"
 import React from 'react';
 
-const Map = ({ setCountry }) => {
+const Map = ({ setCountry, setCountryName, country }) => {
+    const handleSet = (id, name) => {
+        setCountryName(name);
+        setCountry(id);
+    }
+
     return (
-        <div>
-            <svg width="100%" height="578" viewBox="0 0 1156 578" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div className='overflow-x-scroll'>
+            <svg width="100%" height="578" className='' viewBox="0 0 1156 578" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_91_31651)">
-
-
-
                     <rect width="100%" height="578" fill="white"></rect>
 
                     {/* UK */}
                     <g
                         className="map-region"
-                        onClick={() => setCountry('uk')}
+                        onClick={() => handleSet(2141, "UK")}
                         data-location="uk"
                         style={{ "--cx": "528px", "--cy": "180px" }}
                     >
                         <circle
-                            className="map_anim_circle"
+                            className={`map_anim_circle ${country === 2141 && "hidden"}`}
                             cx="528"
                             cy="180"
                             r="15"
@@ -31,8 +33,8 @@ const Map = ({ setCountry }) => {
 
                     {/* France */}
                     <g
-                        className="map-region"
-                        onClick={() => setCountry('france')}
+                        className={`map_anim_circle ${country === 2136 && "hidden"}`}
+                        onClick={() => handleSet(2136, "FRANCE")}
                         data-location="france"
                         style={{ "--cx": "574px", "--cy": "192px" }}
                     >
@@ -49,8 +51,8 @@ const Map = ({ setCountry }) => {
 
                     {/* Spain */}
                     <g
-                        className="map-region"
-                        onClick={() => setCountry('spain')}
+                        className={`map_anim_circle ${country === 2140 && "hidden"}`}
+                        onClick={() => handleSet(2140, "SPAIN")}
                         data-location="spain"
                         style={{ "--cx": "536px", "--cy": "237px" }}
                     >
@@ -67,8 +69,8 @@ const Map = ({ setCountry }) => {
 
                     {/* Germany */}
                     <g
-                        className="map-region"
-                        onClick={() => setCountry('germany')}
+                        className={`map_anim_circle ${country === 2139 && "hidden"}`}
+                        onClick={() => handleSet(2139, "GERMANY")}
                         data-location="germany"
                         style={{ "--cx": "579px", "--cy": "148px" }}
                     >
@@ -85,8 +87,8 @@ const Map = ({ setCountry }) => {
 
                     {/* Polynesie Francaise */}
                     <g
-                        className="map-region"
-                        onClick={() => setCountry('polynesie-francaise')}
+                        className={`map_anim_circle ${country === 2137 && "hidden"}`}
+                        onClick={() => handleSet(2137, "Polynesie Francaise")}
                         data-location="polynesie-francaise"
                         style={{ "--cx": "63px", "--cy": "376px" }}
                     >
@@ -103,8 +105,8 @@ const Map = ({ setCountry }) => {
 
                     {/* USA */}
                     <g
-                        className="map-region"
-                        onClick={() => setCountry('usa')}
+                        className={`map_anim_circle ${country === 2138 && "hidden"}`}
+                        onClick={() => handleSet(2138, "USA")}
                         data-location="usa"
                         style={{ "--cx": "229px", "--cy": "238px" }}
                     >

@@ -3,16 +3,6 @@
 import React, { useState } from "react";
 import { ChevronDown, Menu } from "lucide-react";
 
-// ✅ Added countries list
-const countries = [
-  "FRANCE",
-  "ALLEMAGNE",
-  "UK",
-  "ESPAÑA",
-  "ETATS-UNIS",
-  "POLYNÉSIE FRANÇAISE",
-];
-
 const FilterTab = ({ name, isActive, onClick }) => {
   const activeClasses =
     "bg-[#1d98ff] text-white hover:bg-[#1180e0] transition-colors";
@@ -33,12 +23,11 @@ const FilterTab = ({ name, isActive, onClick }) => {
   );
 };
 
-const App = ({ categories, activeTab, setActiveTab }) => {
+const App = ({ categories, activeTab, setActiveTab, countries, country, setCountry,countryName,setCountryName }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // ✅ Added dropdown open/close state and selected country
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState("COUNTRY");
 
   const countryDropdownClasses = `
     flex items-center justify-between gap-2
@@ -78,8 +67,8 @@ const App = ({ categories, activeTab, setActiveTab }) => {
           <FilterTab
             key={1}
             name={"TOUS"}
-            isActive={activeTab === 1}
-            onClick={() => setActiveTab(1)}
+            isActive={activeTab === null}
+            onClick={() => setActiveTab(null)}
           />
           {categories.map((category) => (
             <FilterTab
@@ -104,7 +93,7 @@ const App = ({ categories, activeTab, setActiveTab }) => {
     `}
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           >
-            {selectedCountry}
+            {countryName}
             <ChevronDown
               className={`w-4 h-4 transition-transform ${isDropdownOpen ? "rotate-180" : "rotate-0"
                 }`}
@@ -115,14 +104,15 @@ const App = ({ categories, activeTab, setActiveTab }) => {
             <div className="absolute left-0 w-full bg-[#1d98ff] text-white shadow-lg z-10 rounded-b-[4px] -mt-1">
               {countries.map((country) => (
                 <button
-                  key={country}
+                  key={country.id}
                   onClick={() => {
-                    setSelectedCountry(country);
+                    setCountry(country.id);
                     setIsDropdownOpen(false);
+                    setCountryName(country.name)
                   }}
                   className="w-full text-left p-[10px]  font-bold text-[15px] leading-[20px] hover:bg-white hover:text-[#1d98ff] transition-colors"
                 >
-                  {country}
+                  {country.name}
                 </button>
               ))}
             </div>

@@ -122,10 +122,15 @@ body {
   width: 100%;
 }
 
+
 .map-region {
-  cursor: pointer;
+    cursor: pointer;
+    transition: fill 0.3s ease;
 }
 
+.map-region:hover {
+    fill: #008CFE;
+}
 
 .global-blue {
   color: #1D98FF;

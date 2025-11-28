@@ -3,39 +3,30 @@ import React, { useEffect, useState } from 'react';
 import Map from "../../Shared/SVG/Map"
 import Sec1 from '../../app/ambassadeur-afs/sec1';
 import AmbassadorsCard from '../Card/AmbassadorsCard';
-import getAmbessedorByCat from "../../funtions/getAmbessedorByCat"
+import { allAmbassadors } from "../../funtions/getAllAmbessador"
 
-const Ambassedor = ({ allData, categories }) => {
-    const [country, setCountry] = useState("");
-    const [data, setData] = useState(allData);
+const Ambassedor = ({ categories, countries }) => {
+    const [country, setCountry] = useState(null);
+    const [data, setData] = useState([]);
+    const [countryName, setCountryName] = useState("COUNTRY");
     // Discipline
-    const [activeTab, setActiveTab] = useState(1);
+    const [activeTab, setActiveTab] = useState(null);
 
     useEffect(() => {
-        if (activeTab === 1) {
-            setActiveTab(1);
+        const load = async () => {
+            const allData = await allAmbassadors(activeTab, country);
             setData(allData);
-            return
-        }
-        const data = async (activeTab) => {
-            const allData = await getAmbessedorByCat(activeTab);
-            setData(allData)
         };
-        data(activeTab)
-    }, [activeTab])
-
-    console.log(activeTab);
-    console.log(data?.length);
-
-
+        load();
+    }, [activeTab, country]);
 
     return (
         <div>
-            <Map setCountry={setCountry} />
+            <Map setCountry={setCountry} setCountryName={setCountryName} country={country} />
             <div className='lg:mt-[80px] mt-[40px] global-margin'>
-                <Sec1 activeTab={activeTab} setActiveTab={setActiveTab} categories={categories} />
+                <Sec1 activeTab={activeTab} setCountry={setCountry} countryName={countryName} setCountryName={setCountryName} country={country} setActiveTab={setActiveTab} categories={categories} countries={countries} />
             </div>
-            <div className='grid 2xl:grid-cols-4 xl:grid-cols-3 gap-6'>
+            <div className='grid 2xl:grid-cols-4 xl:grid-cols-3 gap-6 global-margin'>
                 {
                     data?.map((data, i) => {
                         return (
