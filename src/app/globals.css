@@ -122,6 +122,14 @@ body {
   width: 100%;
 }
 
+.map-region {
+  cursor: pointer;
+}
+
+
+.global-blue {
+  color: #1D98FF;
+}
 
 .global-h1 {
   @apply font-bold lg:text-[clamp(4.375rem,0.9028rem+3.4722vw,3.125rem)] md:text-[clamp(2.625rem,1.1328rem+3.1128vw,3.125rem)] text-[42px]

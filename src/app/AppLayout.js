@@ -19,7 +19,7 @@ async function LayoutContent({ children }) {
 
   return (
     // ${isLoggedIn ? "pt-10" : ""}
-    <div className={`flex flex-col min-h-screen relative`}>
+    <div className={`flex flex-col min-h-screen relative z-[111]`}>
       {/* {isLoggedIn && <TopBar />} */}
       <VhUpdater />
       {/* <Navbar /> */}

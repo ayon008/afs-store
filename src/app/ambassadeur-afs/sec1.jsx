@@ -3,16 +3,6 @@
 import React, { useState } from "react";
 import { ChevronDown, Menu } from "lucide-react";
 
-const categories = [
-  "TOUS",
-  "WINGFOIL",
-  "WINDPOIL",
-  "SURF FOIL",
-  "SUP FOIL",
-  "DOCKSTART",
-  "DOWNWIND",
-];
-
 // ✅ Added countries list
 const countries = [
   "FRANCE",
@@ -27,13 +17,13 @@ const FilterTab = ({ name, isActive, onClick }) => {
   const activeClasses =
     "bg-[#1d98ff] text-white hover:bg-[#1180e0] transition-colors";
   const inactiveClasses =
-    "bg-gray-100 text-gray-800 hover:bg-gray-200 transition-colors";
+    "bg-[#F2F2F2] text-[#c3c3c3] hover:bg-gray-200 transition-colors";
 
   return (
     <button
       onClick={onClick}
       className={`
-        px-4 py-2 font-medium text-sm whitespace-nowrap
+        px-5 py-3 rounded-[5px] cursor-pointer font-bold text-[15px] leading-[19px] whitespace-nowrap
         border-none focus:outline-none
         ${isActive ? activeClasses : inactiveClasses}
       `}
@@ -43,7 +33,7 @@ const FilterTab = ({ name, isActive, onClick }) => {
   );
 };
 
-const App = () => {
+const App = ({ categories }) => {
   const [activeTab, setActiveTab] = useState("TOUS");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -60,9 +50,9 @@ const App = () => {
   `;
 
   return (
-    <div className="p-4 sm:p-8 h-[80px] bg-white font-sans flex items-center">
+    <div className="h-[80px] bg-white font-sans flex items-center">
       {/* Filter Bar */}
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3 w-full p-3 bg-white">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3 w-full bg-white">
         {/* Mobile Menu Button */}
         <button
           className="lg:hidden p-2 bg-gray-100 text-gray-700 hover:bg-gray-200"
@@ -88,52 +78,51 @@ const App = () => {
         >
           {categories.map((category) => (
             <FilterTab
-              key={category}
-              name={category}
-              isActive={activeTab === category}
-              onClick={() => setActiveTab(category)}
+              key={category.id}
+              name={category.name}
+              isActive={activeTab === category.name}
+              onClick={() => setActiveTab(category.name)}
             />
           ))}
         </div>
 
         {/* ✅ Country Dropdown */}
-{/* ✅ Country Dropdown */}
-<div className="relative mt-2 lg:mt-0 w-[200px]"> {/* fix width to match dropdown */}
-  <button
-    className={`
+        {/* ✅ Country Dropdown */}
+        <div className="relative mt-2 lg:mt-0 w-[220px] rounded-[4px] bg-[#1d98ff] cursor-pointer"> {/* fix width to match dropdown */}
+          <button
+            className={`
       w-full flex items-center justify-between gap-2
-      px-5 py-2 font-medium text-sm
+      p-[10px] font-bold text-[15px] leading-[20px]
       bg-[#1d98ff] text-white
       hover:bg-[#1180e0] transition-colors
-      focus:outline-none
+      focus:outline-none rounded-[4px]
     `}
-    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-  >
-    {selectedCountry}
-    <ChevronDown
-      className={`w-4 h-4 transition-transform ${
-        isDropdownOpen ? "rotate-180" : "rotate-0"
-      }`}
-    />
-  </button>
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          >
+            {selectedCountry}
+            <ChevronDown
+              className={`w-4 h-4 transition-transform ${isDropdownOpen ? "rotate-180" : "rotate-0"
+                }`}
+            />
+          </button>
 
-  {isDropdownOpen && (
-    <div className="absolute left-0 w-full bg-[#1d98ff] text-white shadow-lg z-10 mt-1">
-      {countries.map((country) => (
-        <button
-          key={country}
-          onClick={() => {
-            setSelectedCountry(country);
-            setIsDropdownOpen(false);
-          }}
-          className="w-full text-left px-5 py-2 text-sm hover:bg-white hover:text-[#1d98ff] transition-colors"
-        >
-          {country}
-        </button>
-      ))}
-    </div>
-  )}
-</div>
+          {isDropdownOpen && (
+            <div className="absolute left-0 w-full bg-[#1d98ff] text-white shadow-lg z-10 rounded-b-[4px] -mt-1">
+              {countries.map((country) => (
+                <button
+                  key={country}
+                  onClick={() => {
+                    setSelectedCountry(country);
+                    setIsDropdownOpen(false);
+                  }}
+                  className="w-full text-left p-[10px]  font-bold text-[15px] leading-[20px] hover:bg-white hover:text-[#1d98ff] transition-colors"
+                >
+                  {country}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
       </div>
     </div>
