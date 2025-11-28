@@ -33,8 +33,7 @@ const FilterTab = ({ name, isActive, onClick }) => {
   );
 };
 
-const App = ({ categories }) => {
-  const [activeTab, setActiveTab] = useState("TOUS");
+const App = ({ categories, activeTab, setActiveTab }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // ✅ Added dropdown open/close state and selected country
@@ -79,15 +78,15 @@ const App = ({ categories }) => {
           <FilterTab
             key={1}
             name={"TOUS"}
-            isActive={activeTab === "TOUS"}
-            onClick={() => setActiveTab("TOUS")}
+            isActive={activeTab === 1}
+            onClick={() => setActiveTab(1)}
           />
           {categories.map((category) => (
             <FilterTab
               key={category.id}
               name={category.name}
-              isActive={activeTab === category.name}
-              onClick={() => setActiveTab(category.name)}
+              isActive={activeTab === category.id}
+              onClick={() => setActiveTab(category.id)}
             />
           ))}
         </div>

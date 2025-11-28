@@ -4,13 +4,10 @@ import Image from 'next/image';
 
 
 const AmbassadorsCard = ({ data }) => {
-    console.log(data);
     const profile = data?.acf?.profile;
     const url = profile?.url || default_image;
     const title = profile?.title || "";
     const country = data?.acf?.country;
-    console.log(country);
-
 
     return (
         <div className='h-[300px] flex items-stretch rounded-[4px] overflow-hidden group relative shadow-[0_0_50px_10px_#0000000D]'>
