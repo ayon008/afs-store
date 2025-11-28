@@ -14,6 +14,7 @@ const Ambassedor = ({ allData, categories }) => {
     useEffect(() => {
         if (activeTab === 1) {
             setActiveTab(1);
+            setData(allData);
             return
         }
         const data = async (activeTab) => {
