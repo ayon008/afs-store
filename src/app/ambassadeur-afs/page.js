@@ -5,7 +5,7 @@ export default function AmbassadeurAFS() {
   return (
     <div>
       <Hero />
-      <Sec1 />
+      {/* <Sec1 /> */}
       <Sec2 />
     </div>
   );

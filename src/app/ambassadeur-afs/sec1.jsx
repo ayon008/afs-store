@@ -76,6 +76,12 @@ const App = ({ categories }) => {
               : "max-h-0 lg:max-h-full opacity-0 lg:opacity-100 overflow-hidden"}
           `}
         >
+          <FilterTab
+            key={1}
+            name={"TOUS"}
+            isActive={activeTab === "TOUS"}
+            onClick={() => setActiveTab("TOUS")}
+          />
           {categories.map((category) => (
             <FilterTab
               key={category.id}
