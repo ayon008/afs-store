@@ -18,7 +18,7 @@ const AmbassadorsCard = ({ data }) => {
                     <span>
                         Voir plus
                     </span>
-                    <svg width="18" height="18" className='font-bold text-[#00000080]' viewBox="0 0 24 24" fill="#00000080">
+                    <svg width="18" height="18" className='font-bold text-[#00000080] mt-1' viewBox="0 0 24 24" fill="#00000080">
                         <path d="M19 5L5 19M19 5H6.4M19 5V17.6" stroke="#00000080" strokeWidth="2" />
                     </svg>
                 </div>

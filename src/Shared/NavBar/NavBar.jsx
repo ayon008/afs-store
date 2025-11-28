@@ -67,9 +67,9 @@ const Navbar = ({ NAV_LINKS }) => {
 
     return (
         <>
-            <nav className='fixed left-0 right-0 top-0 md:z-50 z-[110] bg-black text-white w-full'>
+            <nav className='fixed left-0 right-0 top-0 md:z-50 z-[110] text-white w-full'>
                 {/* Logo and Search Part */}
-                <div className='py-[16px] global-padding border-b border-gray-600 w-full flex items-center justify-between' onMouseEnter={() => handleShow(null)}>
+                <div className='py-[16px] bg-black global-padding border-b border-gray-600 w-full flex items-center justify-between' onMouseEnter={() => handleShow(null)}>
                     {/* Logo */}
                     <Link href="/" className="hidden md:flex items-center">
                         <Image
@@ -142,7 +142,7 @@ const Navbar = ({ NAV_LINKS }) => {
                     </div>
                 </div>
                 {/* NAV LINKS  Desktop*/}
-                <div className="hidden md:flex flex-col h-full relative">
+                <div className="hidden md:flex flex-col h-full relative bg-black">
                     <div className="flex justify-center items-center whitespace-nowrap px-4 h-full">
                         {NAV_LINKS?.map((link, idx) => (
                             <div
@@ -168,8 +168,8 @@ const Navbar = ({ NAV_LINKS }) => {
                 {
                     hoverId !== 'Service' ?
                         <>
-                            <div onMouseLeave={() => handleShow(null)} className='bg-white/95 text-black md:block hidden'>
-                                <ul className='flex items-center justify-center'>
+                            <div onMouseLeave={() => handleShow(null)} className='text-black bg-transparent h-fit md:block hidden'>
+                                <ul className='flex items-center justify-center bg-white/95'>
                                     {subLinks?.sublinks?.map((children, i) => {
                                         return (
                                             <li
@@ -182,8 +182,8 @@ const Navbar = ({ NAV_LINKS }) => {
                                     })}
                                 </ul>
                                 {detailsDiv &&
-                                    <div className='h-[calc(100vh-230px)] overflow-y-auto scroll-smooth hide-scrollbar-y overscroll-contain'>
-                                        <div className='bg-white/95 h-fit pb-10  global-padding'>
+                                    <div className='h-[calc(100vh-230px)] overflow-y-auto scroll-smooth hide-scrollbar-y overscroll-contain bg-transparent'>
+                                        <div className='h-fit bg-white/95 pb-10 global-padding' onMouseLeave={() => handleShow(null)}>
                                             <div className='text-black/75 flex items-start justify-center gap-10'>
                                                 <div className='space-y-5'>
                                                     <div className='mt-[22px] space-y-1'>
@@ -207,7 +207,7 @@ const Navbar = ({ NAV_LINKS }) => {
                                                     </div>
                                                 </div>
                                                 {/* Product Image */}
-                                                <div className='mt-[22px]'>
+                                                <div className='mt-[22px] max-w-[380px] w-full min-h-[100px]'>
                                                     {
                                                         hoverImageLink &&
                                                         <img src={hoverImageLink} className='max-w-[380px] h-full object-cover' alt='' />
