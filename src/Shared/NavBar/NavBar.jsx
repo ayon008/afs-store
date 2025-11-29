@@ -56,8 +56,8 @@ const Navbar = ({ NAV_LINKS }) => {
     useEffect(() => {
         if (!thirdRef.current && !detailsDiv) return;
         gsap.to(thirdRef.current, {
-            x: isOpen ? "0%" : "-100%",
-            opacity: isOpen ? 1 : 0,
+            x: detailsDiv ? "0%" : "-100%",
+            opacity: detailsDiv ? 1 : 0,
             duration: 0.45,
             ease: "power2.inOut",
         });
@@ -354,28 +354,26 @@ const Navbar = ({ NAV_LINKS }) => {
                 </ul>
             </div>
             {/* 3rd Part */}
-            {
-                <div ref={thirdRef} className='fixed inset-0 h-screen text-black/75 z-[120] bg-white p-6 block md:hidden'>
-                    <p onClick={() => setDetailsDiv(null)} className='text-[12px] leading-[100%] font-bold uppercase text-[#999999]'><ArrowLeft className='inline mr-1' />{detailsDiv}</p>
-                    <div className='mt-5'>
-                        <h4 className='font-semibold text-base leading-[110%]'>{hoverId}</h4>
-                        <h3 className='font-semibold text-[28px] leading-[100%]'>{detailsDiv}</h3>
-                    </div>
-                    <ul className='mt-5 space-y-6'>
-                        {productList?.map((product, i) => (
-                            <li key={i}>
-                                <div className='text-[22px] font-semibold leading-[100%] tracking-[-0.01em] flex items-center justify-between'>
-                                    <span>{product.name}</span>
-                                </div>
-                                <p className="font-semibold text-xs leading-[100%] price-wrapper mt-1">
-                                    {parse(product.price)}
-                                </p>
-                            </li>
-                        ))}
-                    </ul>
+            
+            <div ref={thirdRef} className='fixed inset-0 transform translate-x-full opacity-0 h-screen text-black/75 z-[120] bg-white p-6 block md:hidden'>
+                <p onClick={() => setDetailsDiv(null)} className='text-[12px] leading-[100%] font-bold uppercase text-[#999999]'><ArrowLeft className='inline mr-1' />{detailsDiv}</p>
+                <div className='mt-5'>
+                    <h4 className='font-semibold text-base leading-[110%]'>{hoverId}</h4>
+                    <h3 className='font-semibold text-[28px] leading-[100%]'>{detailsDiv}</h3>
                 </div>
-
-            }
+                <ul className='mt-5 space-y-6'>
+                    {productList?.map((product, i) => (
+                        <li key={i}>
+                            <div className='text-[22px] font-semibold leading-[100%] tracking-[-0.01em] flex items-center justify-between'>
+                                <span>{product.name}</span>
+                            </div>
+                            <p className="font-semibold text-xs leading-[100%] price-wrapper mt-1">
+                                {parse(product.price)}
+                            </p>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </>
     );
 };
