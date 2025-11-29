@@ -28,7 +28,8 @@ const Navbar = ({ NAV_LINKS }) => {
     const navRef = useRef(null);
     // 2nd Ref
     const secondRef = useRef(null);
-
+    // 3rd ref
+    const thirdRef = useRef(null);
 
     // GSAP animation for navbar (slide from right)
     useEffect(() => {
@@ -51,6 +52,16 @@ const Navbar = ({ NAV_LINKS }) => {
             ease: "power2.inOut",
         });
     }, [hoverId]);
+
+    useEffect(() => {
+        if (!thirdRef.current && !detailsDiv) return;
+        gsap.to(thirdRef.current, {
+            x: isOpen ? "0%" : "-100%",
+            opacity: isOpen ? 1 : 0,
+            duration: 0.45,
+            ease: "power2.inOut",
+        });
+    })
 
     const subLinks = NAV_LINKS?.find((Nav) => Nav?.name == hoverId);
     const productList = subLinks?.sublinks?.find((sub) => sub.name === detailsDiv)?.products;
@@ -344,8 +355,7 @@ const Navbar = ({ NAV_LINKS }) => {
             </div>
             {/* 3rd Part */}
             {
-                detailsDiv &&
-                <div className='fixed inset-0 h-screen text-black/75 z-[120] bg-white p-6 block md:hidden'>
+                <div ref={thirdRef} className='fixed inset-0 h-screen text-black/75 z-[120] bg-white p-6 block md:hidden'>
                     <p onClick={() => setDetailsDiv(null)} className='text-[12px] leading-[100%] font-bold uppercase text-[#999999]'><ArrowLeft className='inline mr-1' />{detailsDiv}</p>
                     <div className='mt-5'>
                         <h4 className='font-semibold text-base leading-[110%]'>{hoverId}</h4>
@@ -364,6 +374,7 @@ const Navbar = ({ NAV_LINKS }) => {
                         ))}
                     </ul>
                 </div>
+
             }
         </>
     );
