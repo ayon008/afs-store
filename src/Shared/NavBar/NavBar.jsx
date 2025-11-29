@@ -64,7 +64,10 @@ const Navbar = ({ NAV_LINKS }) => {
     })
 
     const subLinks = NAV_LINKS?.find((Nav) => Nav?.name == hoverId);
-    const productList = subLinks?.sublinks?.find((sub) => sub.name === detailsDiv)?.products;
+    const allProducts = subLinks?.sublinks?.find((sub) => sub.name === detailsDiv);
+    const productList = allProducts?.products;
+    console.log(allProducts);
+
     const [hoverImageLink, setHoverImageLink] = useState("");
 
     console.log(productList);
@@ -194,8 +197,8 @@ const Navbar = ({ NAV_LINKS }) => {
                                 </ul>
                                 {detailsDiv &&
                                     <div className='h-[calc(100vh-230px)] overflow-y-auto scroll-smooth hide-scrollbar-y overscroll-contain bg-transparent'>
-                                        <div className='h-fit bg-white/95 pb-10 global-padding' onMouseLeave={() => handleShow(null)}>
-                                            <div className='text-black/75 flex items-start justify-center gap-10'>
+                                        <div className='h-fit bg-white/95'>
+                                            <div className='text-black/75 global-padding flex items-start justify-center gap-10 pb-6'>
                                                 <div className='space-y-5'>
                                                     <div className='mt-[22px] space-y-1'>
                                                         <h4 className='font-semibold text-base leading-[110%]'>{hoverId}</h4>
@@ -225,13 +228,30 @@ const Navbar = ({ NAV_LINKS }) => {
                                                     }
                                                 </div>
                                             </div>
-                                            <div className='flex items-center justify-center'>
-                                                {/* {subLinks?.button_one && <button>
-                                            <Link href={''} className='text-black/75'>
-                                                {subLinks?.button_one.label}
-                                            </Link>
-                                        </button>} */}
-                                            </div>
+                                            {
+                                                (allProducts?.button_one?.label || allProducts?.button_two?.label) && <div className='flex items-center justify-center gap-10 py-6 border-t border-black/75'>
+                                                    {allProducts?.button_one?.label && <button>
+                                                        <Link href={''} className='text-black/75 font-semibold flex items-center gap-1'>
+                                                            <span className='inline-block'>
+                                                                {allProducts?.button_one.label}
+                                                            </span>
+                                                            <svg width="16" height="16" className='font-semibold' viewBox="0 0 24 24" fill="none">
+                                                                <path d="M19 5L5 19M19 5H6.4M19 5V17.6" stroke="#000000BF" strokeWidth="3" />
+                                                            </svg>
+                                                        </Link>
+                                                    </button>}
+                                                    {allProducts?.button_two?.label && <button>
+                                                        <Link href={''} className='text-black/75 font-semibold flex items-center gap-1'>
+                                                            <span className='inline-block'>
+                                                                {allProducts?.button_two.label}
+                                                            </span>
+                                                            <svg width="16" height="16" className='font-semibold' viewBox="0 0 24 24" fill="none">
+                                                                <path d="M19 5L5 19M19 5H6.4M19 5V17.6" stroke="#000000BF" strokeWidth="3" />
+                                                            </svg>
+                                                        </Link>
+                                                    </button>}
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                 }
@@ -354,25 +374,51 @@ const Navbar = ({ NAV_LINKS }) => {
                 </ul>
             </div>
             {/* 3rd Part */}
-            
-            <div ref={thirdRef} className='fixed inset-0 transform translate-x-full opacity-0 h-screen text-black/75 z-[120] bg-white p-6 block md:hidden'>
-                <p onClick={() => setDetailsDiv(null)} className='text-[12px] leading-[100%] font-bold uppercase text-[#999999]'><ArrowLeft className='inline mr-1' />{detailsDiv}</p>
-                <div className='mt-5'>
-                    <h4 className='font-semibold text-base leading-[110%]'>{hoverId}</h4>
-                    <h3 className='font-semibold text-[28px] leading-[100%]'>{detailsDiv}</h3>
+
+            <div ref={thirdRef} className='fixed inset-0 transform translate-x-full opacity-0 h-screen text-black/75 z-[120] bg-white block md:hidden'>
+                <div className='p-6'>
+                    <p onClick={() => setDetailsDiv(null)} className='text-[12px] leading-[100%] font-bold uppercase text-[#999999]'><ArrowLeft className='inline mr-1' />{detailsDiv}</p>
+                    <div className='mt-5'>
+                        <h4 className='font-semibold text-base leading-[110%]'>{hoverId}</h4>
+                        <h3 className='font-semibold text-[28px] leading-[100%]'>{detailsDiv}</h3>
+                    </div>
+                    <ul className='mt-5 space-y-6'>
+                        {productList?.map((product, i) => (
+                            <li key={i}>
+                                <div className='text-[22px] font-semibold leading-[100%] tracking-[-0.01em] flex items-center justify-between'>
+                                    <span>{product.name}</span>
+                                </div>
+                                <p className="font-semibold text-xs leading-[100%] price-wrapper mt-1">
+                                    {parse(product.price)}
+                                </p>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
-                <ul className='mt-5 space-y-6'>
-                    {productList?.map((product, i) => (
-                        <li key={i}>
-                            <div className='text-[22px] font-semibold leading-[100%] tracking-[-0.01em] flex items-center justify-between'>
-                                <span>{product.name}</span>
-                            </div>
-                            <p className="font-semibold text-xs leading-[100%] price-wrapper mt-1">
-                                {parse(product.price)}
-                            </p>
-                        </li>
-                    ))}
-                </ul>
+                {
+                    (allProducts?.button_one?.label || allProducts?.button_two?.label) && <div className='flex flex-col items-start justify-start bg-[#f0f0f0] mt-6 gap-2 p-6'>
+                        {allProducts?.button_one?.label && <button>
+                            <Link href={''} className='text-black/75 font-semibold flex items-center gap-1'>
+                                <span className='inline-block'>
+                                    {allProducts?.button_one.label}
+                                </span>
+                                <svg width="16" height="16" className='font-semibold' viewBox="0 0 24 24" fill="none">
+                                    <path d="M19 5L5 19M19 5H6.4M19 5V17.6" stroke="#000000BF" strokeWidth="3" />
+                                </svg>
+                            </Link>
+                        </button>}
+                        {allProducts?.button_two?.label && <button>
+                            <Link href={''} className='text-black/75 font-semibold flex items-center gap-1'>
+                                <span className='inline-block'>
+                                    {allProducts?.button_two.label}
+                                </span>
+                                <svg width="16" height="16" className='font-semibold' viewBox="0 0 24 24" fill="none">
+                                    <path d="M19 5L5 19M19 5H6.4M19 5V17.6" stroke="#000000BF" strokeWidth="3" />
+                                </svg>
+                            </Link>
+                        </button>}
+                    </div>
+                }
             </div>
         </>
     );

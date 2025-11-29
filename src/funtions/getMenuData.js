@@ -9,12 +9,13 @@ export const getMenuItems = async () => {
                 {
                     name: item?.title ?? "",
                     href: item?.url ?? "#",
-                    button_one: item?.button_one ?? null,
-                    button_two: item?.button_two ?? null,
+
                     sublinks: Array.isArray(item?.children)
                         ? item.children.map((child) => ({
                             name: child?.title ?? "",
                             id: child?.id ?? null,
+                            button_one: child?.button_one ?? null,
+                            button_two: child?.button_two ?? null,
                             products: child?.menu_products ?? []
                         }))
                         : [],
