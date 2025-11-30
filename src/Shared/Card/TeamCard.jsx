@@ -22,7 +22,7 @@ const TeamCard = ({ member }) => {
     const missions = memberData["quelles_sont_vos_missions_"];
     const role = memberData["vous_pouvez_decrire_en_quelques_mots_ce_que_vous_appreciez_dans_votre_role_"];
     const last_line = memberData["vous_pouvez_partagez_une_anecdote_un_souvenir_ou_un_moment_marquant_vecu_chez_foil_and_co_"];
-    console.log(member);
+
 
     const [isOpen, setOpen] = useState(false);
 
@@ -74,7 +74,7 @@ const TeamCard = ({ member }) => {
 
 
             <PopUp isOpen={isOpen}>
-                <div className='w-[90%] mx-auto bg-white/95 max-w-[1280px] h-[80%] flex lg:flex-row flex-col items-stretch justify-center rounded-3xl overflow-hidden shadow-xl'>
+                <div className='w-[90%] mx-auto bg-white/95 max-w-[1280px] lg:h-[80%] h-fit flex lg:flex-row flex-col items-stretch justify-center rounded-3xl overflow-hidden shadow-xl'>
                     <div className='lg:w-1/2 w-full h-full lg:py-10 py-5 lg:px-5 px-5 relative'>
                         <h2 className='global-h2 uppercase'>
                             <span>{first_name} </span>
@@ -93,18 +93,23 @@ const TeamCard = ({ member }) => {
                                     {missions}
                                 </p>
                             </div>
-                            <div className='mt-4'>
-                                <p className='text-base uppercase'>Ce que vous aimez dans votre rôle</p>
-                                <p className='text-base leading-[24px] text-gray-500 mt-1'>
-                                    {role}
-                                </p>
-                            </div>
-                            <div className='mt-4'>
-                                <p className='text-base uppercase'>Un souvenir marquant chez Foil And Co.</p>
-                                <p className='text-base leading-[24px] text-gray-500 mt-1'>
-                                    {last_line}
-                                </p>
-                            </div>
+                            {
+                                role &&
+                                <div className='mt-4'>
+                                    <p className='text-base uppercase'>Ce que vous aimez dans votre rôle</p>
+                                    <p className='text-base leading-[24px] text-gray-500 mt-1'>
+                                        {role}
+                                    </p>
+                                </div>
+                            }
+                            {
+                                last_line && <div className='mt-4'>
+                                    <p className='text-base uppercase'>Un souvenir marquant chez Foil And Co.</p>
+                                    <p className='text-base leading-[24px] text-gray-500 mt-1'>
+                                        {last_line}
+                                    </p>
+                                </div>
+                            }
                             <div className='mt-4 flex items-center gap-4'>
                                 {
                                     email && <a href={`mailto:${email}`}>

@@ -11,14 +11,22 @@ const Ambassedor = ({ categories, countries }) => {
     const [countryName, setCountryName] = useState("COUNTRY");
     // Discipline
     const [activeTab, setActiveTab] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const load = async () => {
             const allData = await allAmbassadors(activeTab, country);
             setData(allData);
+            setLoading(false);
         };
         load();
     }, [activeTab, country]);
+
+    if (loading) {
+        return <div className='h-[400px] w-full flex items-center justify-center'>
+            <p className='text-3xl text-center'>Loading....</p>
+        </div>
+    }
 
     return (
         <div>
