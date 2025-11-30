@@ -229,7 +229,7 @@ const Navbar = ({ NAV_LINKS }) => {
                                                 </div>
                                             </div>
                                             {
-                                                (allProducts?.button_one?.label || allProducts?.button_two?.label) && <div className='flex items-center justify-center gap-10 py-6 border-t border-black/75'>
+                                                (allProducts?.button_one?.label || allProducts?.button_two?.label) && <div className='flex items-center justify-center gap-10 py-6 border-t border-gray-500'>
                                                     {allProducts?.button_one?.label && <button>
                                                         <Link href={''} className='text-black/75 font-semibold flex items-center gap-1'>
                                                             <span className='inline-block'>
