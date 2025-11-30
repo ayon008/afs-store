@@ -12,6 +12,7 @@
     "@gsap/react": "^2.1.2",
     "@paypal/checkout-server-sdk": "^1.0.3",
     "@paypal/react-paypal-js": "^8.9.2",
+    "@react-google-maps/api": "^2.20.7",
     "@woocommerce/woocommerce-rest-api": "^1.0.2",
     "dompurify": "^3.3.0",
     "flag-icons": "^7.5.0",
