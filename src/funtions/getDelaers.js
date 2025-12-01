@@ -53,9 +53,37 @@ export const getDealers = async (selectedId) => {
 
 
 export const getDealerType = async () => {
-    const response = await fetch(`${process.env.WP_BASE_URL}/wp-json/wp/v2/afs-dealers-type?per_page=100`, {
-        next: { revalidate: 3600 }
-    })
-    const data = await response.json();
-    return data;
-}
+    const BASE = process.env.WP_BASE_URL;
+
+    if (!BASE) {
+        console.error("❌ WP_BASE_URL is missing in environment variables");
+        return []; // safe fallback
+    }
+
+    try {
+        const res = await fetch(
+            `${BASE}/wp-json/wp/v2/afs-dealers-type?per_page=100`,
+            {
+                next: { revalidate: 3600 }, // ISR cache
+            }
+        );
+
+        if (!res.ok) {
+            console.error("❌ Failed to fetch dealer types:", res.status, res.statusText);
+            return [];
+        }
+
+        const data = await res.json();
+
+        // Validate data is actually an array
+        if (!Array.isArray(data)) {
+            console.error("❌ Unexpected response format for dealer types:", data);
+            return [];
+        }
+
+        return data;
+    } catch (error) {
+        console.error("❌ Error fetching dealer types:", error);
+        return []; // production-safe fallback
+    }
+};
