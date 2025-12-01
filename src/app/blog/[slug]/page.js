@@ -172,7 +172,7 @@ const page = async ({ params }) => {
                     width={1264}
                     height={780}
                     priority
-                    className="object-cover w-full aspect-[1264/780] max-h-[780px] object-center"
+                    className="object-cover w-full aspect-[1264/780] max-h-[780px] min-h-screen object-center"
                 />
                 <BreadCums />
                 <div className='absolute inset-0 bg-black/40 z-10  backdrop-blur-[4px]'></div>

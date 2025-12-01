@@ -119,6 +119,33 @@ html {
 }
 
 
+[role="dialog"] {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0px !important;
+  border-radius: 4px !important;
+}
+
+[role="dialog"] > .gm-style-iw-ch {
+  display: none !important;
+}
+
+[role="dialog"] > [draggable="false"] {
+  display: none !important;
+}
+
+.gm-style-iw-chr {
+  display: none !important;
+}
+
+.gm-style-iw-tc{
+  display: none !important;
+}
+
+.gm-style-iw-d{
+  overflow: hidden !important;
+  /* border-radius: 4px !important; */
+}
 
 /* Chrome */
 .scroll-bar::-webkit-scrollbar {
