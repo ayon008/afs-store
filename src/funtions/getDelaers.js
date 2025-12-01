@@ -1,5 +1,6 @@
-"use server"
-export const getDealers = async () => {
+"use server";
+
+export const getDealers = async (selectedId) => {
     try {
         const baseUrl = process.env.WP_BASE_URL;
 
@@ -8,34 +9,53 @@ export const getDealers = async () => {
             return [];
         }
 
-        const response = await fetch(
-            `${baseUrl}/wp-json/wp/v2/dealer?per_page=100&_embed`,
-            {
-                next: { revalidate: 3600 },
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                cache: "force-cache"
-            }
-        );
+        let allDealers = [];
+        const perPage = 100;
 
-        if (!response.ok) {
-            console.error(
-                `❌ WordPress API Error: ${response.status} ${response.statusText}`
+
+
+
+        for (let page = 1; ; page++) {
+            const url = selectedId
+                ? `${baseUrl}/wp-json/wp/v2/dealer?_embed&afs-dealers-type=${selectedId}&per_page=${perPage}&page=${page}`
+                : `${baseUrl}/wp-json/wp/v2/dealer?per_page=${perPage}&page=${page}&_embed`;
+
+            const response = await fetch(
+                url,
+                {
+                    next: { revalidate: 3600 },
+                    headers: { "Content-Type": "application/json" },
+                    cache: "force-cache"
+                }
             );
-            return [];
+
+            // If no more pages or error at high page
+            if (!response.ok) break;
+
+            const batch = await response.json();
+
+            if (!Array.isArray(batch) || batch.length === 0) break;
+
+            allDealers = [...allDealers, ...batch];
+
+            // If less than the page size, means no more pages
+            if (batch.length < perPage) break;
         }
 
-        const data = await response.json();
+        return allDealers;
 
-        if (!Array.isArray(data)) {
-            console.error("❌ Unexpected response format from WP API:", data);
-            return [];
-        }
-
-        return data;
     } catch (error) {
         console.error("❌ getDealers(): Unexpected Error", error);
         return [];
     }
 };
+
+
+
+export const getDealerType = async () => {
+    const response = await fetch(`${process.env.WP_BASE_URL}/wp-json/wp/v2/afs-dealers-type?per_page=100`, {
+        next: { revalidate: 3600 }
+    })
+    const data = await response.json();
+    return data;
+}

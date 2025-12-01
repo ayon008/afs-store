@@ -1,13 +1,21 @@
 "use client"
+import { getDealerType } from '@/funtions/getDelaers';
 import { ChevronDown } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const DropDown = () => {
+const DropDown = ({ selectedId, setSelectedId }) => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-    const items = ["ALL", "Advance dealers", "Company", "Dealers", "Schools"];
     const [selected, setSelected] = useState("ALL");
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        const load = async () => {
+            const data = await getDealerType();
+            setCategories(data);
+        }
+        load();
+    }, [])
 
 
     return (
@@ -15,7 +23,7 @@ const DropDown = () => {
             <button
                 className={`
       w-full flex items-center justify-between gap-2
-      p-[10px] font-bold text-[15px] leading-[20px] cursor-pointer transition-colors border bg-white border-gray-400 rounded-[4px]
+      p-[10px] font-bold text-[15px] leading-[20px] uppercase cursor-pointer transition-colors border bg-white border-gray-400 rounded-[4px]
     `}
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             >
@@ -28,16 +36,27 @@ const DropDown = () => {
 
             {isDropdownOpen && (
                 <div className="absolute left-0 w-full shadow-lg z-40 rounded-[4px]">
-                    {items.map((item, i) => (
+                    <button
+                        onClick={() => {
+                            setSelected("All")
+                            setSelectedId(null)
+                            setIsDropdownOpen(false)
+                        }}
+                        className={`w-full text-left p-[10px] font-bold text-[15px] leading-[20px] uppercase cursor-pointer transition-colors ${!selectedId ? 'bg-black text-white' : "bg-white text-black"}`}
+                    >
+                        All
+                    </button>
+                    {categories.map((item, i) => (
                         <button
                             key={i}
                             onClick={() => {
-                                setSelected(item)
+                                setSelected(item.name)
+                                setSelectedId(item.id)
                                 setIsDropdownOpen(false)
                             }}
-                            className={`w-full text-left p-[10px] font-bold text-[15px] leading-[20px] cursor-pointer transition-colors ${item === selected ? 'bg-black text-white' : "bg-white text-black"}`}
+                            className={`w-full text-left p-[10px] font-bold text-[15px] uppercase leading-[20px] cursor-pointer transition-colors ${item.name === selected ? 'bg-black text-white' : "bg-white text-black"}`}
                         >
-                            {item}
+                            {item.name}
                         </button>
                     ))}
                 </div>

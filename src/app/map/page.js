@@ -25,7 +25,8 @@ const BreadCums = () => {
 }
 
 
-const page = () => {
+const page = async () => {
+    
     return (
         <div className='bg-white global-padding relative pt-4'>
             <div>
