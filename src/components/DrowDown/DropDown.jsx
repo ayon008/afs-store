@@ -19,7 +19,7 @@ const DropDown = ({ selectedId, setSelectedId }) => {
 
 
     return (
-        <div className="relative mt-2 lg:mt-0 w-[300px] rounded-[4px] cursor-pointer bg-white"> {/* fix width to match dropdown */}
+        <div className="relative mt-2 lg:mt-0 lg:w-[300px] w-full rounded-[4px] cursor-pointer bg-white/95"> {/* fix width to match dropdown */}
             <button
                 className={`
       w-full flex items-center justify-between gap-2

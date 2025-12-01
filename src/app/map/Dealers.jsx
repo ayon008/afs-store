@@ -171,60 +171,62 @@ const Dealers = () => {
             </div>
             {/* Map */}
             <div className='rounded-[4px] overflow-hidden relative z-10'>
-                <GoogleMap
-                    mapContainerStyle={containerStyle}
-                    zoom={5}
-                    options={{
-                        styles: mapStyle,
-                        mapTypeControl: false,
-                        minZoom: 4,
-                        maxZoom: 8,
-                        gestureHandling: "greedy"
-                    }}
-                    onLoad={(map) => {
-                        mapRef.current = map;
-                        try {
-                            map.setCenter(center);
-                            map.setZoom(5);
-                        } catch (e) {
-                            console.error('Failed to set center on load', e);
-                        }
-                    }}
-                >
-                    {locations.map((loc) => {
-                        const color = getColorByCategory(loc.category);
-                        const isActive = shop_name === loc?.shop_name;
-                        const svg = getMarkerSvg(color, isActive);
+                <div className='lg:h-[500px] overflow-hidden h-[390px]'>
+                    <GoogleMap
+                        mapContainerStyle={containerStyle}
+                        zoom={5}
+                        options={{
+                            styles: mapStyle,
+                            mapTypeControl: false,
+                            minZoom: 4,
+                            maxZoom: 8,
+                            gestureHandling: "greedy"
+                        }}
+                        onLoad={(map) => {
+                            mapRef.current = map;
+                            try {
+                                map.setCenter(center);
+                                map.setZoom(5);
+                            } catch (e) {
+                                console.error('Failed to set center on load', e);
+                            }
+                        }}
+                    >
+                        {locations.map((loc) => {
+                            const color = getColorByCategory(loc.category);
+                            const isActive = shop_name === loc?.shop_name;
+                            const svg = getMarkerSvg(color, isActive);
 
-                        return (
-                            <>
-                                <Marker
-                                    key={loc.id}
-                                    position={{ lat: loc.lat, lng: loc.lng }}
-                                    icon={{
-                                        url: "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg),
-                                        scaledSize: new window.google.maps.Size(32, 32),
-                                    }}
-                                    zIndex={isActive ? 9999 : undefined}
-                                    animation={isActive ? window.google.maps.Animation.BOUNCE : undefined}
-                                    optimized={false}
-                                    onClick={() => handleClick(loc.shop_name, loc.lat, loc.lng)}
-                                />
-                                {selectedShop === loc.shop_name && (
-                                    <InfoWindow position={{ lat: loc.lat, lng: loc.lng }} options={{
-                                        pixelOffset: new window.google.maps.Size(0, -30) // move up
-                                    }} onCloseClick={() => setSelectedShop("")}>
-                                        {/* <div className='text-sm font-semibold'>{loc.shop_name}</div> */}
-                                        <div className='text-white bg-[#1D98FF] p-1 w-[180px]'>
-                                            <p className='text-lg leading-[22px] font-bold text-center'>{loc?.shop_name}</p>
-                                        </div>
-                                    </InfoWindow>
-                                )}
-                            </>
-                        );
-                    })}
-                </GoogleMap>
-                <div className='z-20 top-8 left-4 absolute max-w-[385px] w-full bg-transparent h-[380px]'>
+                            return (
+                                <>
+                                    <Marker
+                                        key={loc.id}
+                                        position={{ lat: loc.lat, lng: loc.lng }}
+                                        icon={{
+                                            url: "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg),
+                                            scaledSize: new window.google.maps.Size(32, 32),
+                                        }}
+                                        zIndex={isActive ? 9999 : undefined}
+                                        animation={isActive ? window.google.maps.Animation.BOUNCE : undefined}
+                                        optimized={false}
+                                        onClick={() => handleClick(loc.shop_name, loc.lat, loc.lng)}
+                                    />
+                                    {selectedShop === loc.shop_name && (
+                                        <InfoWindow position={{ lat: loc.lat, lng: loc.lng }} options={{
+                                            pixelOffset: new window.google.maps.Size(0, -30) // move up
+                                        }} onCloseClick={() => setSelectedShop("")}>
+                                            {/* <div className='text-sm font-semibold'>{loc.shop_name}</div> */}
+                                            <div className='text-white bg-[#1D98FF] p-1 w-[180px]'>
+                                                <p className='text-lg leading-[22px] font-bold text-center'>{loc?.shop_name}</p>
+                                            </div>
+                                        </InfoWindow>
+                                    )}
+                                </>
+                            );
+                        })}
+                    </GoogleMap>
+                </div>
+                <div className='z-20 lg:top-8 lg:left-4 lg:absolute lg:max-w-[385px] lg:mt-0 mt-10 w-full bg-transparent lg:h-[380px] h-[420px]'>
                     <div className='w-full bg-black py-[12.5px] px-5 rounded-[4px]'>
                         <h3 className='font-bold text-white text-[28px]'>Nombre de magasins:</h3>
                     </div>

@@ -33,7 +33,7 @@ const page = async () => {
                 <BreadCums />
                 <div className='lg:my-[80px] my-[40px]'>
                     <h1 className='global-h1 text-center relative'>Nos partenaires</h1>
-                    <p className='text-center mt-4 w-[35%] text-lg leading-[22px] font-semibold text-[#111111bf] mx-auto'>Faites l’expérience de la qualité de nos produits en les découvrant chez les revendeurs locaux de confiance de votre région.</p>
+                    <p className='text-center mt-4 lg:w-[35%] w-full text-lg leading-[22px] font-semibold text-[#111111bf] mx-auto'>Faites l’expérience de la qualité de nos produits en les découvrant chez les revendeurs locaux de confiance de votre région.</p>
                 </div>
             </div>
             <Dealers />
