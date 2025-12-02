@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import Events from "../afs-events/Events"
+import FeatureBar from '../../constants/FeatureBar';
 
 export const metadata = {
     title: 'AFS EVENTS - FRANCE US UK EU - AFS',
@@ -27,13 +28,16 @@ const BreadCums = () => {
 
 const page = async () => {
     return (
-        <div className='bg-[#111111] global-padding relative pt-4 min-h-screen text-white'>
-            <BreadCums />
-            <div className='lg:my-[80px] my-[40px]'>
-                <h1 className='global-h1 text-center relative'>AFS Events</h1>
-                <p className='text-center mt-4 lg:w-[40%] w-full text-lg leading-[22px] font-semibold mx-auto'>Découvrez tous les événements de nos marques, organisés par AFS.</p>
+        <div>
+            <div className='bg-[#111111] global-padding relative pt-4 min-h-screen text-white'>
+                <BreadCums />
+                <div className='lg:mt-[80px] mt-[40px] global-margin'>
+                    <h1 className='global-h1 text-center relative'>AFS Events</h1>
+                    <p className='text-center mt-4 lg:w-[40%] w-full text-lg leading-[22px] font-semibold mx-auto'>Découvrez tous les événements de nos marques, organisés par AFS.</p>
+                </div>
+                <Events />
             </div>
-            <Events />
+            <FeatureBar />
         </div>
     );
 };
