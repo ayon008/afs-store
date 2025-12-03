@@ -2,7 +2,7 @@
 import { Eye, EyeOff } from 'lucide-react';
 import React, { useState } from 'react';
 
-const Password = ({ label, id, placeholder, register, error }) => {
+const Password = ({ label, id, placeholder, register, error, value }) => {
 
     const [type, setType] = useState("password");
 
