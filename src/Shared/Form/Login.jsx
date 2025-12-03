@@ -23,7 +23,7 @@ const Login = () => {
             onSubmit={handleSubmit(onSubmit)}
             className='max-w-[420px] w-full py-[50px] px-[35px] bg-[#F0F0F0] rounded-[4px]'
         >
-            <h1 className='lg:text-5xl lg:leading-[53px] font-bold mb-8'>Se connecter</h1>
+            <h1 className='lg:text-5xl lg:leading-[53px] font-bold mb-8 text-2xl leading-[26px] lg:text-left text-center'>Se connecter</h1>
 
             <div className='mb-7'>
                 <Input
@@ -35,7 +35,6 @@ const Login = () => {
                     error={errors.email?.message}
                 />
             </div>
-
             <div className='mb-4'>
                 <Password
                     label='Mot de passe'
@@ -60,7 +59,7 @@ const Login = () => {
             <div className='mt-6'>
                 <p className='text-[15px] leading-[19px] text-center mb-4'>New to the website?</p>
                 <div className='flex items-center justify-center'>
-                    <Link href='/register'>
+                    <Link href='/signup'>
                         <FormButton label='sign up' />
                     </Link>
                 </div>

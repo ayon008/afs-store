@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import Login from "../../Shared/Form/Login"
+import FeatureBar from '../../constants/FeatureBar';
 
 export const metadata = {
   title: "Mon compte | AFS Store",
@@ -27,11 +28,14 @@ const BreadCums = () => {
 
 const page = async () => {
   return (
-    <div className='pt-4 global-padding bg-white/95 min-h-screen'>
-      <BreadCums />
-      <div className='flex items-center justify-center lg:mt-[80px] mt-[40px] global-margin'>
-        <Login />
+    <div>
+      <div className='pt-4 global-padding bg-white/95 min-h-screen'>
+        <BreadCums />
+        <div className='flex items-center justify-center lg:mt-[80px] mt-[40px] global-margin'>
+          <Login />
+        </div>
       </div>
+      <FeatureBar />
     </div>
   );
 };
