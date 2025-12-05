@@ -5,17 +5,28 @@ import Password from "../Input/Password"
 import FormButton from "../Button/FormButton"
 import Link from 'next/link';
 import { useForm } from "react-hook-form";
+import { loginUser } from "../../funtions/getRegisterStoreUser"
+
 
 const Login = () => {
 
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors }
     } = useForm();
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         console.log("FORM DATA:", data);
+        const { email, password } = data;
+        try {
+            const response = await loginUser({ username: email, password: password });
+            console.log(response);
+            reset();
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -23,7 +34,7 @@ const Login = () => {
             onSubmit={handleSubmit(onSubmit)}
             className='max-w-[420px] w-full py-[50px] px-[35px] bg-[#F0F0F0] rounded-[4px]'
         >
-            <h1 className='lg:text-5xl lg:leading-[53px] font-bold mb-8 text-2xl leading-[26px] lg:text-left text-center'>Se connecter</h1>
+            <h1 className='lg:text-5xl lg:leading-[53px] font-bold mb-8 text-2xl leading-[26px] text-center'>Se connecter</h1>
 
             <div className='mb-7'>
                 <Input

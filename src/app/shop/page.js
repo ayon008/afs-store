@@ -1,1 +1,13 @@
-export default function Page() { return <h1>Shop Listing (Dynamic from WooCommerce API)</h1>; }
+
+import React from 'react';
+
+
+const page = () => {
+    return (
+        <div>
+
+        </div>
+    );
+};
+
+export default page;

@@ -176,7 +176,7 @@ const page = async ({ params }) => {
                 />
                 <BreadCums />
                 <div className='absolute inset-0 bg-black/40 z-10  backdrop-blur-[4px]'></div>
-                <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 w-full p-8 text-white gap-10 mb-20 flex items-start justify-between global-padding">
+                <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 w-full p-8 text-white gap-10 mb-20 flex lg:flex-row flex-col items-start justify-between global-padding">
                     <h1 className="global-h1">
                         {blogTitle}
                     </h1>

@@ -1,8 +1,7 @@
 'use client';
-
-import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import FormButton from "../Shared/Button/FormButton"
 
 // Helper function to format price
 const formatPrice = (price) => {
@@ -11,7 +10,7 @@ const formatPrice = (price) => {
 
   // Convert the price to a clean string first
   let cleanPrice = price;
-  
+
   // If it's HTML content, clean it up
   if (typeof price === 'string') {
     // Remove HTML tags
@@ -46,16 +45,17 @@ export default function ProjectCard({
   hoverImage = null,
   slug,
   category = 'VERSATILITY',
-  price = null,
-  bestseller = null,
+  price = 1000,
+  bestseller = "",
+  alt
 }) {
   const productLink = `/product/${slug || name.toLowerCase().replace(/\s+/g, '-')}`;
   return (
-    <div className="group w-full max-w-[24rem] bg-white overflow-hidden rounded-none shadow-sm flex flex-col mx-auto">
+    <div className="group w-full max-w-[24rem] bg-[#F7F7F7] shadow-sm flex flex-col justify-between mx-auto rounded-[4px] overflow-hidden h-auto">
       {/* Image Section */}
-      <Link href={productLink} className="block">
+      <Link href={productLink} className="block h-[351px]">
         <div
-          className="relative w-full aspect-[4/5] overflow-hidden flex items-center justify-center bg-white"
+          className="relative w-full aspect-[4/5] h-full overflow-hidden flex items-center justify-center"
           onFocus={(e) => {
             const hoverImg = e.currentTarget.querySelector('[data-hover-img]');
             if (hoverImg) hoverImg.classList.remove('opacity-0');
@@ -68,10 +68,10 @@ export default function ProjectCard({
           {/* Base Image */}
           <Image
             src={image}
-            alt={name}
+            alt={alt || name}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-contain absolute inset-0 transition-transform duration-500 ease-in-out"
+            className="object-cover absolute inset-0 transition-transform duration-500 ease-in-out pt-8"
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = 'https://placehold.co/600x600/E0E0E0/000000?text=Image+Load+Error';
@@ -83,10 +83,10 @@ export default function ProjectCard({
             <Image
               src={hoverImage}
               data-hover-img
-              alt={`${name} - hover`}
+              alt={`${alt || name} - hover`}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-contain absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
+              className="object-cover absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
               onError={(e) => {
                 e.target.onerror = null;
                 e.target.classList.add('opacity-0');
@@ -98,39 +98,27 @@ export default function ProjectCard({
           {/* Label (Bestseller / Category) */}
           {bestseller && (
             <div className="absolute top-2 left-2 z-10">
-              <span className="inline-block px-2 py-1 bg-gray-100 text-black text-xs font-semibold uppercase tracking-wider">
+              <span className="inline-block px-2 py-1 bg-[#E6E6E6] text-black text-xs font-semibold uppercase tracking-wider">
                 {bestseller}
               </span>
             </div>
           )}
         </div>
       </Link>
-
       {/* Text Section */}
-      <div className="flex flex-col justify-between flex-1 px-4 pt-3 pb-4 text-center min-h-[200px]">
+      <div className="flex flex-col flex-1 px-4 mt-10 gap-5 pb-4 text-center">
         <div className="flex-1">
-          <p className="text-xs sm:text-sm font-semibold uppercase text-gray-500 mb-1 tracking-wider">
-            {category}
-          </p>
-          <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold uppercase text-black mb-1 mt-2 tracking-tight break-words min-h-[3rem] flex items-center justify-center">
+          <h2 className="text-base uppercase leading-[20px] font-bold">
             {name}
           </h2>
-          <p className="text-sm sm:text-base md:text-lg font-medium text-black mb-2 break-words min-h-[1.5rem] flex items-center justify-center">
+          <p className="text-base leading-[100%] text-[#111111bf] font-bold mt-1">
             {price ? formatPrice(price) : ""}
           </p>
         </div>
-
-        <div className="mt-auto pt-4">
-          <Link href={productLink}>
-            <button
-              className="px-4 py-1.5 sm:px-6 sm:py-2 bg-black text-white font-bold uppercase text-xs sm:text-sm tracking-widest transition-colors duration-200 hover:bg-gray-800 rounded-md w-full sm:w-auto min-w-[120px]"
-              aria-label={`Discover ${name}`}
-            >
-              Discover
-            </button>
-          </Link>
+        <div className="">
+          <FormButton label={'DISCOVER'} />
         </div>
       </div>
-    </div>
+    </div >
   );
 }

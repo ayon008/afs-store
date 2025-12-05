@@ -149,9 +149,9 @@ const BlogContent = ({ blog }) => {
     // {h.id === activeId ? <ArrowRight className='inline mb-1' size={'1.2rem'} /> : <></>}
 
     return (
-        <section ref={blogRef} className='max-w-[1600px] mx-auto flex gap-10 blog-section'>
+        <section ref={blogRef} className='max-w-[1600px] mx-auto flex lg:flex-row flex-col gap-10 blog-section'>
             {/* Navigation */}
-            <div className='w-72 h-fit' ref={stickyRef}>
+            <div className='lg:w-72 w-full h-fit' ref={stickyRef}>
                 <ul className="space-y-6">
                     {
                         heading.map((h, i) => {

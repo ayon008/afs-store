@@ -5,6 +5,7 @@ import Input from "../Input/input";
 import FormButton from "../Button/FormButton";
 import Password from "../Input/Password";
 import Link from "next/link";
+import { registerStoreUser } from "@/funtions/getRegisterStoreUser";
 
 const Register = () => {
     const {
@@ -12,12 +13,25 @@ const Register = () => {
         handleSubmit,
         formState: { errors },
         watch,
+        reset
     } = useForm({
         mode: "onChange", // live validation
     });
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         console.log("FORM DATA:", data);
+        const { first_name, last_name, email, password } = data;
+        try {
+            const response = await registerStoreUser({
+                username: email, name: `${first_name + " " + last_name}`, first_name: first_name, last_name: last_name, email: email, password: password});
+            if (response.id) {
+                console.log(response);
+                return reset()
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     // watch values for live validation and "Ayon" display
@@ -31,7 +45,7 @@ const Register = () => {
             onSubmit={handleSubmit(onSubmit)}
             className="max-w-[420px] w-full py-[50px] px-[35px] bg-[#F0F0F0] rounded-[4px]"
         >
-            <h1 className="lg:text-5xl lg:leading-[53px] font-bold mb-8 text-2xl leading-[26px] lg:text-left text-center">
+            <h1 className="lg:text-5xl lg:leading-[53px] font-bold mb-8 text-2xl leading-[26px] text-center">
                 S’inscrire
             </h1>
 
