@@ -2,6 +2,9 @@ import React from 'react';
 import default_image from "../../../assets/images/GWEN-WB-D-lite-1024x573.png.webp"
 import ProjectCard from '../../../components/ProjectCard';
 import { getParentCategory, getProductsByCategoryId } from "../../../funtions/getWooCommerce"
+import Ranger from "../../../Shared/Ranger/Ranger"
+
+
 import Link from 'next/link';
 
 const page = async ({ params }) => {
@@ -52,8 +55,10 @@ const page = async ({ params }) => {
                 </div>
             </div>
             <div className='flex items-start justify-center lg:flex-row flex-col-reverse global-padding'>
-                <div className='lg:w-[20%] w-full'></div>
-                <div className='grid xl:grid-cols-3 3xl:grid-cols-5 2xl:grid-cols-4 lg:gap-6 gap-4 lg:w-[80%] w-full grid-cols-2 max-w-[1920px] mx-auto global-margin'>
+                <div className='lg:w-[20%] w-full'>
+                    <Ranger />
+                </div>
+                <div className='grid xl:grid-cols-3 3xl:grid-cols-5 2xl:grid-cols-4 lg:grid-cols-3 lg:gap-6 gap-4 lg:w-[80%] w-full grid-cols-2 max-w-[1920px] mx-auto global-margin'>
                     {
                         productData?.map((product) => {
                             const { images } = product;

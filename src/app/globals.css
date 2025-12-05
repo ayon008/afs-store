@@ -164,6 +164,22 @@ html {
 }
 
 
+.global-b-top {
+    border-top: 2px dashed #808080;
+    border-image: repeating-linear-gradient(to right, #808080 0, #808080 10px, transparent 10px, transparent 20px) 100%;
+    border-image-slice: 1;
+    border-width: 2px 0 0 0;
+}
+
+.global-b-bottom {
+   border-bottom: 2px solid;
+    border-image: repeating-linear-gradient(to right, #111111 0, #111111 10px, transparent 10px, transparent 20px) 100%;
+    border-image-slice: 1;
+    border-width: 2px;
+
+}
+
+
 /* Turn off horizontal scrolling */
 html,
 body {
