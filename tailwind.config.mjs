@@ -25,7 +25,7 @@ export default {
         'lg': '1025px',
         'xl': '1280px',
         '2xl': '1536px',
-        '3xl': '1700px',
+        '3xl': '2400px',
       },
       colors: {
         'primary': '#FFF',

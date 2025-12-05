@@ -51,32 +51,37 @@ export default function ProjectCard({
   type = "simple"
 }) {
   const productLink = `/product/${slug || name.toLowerCase().replace(/\s+/g, '-')}`;
-    
+
+  const cleanTitle = name
+    .replace(/ - Duplicate/g, "")
+    .replace(/ - \[#\d+\]/g, "")
+    .trim();
+
+
+  console.log(hoverImage, 'hoverImage');
+
+
+
   return (
-    <div className="group w-full max-w-[24rem] bg-[#F7F7F7] shadow-sm flex flex-col justify-between mx-auto rounded-[4px] overflow-hidden h-auto">
+    <div className="group w-full max-w-[24rem] bg-[#F7F7F7] flex flex-col justify-between mx-auto rounded-[4px] overflow-hidden h-auto">
       {/* Image Section */}
-      <Link href={productLink} className="block lg:h-[351px] h-[200px]">
-        <div
-          className="relative w-full aspect-[4/5] h-full overflow-hidden flex items-center justify-center"
-          onFocus={(e) => {
-            const hoverImg = e.currentTarget.querySelector('[data-hover-img]');
-            if (hoverImg) hoverImg.classList.remove('opacity-0');
-          }}
-          onBlur={(e) => {
-            const hoverImg = e.currentTarget.querySelector('[data-hover-img]');
-            if (hoverImg) hoverImg.classList.add('opacity-0');
-          }}
-        >
-          {/* Base Image */}
+      <Link href={productLink} className="block">
+        <div className="relative w-full aspect-[1] h-full overflow-hidden flex items-center justify-center group">
+
+          {/* Featured (default) Image */}
           <Image
             src={image}
             alt={alt || name}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover absolute inset-0 transition-transform duration-500 ease-in-out pt-8"
+            className={` object-contain absolute inset-0
+      opacity-100 ${hoverImage && "group-hover:opacity-0"}
+      transition-opacity duration-300
+      ease-[cubic-bezier(.19,1,.22,1)]`}
             onError={(e) => {
               e.target.onerror = null;
-              e.target.src = 'https://placehold.co/600x600/E0E0E0/000000?text=Image+Load+Error';
+              e.target.src =
+                'https://placehold.co/600x600/E0E0E0/000000?text=Image+Load+Error';
             }}
           />
 
@@ -84,20 +89,24 @@ export default function ProjectCard({
           {hoverImage && (
             <Image
               src={hoverImage}
-              data-hover-img
               alt={`${alt || name} - hover`}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-cover absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
+              className="
+        object-cover absolute inset-0
+        opacity-0 group-hover:opacity-100
+        transition-opacity duration-300
+        ease-[cubic-bezier(.19,1,.22,1)]
+      "
               onError={(e) => {
                 e.target.onerror = null;
                 e.target.classList.add('opacity-0');
               }}
-              aria-hidden={true}
+              aria-hidden="true"
             />
           )}
 
-          {/* Label (Bestseller / Category) */}
+          {/* Label */}
           {bestseller && (
             <div className="absolute top-2 left-2 z-10">
               <span className="inline-block px-2 py-1 bg-[#E6E6E6] text-black lg:text-xs text-[10px] font-semibold uppercase tracking-wider">
@@ -106,14 +115,15 @@ export default function ProjectCard({
             </div>
           )}
         </div>
+
       </Link>
       {/* Text Section */}
       <div className="flex flex-col flex-1 px-4 lg:mt-10 mt-4 gap-5 pb-4 text-center">
         <div className="flex-1">
-          <h2 className="text-base uppercase lg:leading-[20px] leading-[100%] font-bold">
-            {name}
+          <h2 className="text-[clamp(0.875rem,0.805rem+0.2667vw,1.125rem)] uppercase lg:leading-[20px] leading-[100%] font-bold">
+            {cleanTitle}
           </h2>
-          <p className="text-base leading-[100%] text-[#111111bf] font-bold mt-1">
+          <p className="text-[clamp(0.8125rem,0.76rem+0.2vw,1rem)] leading-[100%] text-[#111111bf] font-bold mt-1">
             {
               type === "simple" ? (price ? formatPrice(price) : "") : "From" + " " + (price ? formatPrice(price) : "")
             }
