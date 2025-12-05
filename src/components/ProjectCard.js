@@ -47,13 +47,15 @@ export default function ProjectCard({
   category = 'VERSATILITY',
   price = 1000,
   bestseller = "",
-  alt
+  alt,
+  type = "simple"
 }) {
   const productLink = `/product/${slug || name.toLowerCase().replace(/\s+/g, '-')}`;
+    
   return (
     <div className="group w-full max-w-[24rem] bg-[#F7F7F7] shadow-sm flex flex-col justify-between mx-auto rounded-[4px] overflow-hidden h-auto">
       {/* Image Section */}
-      <Link href={productLink} className="block h-[351px]">
+      <Link href={productLink} className="block lg:h-[351px] h-[200px]">
         <div
           className="relative w-full aspect-[4/5] h-full overflow-hidden flex items-center justify-center"
           onFocus={(e) => {
@@ -98,7 +100,7 @@ export default function ProjectCard({
           {/* Label (Bestseller / Category) */}
           {bestseller && (
             <div className="absolute top-2 left-2 z-10">
-              <span className="inline-block px-2 py-1 bg-[#E6E6E6] text-black text-xs font-semibold uppercase tracking-wider">
+              <span className="inline-block px-2 py-1 bg-[#E6E6E6] text-black lg:text-xs text-[10px] font-semibold uppercase tracking-wider">
                 {bestseller}
               </span>
             </div>
@@ -106,13 +108,15 @@ export default function ProjectCard({
         </div>
       </Link>
       {/* Text Section */}
-      <div className="flex flex-col flex-1 px-4 mt-10 gap-5 pb-4 text-center">
+      <div className="flex flex-col flex-1 px-4 lg:mt-10 mt-4 gap-5 pb-4 text-center">
         <div className="flex-1">
-          <h2 className="text-base uppercase leading-[20px] font-bold">
+          <h2 className="text-base uppercase lg:leading-[20px] leading-[100%] font-bold">
             {name}
           </h2>
           <p className="text-base leading-[100%] text-[#111111bf] font-bold mt-1">
-            {price ? formatPrice(price) : ""}
+            {
+              type === "simple" ? (price ? formatPrice(price) : "") : "From" + " " + (price ? formatPrice(price) : "")
+            }
           </p>
         </div>
         <div className="">

@@ -117,16 +117,13 @@ export const getProductsByCategoryId = async (ids) => {
 
         if (categories.length === 0) return [];
 
-        console.log(categories,'arr');
-        
-
         const firstCategory = categories[0];
         let allProducts = [];
         const per_page = 100;
 
         // 1️⃣ Fetch products only from first category
         for (let i = 1; ; i++) {
-            const url = `https://staging.afs-foiling.com/wp-json/wc/v3/products?category=${firstCategory}&status=publish&per_page=${per_page}&page=${i}`;
+            const url = `https://staging.afs-foiling.com/wp-json/wc/v3/products?category=${firstCategory}&status=publish&_fields=id,name,acf,images,slug,categories,price,regular_price,sale_price,type&per_page=${per_page}&page=${i}&lang=fr`;
 
             const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString("base64");
 
@@ -134,7 +131,8 @@ export const getProductsByCategoryId = async (ids) => {
                 headers: {
                     Authorization: `Basic ${auth}`,
                 },
-                cache: "default",
+                cache: "force-cache",
+                next: { revalidate: 3600 }
             });
 
             if (!response.ok) break;

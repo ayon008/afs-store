@@ -12,24 +12,34 @@ const page = async ({ params }) => {
     const productData = await getProductsByCategoryId(category?.id);
 
     const BreadCums = () => {
+        let path = "/category-product";
+
         return (
             <div className='uppercase'>
                 <div className='font-bold text-sm text-white'>
-                    <Link className='inline' href={'/'}>Accueil</Link>  {
-                        slug?.map((slug, i) => {
-                            return (
-                                <span className='uppercase' key={i}> / {slug.split("-").join(" ")}</span>
-                            )
-                        })
-                    }
+                    <Link className='inline' href="/">Accueil</Link>
+
+                    {slug?.map((singleSlug, i) => {
+                        path = path + `/${singleSlug}`
+                        return (
+                            <Link
+                                key={i}
+                                href={path}
+                                className="uppercase inline"
+                            >
+                                {" / "}{singleSlug.split("-").join(" ")}
+                            </Link>
+                        );
+                    })}
                 </div>
             </div>
-        )
-    }
+        );
+    };
+
 
     return (
         <div>
-            <div className='h-[620px] w-full relative global-margin'
+            <div className='lg:h-[620px] h-[485px] w-full relative global-margin bg-center'
                 style={{ backgroundImage: `url(${image})` }}
             >
                 <div className='global-padding pt-4 max-w-[1920px] mx-auto'>
@@ -41,16 +51,15 @@ const page = async ({ params }) => {
                     </div>
                 </div>
             </div>
-            <div className='flex items-start justify-center global-padding'>
-                <div className='w-[20%]'></div>
-                <div className='grid xl:grid-cols-3 3xl:grid-cols-5 2xl:grid-cols-4 gap-6 w-[80%] max-w-[1920px] mx-auto global-margin'>
+            <div className='flex items-start justify-center lg:flex-row flex-col-reverse global-padding'>
+                <div className='lg:w-[20%] w-full'></div>
+                <div className='grid xl:grid-cols-3 3xl:grid-cols-5 2xl:grid-cols-4 lg:gap-6 gap-4 lg:w-[80%] w-full grid-cols-2 max-w-[1920px] mx-auto global-margin'>
                     {
                         productData?.map((product) => {
                             const { images } = product;
                             const bestseller = product?.acf?.bestseller;
-
                             return (
-                                <ProjectCard name={product?.name} bestseller={bestseller} hoverImage={images[1]?.src} image={images[0]?.src} key={product?.id} />
+                                <ProjectCard price={product?.price} type={product?.type} name={product?.name} bestseller={bestseller} hoverImage={images[1]?.src} image={images[0]?.src} key={product?.id} />
                             )
                         })
                     }
