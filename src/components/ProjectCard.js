@@ -63,7 +63,7 @@ export default function ProjectCard({
 
 
   return (
-    <div className="group w-full max-w-[24rem] bg-[#F7F7F7] flex flex-col justify-between mx-auto rounded-[4px] overflow-hidden h-auto">
+    <div className="group w-full bg-[#F7F7F7] flex flex-col justify-between mx-auto rounded-[4px] overflow-hidden h-auto">
       {/* Image Section */}
       <Link href={productLink} className="block">
         <div className="relative w-full aspect-[1] h-full overflow-hidden flex items-center justify-center group">
@@ -118,7 +118,7 @@ export default function ProjectCard({
 
       </Link>
       {/* Text Section */}
-      <div className="flex flex-col flex-1 px-4 lg:mt-10 mt-4 gap-5 pb-4 text-center">
+      <div className="flex flex-col flex-1 px-4 mt-[10px] gap-5 pb-4 text-center">
         <div className="flex-1">
           <h2 className="text-[clamp(0.875rem,0.805rem+0.2667vw,1.125rem)] uppercase lg:leading-[20px] leading-[100%] font-bold">
             {cleanTitle}

@@ -7,12 +7,23 @@ import Ranger from "../../../Shared/Ranger/Ranger"
 
 import Link from 'next/link';
 
-const page = async ({ params }) => {
+const page = async ({ params, searchParams }) => {
+    // Catch All Route
     const { slug } = params;
+    // Destructuring the params from slug
     const [parent, ...children] = slug;
+
+    // Getting the Category details by the slug
     const category = await getParentCategory(slug[slug?.length - 1].toLowerCase());
     const image = category?.image?.src || default_image;
-    const productData = await getProductsByCategoryId(category?.id);
+    let productData = await getProductsByCategoryId(category?.id);
+    const maxPrice = Math.max(...productData.map(p => p?.price));
+    const minPrice = Math.min(...productData.map(p => p?.price));
+
+    const { min = null, max = null } = await searchParams;
+
+    productData = await getProductsByCategoryId(category?.id, max, min);
+
 
     const BreadCums = () => {
         let path = "/category-product";
@@ -42,7 +53,7 @@ const page = async ({ params }) => {
 
     return (
         <div>
-            <div className='lg:h-[620px] h-[485px] w-full relative global-margin bg-center'
+            <div className='lg:h-[620px] h-[485px] w-full relative global-margin bg-no-repeat bg-cover bg-center'
                 style={{ backgroundImage: `url(${image})` }}
             >
                 <div className='global-padding pt-4 max-w-[1920px] mx-auto'>
@@ -54,11 +65,11 @@ const page = async ({ params }) => {
                     </div>
                 </div>
             </div>
-            <div className='flex items-start justify-center lg:flex-row flex-col-reverse global-padding'>
+            <div className='flex items-start justify-center gap-10 lg:flex-row flex-col-reverse global-padding'>
                 <div className='lg:w-[20%] w-full'>
-                    <Ranger />
+                    <Ranger maxPrice={maxPrice} minPrice={minPrice} />
                 </div>
-                <div className='grid xl:grid-cols-3 3xl:grid-cols-5 2xl:grid-cols-4 lg:grid-cols-3 lg:gap-6 gap-4 lg:w-[80%] w-full grid-cols-2 max-w-[1920px] mx-auto global-margin'>
+                <div className='grid xl:grid-cols-3 3xl:grid-cols-5 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 lg:gap-6 gap-4 lg:w-[80%] w-full grid-cols-2 max-w-[1920px] mx-auto global-margin'>
                     {
                         productData?.map((product) => {
                             const { images } = product;

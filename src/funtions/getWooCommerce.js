@@ -108,7 +108,7 @@ export const getAllProductsUnderParentCategory = async (parentSlug) => {
 };
 
 
-export const getProductsByCategoryId = async (ids) => {
+export const getProductsByCategoryId = async (ids, max, min) => {
     try {
         // Convert "12,40" or [12,40] or 12 → always array
         let categories = Array.isArray(ids)
@@ -123,7 +123,14 @@ export const getProductsByCategoryId = async (ids) => {
 
         // 1️⃣ Fetch products only from first category
         for (let i = 1; ; i++) {
-            const url = `https://staging.afs-foiling.com/wp-json/wc/v3/products?category=${firstCategory}&status=publish&_fields=id,name,acf,images,slug,categories,price,regular_price,sale_price,type&per_page=${per_page}&page=${i}&lang=fr`;
+            let url = `https://staging.afs-foiling.com/wp-json/wc/v3/products?category=${firstCategory}&status=publish&_fields=id,name,acf,images,slug,categories,price,regular_price,sale_price,type&per_page=${per_page}&page=${i}&lang=fr`;
+
+            if (min != null) url += `&min_price=${Number(min)}`;
+            if (max != null) url += `&max_price=${Number(max)}`;
+
+
+            console.log(url);
+
 
             const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString("base64");
 
