@@ -128,10 +128,6 @@ export const getProductsByCategoryId = async (ids, max, min) => {
             if (min != null) url += `&min_price=${Number(min)}`;
             if (max != null) url += `&max_price=${Number(max)}`;
 
-
-            console.log(url);
-
-
             const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString("base64");
 
             const response = await fetch(url, {

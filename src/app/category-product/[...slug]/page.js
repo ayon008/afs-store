@@ -15,6 +15,10 @@ const page = async ({ params, searchParams }) => {
 
     // Getting the Category details by the slug
     const category = await getParentCategory(slug[slug?.length - 1].toLowerCase());
+
+    console.log(category);
+
+
     const image = category?.image?.src || default_image;
     let productData = await getProductsByCategoryId(category?.id);
     const maxPrice = Math.max(...productData.map(p => p?.price));
