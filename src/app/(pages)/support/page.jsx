@@ -1,9 +1,48 @@
+import Head from "next/head";
 import Image from "next/image";
 
 export default function AfsSupport() {
     return (
         <>
-            <div className="bg-[#F0F0F0] h-[clamp(51.25rem,39.7889rem+15.5405vw,58.4375rem)] global-margin">
+            <Head>
+                <title>AFS Support – Need Help?</title>
+
+                {/* Basic SEO */}
+                <meta
+                    name="description"
+                    content="AFS Support – Contact our team for any technical issues, guidance, or assistance with your AFS products."
+                />
+                <meta name="robots" content="index, follow" />
+                <meta
+                    name="keywords"
+                    content="AFS, support, foiling, help, SAV, assistance"
+                />
+
+                {/* OG / Social Preview */}
+                <meta property="og:title" content="AFS Support" />
+                <meta
+                    property="og:description"
+                    content="Reach out to AFS Support for technical help, product assistance, and expert guidance."
+                />
+                <meta property="og:type" content="website" />
+                <meta
+                    property="og:image"
+                    content="https://afs-foiling.com/fr/wp-content/uploads/2024/03/imgs.png"
+                />
+
+                {/* Twitter Preview */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="AFS Support" />
+                <meta
+                    name="twitter:description"
+                    content="Need help with your AFS gear? We're here for you."
+                />
+                <meta
+                    name="twitter:image"
+                    content="https://afs-foiling.com/fr/wp-content/uploads/2024/03/imgs.png"
+                />
+            </Head>
+            <div className="bg-[#F0F0F0] min-h-[calc(100vh - 80px)] global-margin pb-[40px]">
                 <Image
                     src="https://afs-foiling.com/fr/wp-content/uploads/2024/03/imgs.png"
                     alt="AFS Support"
@@ -13,7 +52,7 @@ export default function AfsSupport() {
                     height={120}
                 />
 
-                <div className="global-padding flex items-center justify-center flex-col gap-[60px] md:gap[80px] flex-wrap">
+                <div className="global-padding flex items-center justify-center flex-col gap-[60px] md:gap-[80px] flex-wrap">
                     <h1 className="global-h1">AFS Support</h1>
                     <ul className="w-full flex flex-wrap gap-[10px] items-center justify-center">
                         <li>
@@ -43,7 +82,7 @@ export default function AfsSupport() {
                                         stroke-linejoin="round"
                                     ></path>
                                 </svg>
-                                <div className="flex items-center gap[4px] justify-center flex-col">
+                                <div className="flex items-center gap-[4px] justify-center flex-col">
                                     <p className="text-center text-[clamp(0.875rem,0.8024rem+0.3226vw,1.125rem)] font-semibold">
                                         Réparer mon produit
                                     </p>
@@ -93,7 +132,7 @@ export default function AfsSupport() {
                                         stroke-linejoin="round"
                                     ></path>
                                 </svg>
-                                <div className="flex items-center gap[4px] justify-center flex-col">
+                                <div className="flex items-center gap-[4px] justify-center flex-col">
                                     <p className="text-center text-[clamp(0.875rem,0.8024rem+0.3226vw,1.125rem)] font-semibold">
                                         Notice d’utilisation
                                     </p>
@@ -157,7 +196,7 @@ export default function AfsSupport() {
                                         stroke-linejoin="round"
                                     ></path>
                                 </svg>
-                                <div className="flex items-center gap[4px] justify-center flex-col">
+                                <div className="flex items-center gap-[4px] justify-center flex-col">
                                     <p className="text-center text-[clamp(0.875rem,0.8024rem+0.3226vw,1.125rem)] font-semibold">
                                         Pièces détachées
                                     </p>
@@ -207,7 +246,7 @@ export default function AfsSupport() {
                                         stroke-linejoin="round"
                                     ></path>
                                 </svg>
-                                <div className="flex items-center gap[4px] justify-center flex-col">
+                                <div className="flex items-center gap-[4px] justify-center flex-col">
                                     <p className="text-center text-[clamp(0.875rem,0.8024rem+0.3226vw,1.125rem)] font-semibold">
                                         Reprise materiel
                                     </p>
@@ -257,7 +296,7 @@ export default function AfsSupport() {
                                         stroke-linejoin="round"
                                     ></path>
                                 </svg>
-                                <div className="flex items-center gap[4px] justify-center flex-col">
+                                <div className="flex items-center gap-[4px] justify-center flex-col">
                                     <p className="text-center text-[clamp(0.875rem,0.8024rem+0.3226vw,1.125rem)] font-semibold">
                                         FAQ
                                     </p>
@@ -307,7 +346,7 @@ export default function AfsSupport() {
                                         stroke-linejoin="round"
                                     ></path>
                                 </svg>
-                                <div className="flex items-center gap[4px] justify-center flex-col">
+                                <div className="flex items-center gap-[4px] justify-center flex-col">
                                     <p className="text-center text-[clamp(0.875rem,0.8024rem+0.3226vw,1.125rem)] font-semibold">
                                         Demande SAV
                                     </p>
@@ -350,7 +389,7 @@ export default function AfsSupport() {
                     </p>
                 </div>
 
-                <div className="flex gap-[20px] max-w[1600px] w-[100%] flex-col sm:flex-row text-center">
+                <div className="flex gap-[20px] max-w-[1600px] w-[100%] flex-col sm:flex-row text-center">
                     <div className="relative w-full sm:w-1/2 min-h-[clamp(30rem,26.0135rem+5.4054vw,32.5rem)] rounded p-[20px] md:p-[40px] overflow-hidden bg-[#fff]">
                         {/* Blurred background image */}
                         <div
@@ -512,19 +551,22 @@ export default function AfsSupport() {
                                 Foil — manuel d'utilisation
                             </p>
 
-                            <span className="arrow block md:opacity-0 group-hover:opacity-100 transition-all duration-300">
+                            <span className="flex items-center gap-[4px] arrow block md:opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                <span class="text-[clamp(0.875rem,0.8024rem+0.3226vw,1.125rem)] font-semibold global-blue">
+                                    Tout lire
+                                </span>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    width="15"
-                                    height="14"
-                                    viewBox="0 0 15 14"
+                                    width="12"
+                                    height="16"
+                                    viewBox="0 0 12 16"
                                     fill="none"
                                 >
                                     <path
-                                        d="M7.50016 1.16669V12.25M7.50016 12.25L12.1668 7.75002M7.50016 12.25L2.8335 7.75002"
+                                        d="M10.2857 4.71484L1.71429 13.2863M10.2857 4.71484H2.57144M10.2857 4.71484V12.4291"
                                         stroke="#1D98FF"
-                                        strokeWidth="2"
-                                    />
+                                        stroke-width="1.5"
+                                    ></path>
                                 </svg>
                             </span>
                         </a>
@@ -532,7 +574,7 @@ export default function AfsSupport() {
 
                     <div className="group w-[calc(50%-20px)] md:w-[250px]">
                         <a
-                            href="https://afs-foiling.com/fr/wp-content/uploads/2024/04/Guide-Hydrofoil.pdf"
+                            href="https://afs-foiling.com/fr/wp-content/uploads/2024/04/Guide-Board.pdf"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex flex-col items-center justify-center gap-[10px]"
@@ -546,35 +588,38 @@ export default function AfsSupport() {
                             />
 
                             <p className="text-center text-[clamp(0.875rem,0.8024rem+0.3226vw,1.125rem)] font-semibold">
-                                Foil — manuel d'utilisation
+                                Planche — manuel d'utilisation
                             </p>
 
-                            <span className="arrow block md:opacity-0 group-hover:opacity-100 transition-all duration-300">
+                            <span className="flex items-center gap-[4px] arrow block md:opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                <span class="text-[clamp(0.875rem,0.8024rem+0.3226vw,1.125rem)] font-semibold global-blue">
+                                    Tout lire
+                                </span>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    width="15"
-                                    height="14"
-                                    viewBox="0 0 15 14"
+                                    width="12"
+                                    height="16"
+                                    viewBox="0 0 12 16"
                                     fill="none"
                                 >
                                     <path
-                                        d="M7.50016 1.16669V12.25M7.50016 12.25L12.1668 7.75002M7.50016 12.25L2.8335 7.75002"
+                                        d="M10.2857 4.71484L1.71429 13.2863M10.2857 4.71484H2.57144M10.2857 4.71484V12.4291"
                                         stroke="#1D98FF"
-                                        strokeWidth="2"
-                                    />
+                                        stroke-width="1.5"
+                                    ></path>
                                 </svg>
                             </span>
                         </a>
                     </div>
                     <div className="group w-[calc(50%-20px)] md:w-[250px]">
                         <a
-                            href="https://afs-foiling.com/fr/wp-content/uploads/2024/04/Guide-Hydrofoil.pdf"
+                            href="https://afs-foiling.com/fr/wp-content/uploads/2024/04/Guide-Wing.pdf"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex flex-col items-center justify-center gap-[10px]"
                         >
                             <Image
-                                src="https://afs-foiling.com/fr/wp-content/uploads/2024/03/image_wrap-6.png"
+                                src="https://afs-foiling.com/fr/wp-content/uploads/2024/03/image_wrap-8.png"
                                 className="w-full md:w-[250px] h-auto object-contain"
                                 alt="Guide PDF"
                                 width={1920}
@@ -582,22 +627,25 @@ export default function AfsSupport() {
                             />
 
                             <p className="text-center text-[clamp(0.875rem,0.8024rem+0.3226vw,1.125rem)] font-semibold">
-                                Foil — manuel d'utilisation
+                                Wing — manuel d'utilisation
                             </p>
 
-                            <span className="arrow block md:opacity-0 group-hover:opacity-100 transition-all duration-300">
+                            <span className="flex items-center gap-[4px] arrow block md:opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                <span class="text-[clamp(0.875rem,0.8024rem+0.3226vw,1.125rem)] font-semibold global-blue">
+                                    Tout lire
+                                </span>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    width="15"
-                                    height="14"
-                                    viewBox="0 0 15 14"
+                                    width="12"
+                                    height="16"
+                                    viewBox="0 0 12 16"
                                     fill="none"
                                 >
                                     <path
-                                        d="M7.50016 1.16669V12.25M7.50016 12.25L12.1668 7.75002M7.50016 12.25L2.8335 7.75002"
+                                        d="M10.2857 4.71484L1.71429 13.2863M10.2857 4.71484H2.57144M10.2857 4.71484V12.4291"
                                         stroke="#1D98FF"
-                                        strokeWidth="2"
-                                    />
+                                        stroke-width="1.5"
+                                    ></path>
                                 </svg>
                             </span>
                         </a>
@@ -610,10 +658,13 @@ export default function AfsSupport() {
                 className="flex flex-col gap-[40px] justify-center items-center global-margin global-padding"
             >
                 <h2 className="global-h2">Pièces détachées</h2>
-                <div className="flex gap-[10px] h-[auto] md:h-[clamp(37.5rem,18.3649rem+25.9459vw,49.5rem)] bg-[#dbdbdb] rounded w-full justify-between items-center flex-col md:flex-row">
+                <div
+                    id="Reprise"
+                    className="flex gap-[10px] h-[auto] md:h-[clamp(37.5rem,18.3649rem+25.9459vw,49.5rem)] bg-[#dbdbdb] rounded w-full justify-between items-center flex-col md:flex-row"
+                >
                     <Image
                         src="https://afs-foiling.com/fr/wp-content/uploads/2024/03/image-32-1.png"
-                        className="flex-[1_0_0%] object-contain max-w[100%] md:max-w-[33.33%]"
+                        className="flex-[1_0_0%] object-contain max-w-[100%] md:max-w-[33.33%]"
                         alt="Guide PDF"
                         width={1920}
                         height={120}
@@ -663,7 +714,7 @@ export default function AfsSupport() {
                     </div>
                     <Image
                         src="https://afs-foiling.com/fr/wp-content/uploads/2024/03/image-25-3.png"
-                        className="flex-[1_0_0%] object-contain max-w[100%] md:max-w-[33.33%]"
+                        className="flex-[1_0_0%] object-contain max-w-[100%] md:max-w-[33.33%]"
                         alt="Guide PDF"
                         width={1920}
                         height={120}
@@ -672,7 +723,7 @@ export default function AfsSupport() {
             </div>
 
             <div
-                id="Faq"
+                id="FAQ"
                 className="flex flex-col gap-[40px] justify-center items-center global-margin global-padding"
             >
                 <h1 className="global-h2">FAQ</h1>
