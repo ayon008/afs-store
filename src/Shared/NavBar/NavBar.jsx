@@ -66,11 +66,8 @@ const Navbar = ({ NAV_LINKS }) => {
     const subLinks = NAV_LINKS?.find((Nav) => Nav?.name == hoverId);
     const allProducts = subLinks?.sublinks?.find((sub) => sub.name === detailsDiv);
     const productList = allProducts?.products;
-    console.log(allProducts);
 
     const [hoverImageLink, setHoverImageLink] = useState("");
-
-    console.log(productList);
 
 
     // Show the white hover Items

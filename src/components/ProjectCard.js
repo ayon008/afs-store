@@ -57,11 +57,6 @@ export default function ProjectCard({
     .replace(/ - \[#\d+\]/g, "")
     .trim();
 
-
-  console.log(hoverImage, 'hoverImage');
-
-
-
   return (
     <div className="group w-full bg-[#F7F7F7] flex flex-col justify-between mx-auto rounded-[4px] overflow-hidden h-auto">
       {/* Image Section */}
@@ -130,7 +125,9 @@ export default function ProjectCard({
           </p>
         </div>
         <div className="">
-          <FormButton label={'DISCOVER'} />
+          <Link href={`/product/${slug}`}>
+            <FormButton label={'DECOUVRIR'} />
+          </Link>
         </div>
       </div>
     </div >

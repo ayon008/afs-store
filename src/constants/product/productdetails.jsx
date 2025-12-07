@@ -43,7 +43,7 @@ const ProductDetails = ({ product, isLoading: parentLoading = false }) => {
     return () => clearTimeout(t);
   }, [selectedAttributes]);
 
-  
+
 
   // When selectedAttributes change, try to find a matching variation
   useEffect(() => {
@@ -69,7 +69,7 @@ const ProductDetails = ({ product, isLoading: parentLoading = false }) => {
 
       // Abort any previous in-flight findMatch fetches
       if (findMatchAbortRef.current) {
-        try { findMatchAbortRef.current.abort(); } catch (e) {}
+        try { findMatchAbortRef.current.abort(); } catch (e) { }
       }
       const controller = new AbortController();
       findMatchAbortRef.current = controller;
@@ -96,8 +96,8 @@ const ProductDetails = ({ product, isLoading: parentLoading = false }) => {
           return out;
         };
 
-  // If variationsArray contains only ids (numbers), we need to fetch them
-  const needsFetch = variationsArray.length > 0 && typeof variationsArray[0] === 'number';
+        // If variationsArray contains only ids (numbers), we need to fetch them
+        const needsFetch = variationsArray.length > 0 && typeof variationsArray[0] === 'number';
 
         if (!needsFetch) {
           // variationsArray likely contains variation objects
@@ -120,8 +120,8 @@ const ProductDetails = ({ product, isLoading: parentLoading = false }) => {
           }
         }
 
-  // Fallback: fetch each variation id and compare attributes
-  const idsToCheck = variationsArray.length > 0 ? variationsArray : [];
+        // Fallback: fetch each variation id and compare attributes
+        const idsToCheck = variationsArray.length > 0 ? variationsArray : [];
         const cache = variationCacheRef.current;
         // first check cache
         for (const vid of idsToCheck) {
@@ -187,7 +187,7 @@ const ProductDetails = ({ product, isLoading: parentLoading = false }) => {
     return () => {
       mounted = false;
       if (findMatchAbortRef.current) {
-        try { findMatchAbortRef.current.abort(); } catch (e) {}
+        try { findMatchAbortRef.current.abort(); } catch (e) { }
         findMatchAbortRef.current = null;
       }
     };
@@ -198,7 +198,7 @@ const ProductDetails = ({ product, isLoading: parentLoading = false }) => {
     if (!product || !product.variations || prefetchDoneRef.current) return;
     const cache = variationCacheRef.current;
     const variationsArray = product.variations || [];
-  const controller = new AbortController();
+    const controller = new AbortController();
 
     // If the variationsArray already contains full objects, populate cache and return
     if (variationsArray.length > 0 && typeof variationsArray[0] === 'object') {
@@ -285,7 +285,7 @@ const ProductDetails = ({ product, isLoading: parentLoading = false }) => {
 
     return () => {
       cancelled = true;
-      try { controller.abort(); } catch (e) {}
+      try { controller.abort(); } catch (e) { }
     };
   }, [product]);
 
@@ -365,7 +365,7 @@ const ProductDetails = ({ product, isLoading: parentLoading = false }) => {
       <main className="pt-28 p-4 sm:p-10">
         {/* Breadcrumb */}
         <div className="mb-8">
-          <Breadcrumbs 
+          <Breadcrumbs
             breadcrumbData={{
               main: "Products",
               mainHref: "/shop",
@@ -385,9 +385,9 @@ const ProductDetails = ({ product, isLoading: parentLoading = false }) => {
                     key={img.id || img.src}
                     className={`aspect-square rounded-xl overflow-hidden shadow-lg relative bg-black`}
                   >
-                        {!loadedImages.has(img.src) && (
-                          <div className="absolute inset-0"><Skeleton className="w-full h-full rounded" /></div>
-                        )}
+                    {!loadedImages.has(img.src) && (
+                      <div className="absolute inset-0"><Skeleton className="w-full h-full rounded" /></div>
+                    )}
                     <Image
                       src={img.src}
                       alt={img.alt || product.name || 'product image'}
@@ -419,11 +419,11 @@ const ProductDetails = ({ product, isLoading: parentLoading = false }) => {
                   <div className="relative w-full h-full">
                     <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 pointer-events-auto">
                       <button
-  onClick={() => setShowAllImages(true)}
-  className="bg-white text-black font-medium py-3 px-8 rounded-full shadow-lg flex items-center gap-2"
->
-  View all
-</button>
+                        onClick={() => setShowAllImages(true)}
+                        className="bg-white text-black font-medium py-3 px-8 rounded-full shadow-lg flex items-center gap-2"
+                      >
+                        View all
+                      </button>
 
                     </div>
                   </div>
@@ -454,15 +454,15 @@ const ProductDetails = ({ product, isLoading: parentLoading = false }) => {
                     />
                   </div>
                 ))}
-                
+
                 {/* Show Less Button at the end */}
                 <div className="col-span-2 flex justify-center mt-4">
                   <button
                     onClick={() => setShowAllImages(false)}
-  className="bg-white text-black font-medium py-3 px-8 rounded-full shadow-lg flex items-center gap-2"
+                    className="bg-white text-black font-medium py-3 px-8 rounded-full shadow-lg flex items-center gap-2"
                   >
                     Show Less
-                   
+
                   </button>
                 </div>
               </div>
@@ -473,7 +473,7 @@ const ProductDetails = ({ product, isLoading: parentLoading = false }) => {
           <div className="flex flex-col justify-start space-y-7 mt-4">
             <h2 className="text-4xl font-bold text-gray-900 leading-tight">
               {!allImagesLoaded ? (
-                  <Skeleton className="h-8 w-64" />
+                <Skeleton className="h-8 w-64" />
               ) : (
                 product?.name || 'Fuselink Fuselage'
               )}
@@ -483,19 +483,19 @@ const ProductDetails = ({ product, isLoading: parentLoading = false }) => {
             <div className="text-sm text-gray-700 space-y-3 leading-relaxed">
               <p className="font-bold">
                 {!allImagesLoaded ? (
-              <Skeleton className="h-4 w-40" />
+                  <Skeleton className="h-4 w-40" />
                 ) : (
                   product?.short_description ? null : 'Performance and accessibility - Cover included'
                 )}
               </p>
               <div className="font-bold">
                 {!allImagesLoaded ? (
-                    <div className="space-y-2">
-                 <Skeleton className="h-3 w-3/4 block" />
-                 <Skeleton className="h-3 w-5/6 block" />
-                 <Skeleton className="h-3 w-2/3 block" />
-                    </div>
-                  ) : (
+                  <div className="space-y-2">
+                    <Skeleton className="h-3 w-3/4 block" />
+                    <Skeleton className="h-3 w-5/6 block" />
+                    <Skeleton className="h-3 w-2/3 block" />
+                  </div>
+                ) : (
                   product?.short_description ? (
                     <div dangerouslySetInnerHTML={{ __html: product.short_description }} />
                   ) : (
@@ -525,7 +525,7 @@ const ProductDetails = ({ product, isLoading: parentLoading = false }) => {
               <button
                 onClick={() => setShowSizeGuide(true)}
                 className="flex items-center gap-1.5 mt-3 hover:opacity-80 transition-opacity"
-                style={{ 
+                style={{
                   fontFamily: '"alliance no.2", sans-serif',
                   fontSize: '16px',
                   fontWeight: 500,
@@ -534,11 +534,11 @@ const ProductDetails = ({ product, isLoading: parentLoading = false }) => {
                 }}
               >
                 Size guide
-               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16" fill="none"><path d="M10.2857 4.71484L1.71429 13.2863M10.2857 4.71484H2.57144M10.2857 4.71484V12.4291" stroke="#1D98FF" stroke-width="1.5"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16" fill="none"><path d="M10.2857 4.71484L1.71429 13.2863M10.2857 4.71484H2.57144M10.2857 4.71484V12.4291" stroke="#1D98FF" stroke-width="1.5"></path></svg>
               </button>
-              <SizingGuideModal 
-                isOpen={showSizeGuide} 
-                onClose={() => setShowSizeGuide(false)} 
+              <SizingGuideModal
+                isOpen={showSizeGuide}
+                onClose={() => setShowSizeGuide(false)}
                 productId={product?.id}
               />
             </div>
@@ -558,11 +558,10 @@ const ProductDetails = ({ product, isLoading: parentLoading = false }) => {
                         <button
                           key={option}
                           onClick={() => handleAttributeSelect(slug, option)}
-                          className={`border text-sm py-2 px-4 rounded-full transition duration-150 mb-2 ${
-                            selected 
-                              ? 'bg-black text-white border-black shadow-md' 
+                          className={`border text-sm py-2 px-4 rounded-full transition duration-150 mb-2 ${selected
+                              ? 'bg-black text-white border-black shadow-md'
                               : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-                          }`}
+                            }`}
                         >
                           {option}
                         </button>
@@ -619,11 +618,10 @@ const ProductDetails = ({ product, isLoading: parentLoading = false }) => {
                   !product?.purchasable ||
                   product?.stock_status === "outofstock"
                 }
-                className={`w-full ${
-                  !product?.purchasable || product?.stock_status === "outofstock"
+                className={`w-full ${!product?.purchasable || product?.stock_status === "outofstock"
                     ? 'bg-gray-400 cursor-not-allowed'
                     : ADD_TO_CART_COLOR + ' hover:bg-blue-600'
-                } text-white font-bold py-3 text-lg uppercase tracking-wider transition duration-200 shadow-md hover:shadow-lg disabled:opacity-40 disabled:cursor-not-allowed`}
+                  } text-white font-bold py-3 text-lg uppercase tracking-wider transition duration-200 shadow-md hover:shadow-lg disabled:opacity-40 disabled:cursor-not-allowed`}
               >
                 {!product?.purchasable || product?.stock_status === "outofstock"
                   ? 'UNAVAILABLE'
@@ -694,8 +692,8 @@ const ProductDetails = ({ product, isLoading: parentLoading = false }) => {
                 <p className="text-[15px] font-normal leading-4 text-[rgba(17,17,17,0.75)] mb-6" style={{ fontFamily: '"alliance no.2", sans-serif' }}>
                   We're here to provide you with comprehensive answers and advice to help you make the right choice.
                 </p>
-                <a 
-                  href="/contact" 
+                <a
+                  href="/contact"
                   className="inline-flex items-center text-[12px] font-medium leading-4 text-[rgb(29,152,255)] hover:text-blue-600 transition-colors uppercase"
                   style={{ fontFamily: '"alliance no.2", sans-serif' }}
                 >
@@ -707,12 +705,12 @@ const ProductDetails = ({ product, isLoading: parentLoading = false }) => {
               </div>
               <div className="flex-shrink-0 w-full md:w-[280px] h-[180px] relative overflow-hidden">
                 {!loadedImages.has('expert') && <div className="absolute inset-0"><Skeleton className="w-full h-full rounded-lg" /></div>}
-                <Image 
-                  src="https://afs-foiling.com/wp-content/uploads/2025/06/image-33-1.png.webp" 
-                  alt="AFS Product Expert" 
+                <Image
+                  src="https://afs-foiling.com/wp-content/uploads/2025/06/image-33-1.png.webp"
+                  alt="AFS Product Expert"
                   fill
-                  onLoadingComplete={() => setLoadedImages(s => new Set(s).add('expert'))} 
-                  className={`object-contain object-right transition-opacity duration-300 ${loadedImages.has('expert') ? 'opacity-100' : 'opacity-0'}`} 
+                  onLoadingComplete={() => setLoadedImages(s => new Set(s).add('expert'))}
+                  className={`object-contain object-right transition-opacity duration-300 ${loadedImages.has('expert') ? 'opacity-100' : 'opacity-0'}`}
                 />
               </div>
             </div>
@@ -730,7 +728,7 @@ const ProductDetails = ({ product, isLoading: parentLoading = false }) => {
 
 export default ProductDetails;
 
-function GalleryAll({ images = [], loadedImages = new Set(), setLoadedImages = () => {} }) {
+function GalleryAll({ images = [], loadedImages = new Set(), setLoadedImages = () => { } }) {
   const [expanded, setExpanded] = useState(false);
 
   const list = expanded ? images : images.slice(0, 4);
@@ -758,3 +756,4 @@ function GalleryAll({ images = [], loadedImages = new Set(), setLoadedImages = (
     </div>
   );
 }
+

@@ -1,7 +1,7 @@
 import React from 'react';
 import default_image from "../../../assets/images/GWEN-WB-D-lite-1024x573.png.webp"
-import ProjectCard from '../../../components/ProjectCard';
-import { getParentCategory, getProductsByCategoryId } from "../../../funtions/getWooCommerce"
+import Products from "../../../Shared/Products/Products"
+import { getChildCategories, getParentCategory, getProductsByCategoryId } from "../../../funtions/getWooCommerce"
 import Ranger from "../../../Shared/Ranger/Ranger"
 
 
@@ -16,18 +16,13 @@ const page = async ({ params, searchParams }) => {
     // Getting the Category details by the slug
     const category = await getParentCategory(slug[slug?.length - 1].toLowerCase());
 
-    console.log(category);
-
-
     const image = category?.image?.src || default_image;
-    let productData = await getProductsByCategoryId(category?.id);
+    const productData = await getProductsByCategoryId(category?.id);
     const maxPrice = Math.max(...productData.map(p => p?.price));
     const minPrice = Math.min(...productData.map(p => p?.price));
+    const childCategories = await getChildCategories(category?.id);
 
     const { min = null, max = null } = await searchParams;
-
-    productData = await getProductsByCategoryId(category?.id, max, min);
-
 
     const BreadCums = () => {
         let path = "/category-product";
@@ -69,21 +64,8 @@ const page = async ({ params, searchParams }) => {
                     </div>
                 </div>
             </div>
-            <div className='flex items-start justify-center gap-10 lg:flex-row flex-col-reverse global-padding'>
-                <div className='lg:w-[20%] w-full'>
-                    <Ranger maxPrice={maxPrice} minPrice={minPrice} />
-                </div>
-                <div className='grid xl:grid-cols-3 3xl:grid-cols-5 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 lg:gap-6 gap-4 lg:w-[80%] w-full grid-cols-2 max-w-[1920px] mx-auto global-margin'>
-                    {
-                        productData?.map((product) => {
-                            const { images } = product;
-                            const bestseller = product?.acf?.bestseller;
-                            return (
-                                <ProjectCard price={product?.price} type={product?.type} name={product?.name} bestseller={bestseller} hoverImage={images[1]?.src} image={images[0]?.src} key={product?.id} />
-                            )
-                        })
-                    }
-                </div>
+            <div>
+                <Products maxPrice={maxPrice} minPrice={minPrice} childCategories={childCategories} min={min} max={max} id={category?.id} />
             </div>
         </div>
     );

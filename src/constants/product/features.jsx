@@ -26,7 +26,7 @@ export default function Features({ productSlug }) {
         const data = await res.json();
 
         const product = data.find(p => p.slug === productSlug);
-        
+
         if (!product?.acf) {
           setFeatures([]);
           setLoading(false);
@@ -34,11 +34,11 @@ export default function Features({ productSlug }) {
         }
 
         const featuresList = [];
-        
+
         // Add Technical Specifications (caracteristiques)
         if (product.acf.caracteristiques) {
           const caracteristiques = product.acf.caracteristiques;
-          
+
           if (typeof caracteristiques === 'string' && caracteristiques.trim()) {
             featuresList.push({
               title: 'Technical Specifications',
@@ -48,11 +48,11 @@ export default function Features({ productSlug }) {
             featuresList.push(...caracteristiques);
           }
         }
-        
+
         // Add Size Guide / Compatibility (compatibilite)
         if (product.acf.compatibilite) {
           const compatibilite = product.acf.compatibilite;
-          
+
           if (typeof compatibilite === 'string' && compatibilite.trim()) {
             featuresList.push({
               title: 'Size Guide',
@@ -106,11 +106,10 @@ export default function Features({ productSlug }) {
         </button>
 
         <div
-          className={`overflow-hidden transition-all duration-300 ease-in-out ${
-            isOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
-          }`}
+          className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
+            }`}
         >
-          <div 
+          <div
             className="px-[5rem] pb-6 pt-2 bg-transparent feature-content"
             style={{
               fontFamily: '"Alliance No.2", sans-serif',
@@ -120,7 +119,7 @@ export default function Features({ productSlug }) {
             }}
             dangerouslySetInnerHTML={{ __html: content }}
           />
-         <style jsx>{`
+          <style jsx>{`
   .feature-content :global(table) {
     width: 100%;
     border-collapse: collapse;
