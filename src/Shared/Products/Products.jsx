@@ -1,13 +1,40 @@
 "use client"
 import { useRouter, usePathname } from 'next/navigation';
-import React, { useState, useTransition, useEffect } from 'react';
+import React, { useState, useTransition, useEffect, useRef } from 'react';
 import RangeSlider from 'react-range-slider-input';
 import 'react-range-slider-input/dist/style.css';
 import ProjectCard from '../../components/ProjectCard';
 import { getProductsByCategoryId } from '../../funtions/getWooCommerce';
 import SkeletonProjectCard from "../../Shared/Products/ProductLoader"
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(ScrollTrigger);
+
+
 
 const Products = ({ minPrice, maxPrice, childCategories, min = null, max = null, id }) => {
+
+
+    const filterRef = useRef(null);
+
+
+    useGSAP(() => {
+        if (!filterRef.current) return;
+        gsap.to(filterRef.current, {
+            scrollTrigger: {
+                trigger: filterRef.current,
+                endTrigger:".products",
+                start: "top 170px",
+                end: "bottom bottom",
+                markers: true,
+                pin: true,
+            }
+        })
+    })
+
+
     const [value, setValue] = useState([minPrice, maxPrice]);
     const router = useRouter();
     const pathname = usePathname();
@@ -31,7 +58,7 @@ const Products = ({ minPrice, maxPrice, childCategories, min = null, max = null,
     const renderCategories = (categories) => {
         const logSelectedCategoryIds = () => {
             const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
-            const selectedIds = Array.from(checkedBoxes).map(cb => cb.value);
+            const selectedIds = Array.from(checkedBoxes).map(cb => cb.value)?.length > 0 ? Array.from(checkedBoxes).map(cb => cb.value) : id;
             setIds(selectedIds);
         };
 
@@ -79,20 +106,26 @@ const Products = ({ minPrice, maxPrice, childCategories, min = null, max = null,
     }, [ids, min, max])
 
 
+
+
+
+
     return (
-        <div className='flex items-start justify-center gap-10 lg:flex-row flex-col-reverse global-padding'>
-            <div className='lg:w-[20%] w-full'>
-                <div className='mb-6'>
-                    <p className='font-semibold text-base leading-[100%] text-black mb-4'>CATÉGORIES</p>
-                    {childCategories && childCategories.length > 0
-                        ? renderCategories(childCategories)
-                        : <p className="text-sm text-gray-500">No categories</p>}
-                </div>
-                <div>
-                    <label className='uppercase text-base font-medium mb-4 block' for="vol">PRIX</label>
-                    <RangeSlider min={minPrice} max={maxPrice} defaultValue={[min || minPrice, max || maxPrice]} onInput={(val) => handleChange(val)} className='my-dashed-slider -ml-2' />
-                    <div className='text-[14px] leading-[15px] font-semibold mt-4'>
-                        €{min || value[0].toFixed(2)} — €{max || value[1].toFixed(2)}
+        <div className='flex items-start justify-center gap-10 lg:flex-row flex-col-reverse global-padding max-w-[1920px] mx-auto'>
+            <div ref={filterRef} className='lg:w-[20%] w-full'>
+                <div className='h-[calc(90vh-140px)] overflow-y-scroll popup-scroll-bar-1'>
+                    <div className='mb-6'>
+                        <p className='font-semibold text-base leading-[100%] text-black mb-4'>CATÉGORIES</p>
+                        {childCategories && childCategories.length > 0
+                            ? renderCategories(childCategories)
+                            : <p className="text-sm text-gray-500">No categories</p>}
+                    </div>
+                    <div>
+                        <label className='uppercase text-base font-medium mb-4 block' for="vol">PRIX</label>
+                        <RangeSlider min={minPrice} max={maxPrice} defaultValue={[min || minPrice, max || maxPrice]} onInput={(val) => handleChange(val)} className='my-dashed-slider -ml-2' />
+                        <div className='text-[14px] leading-[15px] font-semibold mt-4'>
+                            €{min || value[0].toFixed(2)} — €{max || value[1].toFixed(2)}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -107,7 +140,7 @@ const Products = ({ minPrice, maxPrice, childCategories, min = null, max = null,
                             })
                         }
                     </div>
-                    : <div className='grid xl:grid-cols-3 3xl:grid-cols-5 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 lg:gap-6 gap-4 lg:w-[80%] w-full grid-cols-2 max-w-[1920px] mx-auto global-margin'>
+                    : <div className='grid xl:grid-cols-3 3xl:grid-cols-5 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 lg:gap-6 gap-4 lg:w-[80%] w-full grid-cols-2 max-w-[1920px] mx-auto global-margin products'>
                         {
                             productData?.map((product) => {
                                 const { images } = product;
