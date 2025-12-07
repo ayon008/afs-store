@@ -8,33 +8,11 @@ import { getProductsByCategoryId } from '../../funtions/getWooCommerce';
 import SkeletonProjectCard from "../../Shared/Products/ProductLoader"
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 
-
 const Products = ({ minPrice, maxPrice, childCategories, min = null, max = null, id }) => {
-
-
-    const filterRef = useRef(null);
-
-
-    useGSAP(() => {
-        if (!filterRef.current) return;
-        gsap.to(filterRef.current, {
-            scrollTrigger: {
-                trigger: filterRef.current,
-                endTrigger:".products",
-                start: "top 170px",
-                end: "bottom bottom",
-                markers: true,
-                pin: true,
-            }
-        })
-    })
-
-
     const [value, setValue] = useState([minPrice, maxPrice]);
     const router = useRouter();
     const pathname = usePathname();
@@ -107,12 +85,27 @@ const Products = ({ minPrice, maxPrice, childCategories, min = null, max = null,
 
 
 
+    const filterRef = useRef(null);
+    const productRef = useRef(null);
 
-
+    useEffect(() => {
+        if (!filterRef.current || !productRef.current) return;
+        ScrollTrigger.killAll(); // avoid duplicates on refresh
+        ScrollTrigger.create({
+            trigger: productRef.current,  // Start when PRODUCTS reach this point
+            start: "top 170px",           // Product top hits 170px from top
+            endTrigger: productRef.current,
+            end: "bottom bottom",         // Unpin when products bottom hits bottom
+            pin: filterRef.current,       // Pin the filter sidebar
+            pinSpacing: true,
+            markers: true,                // remove in production
+        });
+        ScrollTrigger.refresh();
+    }, []);
 
     return (
         <div className='flex items-start justify-center gap-10 lg:flex-row flex-col-reverse global-padding max-w-[1920px] mx-auto'>
-            <div ref={filterRef} className='lg:w-[20%] w-full'>
+            <div ref={filterRef} className='lg:w-[20%] w-full filterDiv'>
                 <div className='h-[calc(90vh-140px)] overflow-y-scroll popup-scroll-bar-1'>
                     <div className='mb-6'>
                         <p className='font-semibold text-base leading-[100%] text-black mb-4'>CATÉGORIES</p>
@@ -140,7 +133,7 @@ const Products = ({ minPrice, maxPrice, childCategories, min = null, max = null,
                             })
                         }
                     </div>
-                    : <div className='grid xl:grid-cols-3 3xl:grid-cols-5 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 lg:gap-6 gap-4 lg:w-[80%] w-full grid-cols-2 max-w-[1920px] mx-auto global-margin products'>
+                    : <div className='grid xl:grid-cols-3 3xl:grid-cols-5 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 lg:gap-6 gap-4 lg:w-[80%] w-full grid-cols-2 max-w-[1920px] mx-auto global-margin all-products wb_compact' ref={productRef}>
                         {
                             productData?.map((product) => {
                                 const { images } = product;
