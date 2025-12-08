@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 const page = async ({ params, searchParams }) => {
     // Catch All Route
-    const { slug } = params;
+    const { slug } = await params;
     // Destructuring the params from slug
     const [parent, ...children] = slug;
 

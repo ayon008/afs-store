@@ -64,59 +64,6 @@ export const getChildCategories = async (parentId) => {
     return categoriesWithChildren;
 }
 
-
-// // Recursively get all descendant category IDs
-// const getAllDescendantCategoryIds = async (parentId) => {
-//     let ids = [parentId];
-//     const children = await getChildCategories(parentId);
-
-//     for (const child of children) {
-//         const childDescendants = await getAllDescendantCategoryIds(child.id);
-//         ids = ids.concat(childDescendants);
-//     }
-//     return ids;
-// };
-
-// export const getProductsByCategoryIds = async (categoryIds) => {
-//     const url = `https://staging.afs-foiling.com/wp-json/wc/v3/products?category=${categoryIds.join(',')}&per_page=100&lang=fr`;
-
-//     const response = await fetch(url, {
-//         headers: {
-//             Authorization: `Basic ${Buffer.from(`${consumerKey}:${consumerSecret}`).toString('base64')}`,
-//         },
-//         next: { revalidate: 3600 },
-//     });
-
-//     if (!response.ok) throw new Error(`WooCommerce API error: ${response.statusText}`);
-//     return response.json();
-// };
-
-
-// export const getAllProductsUnderParentCategory = async (parentSlug) => {
-//     // Get parent category by slug
-//     const parentCategoryUrl = `https://staging.afs-foiling.com/wp-json/wc/v3/products/categories?slug=${encodeURIComponent(parentSlug)}&lang=fr`;
-//     const parentRes = await fetch(parentCategoryUrl, {
-//         headers: {
-//             Authorization: `Basic ${Buffer.from(`${consumerKey}:${consumerSecret}`).toString('base64')}`,
-//         },
-//         next: { revalidate: 3600 },
-//     });
-//     if (!parentRes.ok) throw new Error(`WooCommerce API error: ${parentRes.statusText}`);
-//     const parentData = await parentRes.json();
-//     if (!parentData.length) throw new Error(`Parent category '${parentSlug}' not found.`);
-
-//     const parentId = parentData[0].id;
-
-//     // Get all descendant category IDs
-//     const allCategoryIds = await getAllDescendantCategoryIds(parentId);
-
-//     // Get all products under all categories
-//     const products = await getProductsByCategoryIds(allCategoryIds);
-
-//     return products; // Only published products by default
-// };
-
-
 export const getProductsByCategoryId = async (ids, max, min) => {
     try {
         // Convert "12,40" or [12,40] or 12 → always array
@@ -135,8 +82,8 @@ export const getProductsByCategoryId = async (ids, max, min) => {
             let url = `https://staging.afs-foiling.com/wp-json/wc/v3/products?category=${firstCategory}&status=publish&_fields=id,name,acf,images,slug,categories,price,regular_price,sale_price,type&per_page=${per_page}&page=${i}&lang=fr`;
 
 
-            console.log(url,'url');
-            
+            console.log(url, 'url');
+
 
             if (min != null) url += `&min_price=${Number(min)}`;
             if (max != null) url += `&max_price=${Number(max)}`;
@@ -169,3 +116,21 @@ export const getProductsByCategoryId = async (ids, max, min) => {
     }
 };
 
+
+
+export const getProductBySlug = async (slug) => {
+    const url = `https://staging.afs-foiling.com/wp-json/wc/v3/products?slug=${slug}&lang=fr`;
+    try {
+        const response = await fetch(url, {
+            headers: {
+                Authorization: `Basic ${authHeader}`
+            },
+            next: { revalidate: 3600 },
+        })
+        const data = await response.json();
+        return data[0];
+    } catch (error) {
+        console.log(error);
+        return { error: true }
+    }
+}
