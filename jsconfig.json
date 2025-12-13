@@ -2,7 +2,12 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ], // Use @ to point inside src/
+      "#/*": [
+        "./*"
+      ] // Use # to point to project root
     }
   }
 }

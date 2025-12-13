@@ -1,5 +1,5 @@
 "use client"
-import { getDealerType } from '@/funtions/getDelaers';
+import { getDealerType } from '../../funtions/getDelaers';
 import { ChevronDown } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 

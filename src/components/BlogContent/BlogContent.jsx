@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from '@gsap/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -58,24 +59,23 @@ const BlogContent = ({ blog }) => {
         return () => mutObserver.disconnect();
     }, [blog]);
 
-    // Added Animation
-    useEffect(() => {
+    useGSAP(() => {
         if (!stickyRef.current || !contentRef.current) return;
         const ctx = gsap.context(() => {
-            gsap.to(stickyRef.current, {
+            const tl = gsap.timeline({
                 scrollTrigger: {
-                    trigger: stickyRef.current,
-                    start: "top 200px",
-                    endTrigger: contentRef.current,
-                    end: `bottom bottom`,
-                    pin: true,
-                    scrub: false,
+                    trigger: contentRef.current,
+                    start: "top 170px",
+                    end: "bottom bottom",
+                    pin: stickyRef.current,
                     pinSpacing: true,
+                    invalidateOnRefresh: true,
+                    anticipatePin: 1,
                 }
-            });
-        }, stickyRef);
+            })
+        })
         return () => ctx.revert();
-    }, []);
+    }, { revertOnUpdate: true })
 
     // Track active heading and read aloud using GSAP
     useEffect(() => {

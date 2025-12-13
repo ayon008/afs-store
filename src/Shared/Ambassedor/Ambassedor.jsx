@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import Map from "../../Shared/SVG/Map"
+import Map from "../SingleProduct/SVG/Map"
 import Sec1 from '../../app/ambassadeur-afs/sec1';
 import AmbassadorsCard from '../Card/AmbassadorsCard';
 import { allAmbassadors } from "../../funtions/getAllAmbessador"

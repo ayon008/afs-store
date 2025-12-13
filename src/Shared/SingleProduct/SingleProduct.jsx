@@ -13,6 +13,10 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Reviews from '../Reviews/Reviews';
+import default_image from "../../assets/images/Team/Group-1-3.png.webp"
+import ShimmerLoader from './SingleProductLoader';
+import ProductDetails from './ProductDetails';
+import FaqSection from './FaqSection';
 
 
 function extractYouTubeID(url) {
@@ -45,6 +49,8 @@ const SingleProduct = () => {
         }
         load();
     }, [slug])
+
+
     const categories = data?.categories;
 
     const [images, setImages] = useState([]);
@@ -72,6 +78,8 @@ const SingleProduct = () => {
 
         if (newImages?.length > 4) {
             setLength(4);
+        } else if (newImages?.length < 4) {
+            setLength(newImages?.length);
         }
 
         setImages(newImages);
@@ -81,18 +89,33 @@ const SingleProduct = () => {
 
     const acf = data?.acf;
 
+    const dimensions = data?.dimensions;
+
+
+    const product_id = data?.id;
+
+
+
+    if (loader) {
+        return (
+            <div className='global-padding pt-4 max-w-[1920px] mx-auto'>
+                <ShimmerLoader />
+            </div>
+        )
+    }
+
 
     return (
-        <div className='global-padding pt-4'>
+        <div className='global-padding lg:pt-4 pt-0 max-w-[1920px] mx-auto w-full'>
             {/* <BreadCums /> */}
-            <div className='flex items-start justify-between gap-10 global-margin'>
-                <div className='w-[60%]'>
-                    <div className='grid grid-cols-2 gap-[10px] relative'>
+            <div className='flex items-start lg:flex-row flex-col justify-between gap-10'>
+                <div className='lg:w-[60%] w-full'>
+                    <div className='lg:grid grid-cols-2 gap-2.5 relative hidden'>
                         {
                             images?.slice(0, sliceLength)?.map((singleImage, i) => {
                                 return (
-                                    <div className='rounded-[4px] overflow-hidden bg-black relative' key={i}>
-                                        <Image src={singleImage?.src} width={649} height={649} className='w-full h-full object-cover aspect-[1]' alt={singleImage?.alt} />
+                                    <div className='rounded-sm overflow-hidden bg-black relative cursor-pointer' key={i}>
+                                        <Image src={singleImage?.src || default_image} width={649} height={649} className='w-full h-full object-cover aspect-[1]' alt={singleImage?.alt} />
                                         {
                                             singleImage?.video &&
                                             <span onClick={() => {
@@ -110,32 +133,74 @@ const SingleProduct = () => {
                             })
                         }
                         {
-                            sliceLength === 4 && <button className='px-4 py-2 rounded-[20px] bg-white border-[#ccc] border w-fit text-base leading-[1.5rem] font-semibold absolute left-1/2 -translate-x-1/2 -bottom-5 cursor-pointer' onClick={() => setLength(images?.length)}>View all</button>
+                            sliceLength === 4 && <button className='px-4 py-2 rounded-[20px] bg-white border-[#ccc] border w-fit text-base leading-6 font-semibold absolute left-1/2 -translate-x-1/2 -bottom-5 cursor-pointer' onClick={() => setLength(images?.length)}>View all</button>
+                        }
+                        {
+                            sliceLength > 4 && <button className='px-4 py-2 rounded-[20px] bg-white border-[#ccc] border w-fit text-base leading-6 font-semibold absolute left-1/2 -translate-x-1/2 -bottom-5 cursor-pointer' onClick={() => {
+                                setLength(4)
+                                window.scrollTo({ top: 0, behavior: "smooth" });
+                            }}>Voir moins</button>
                         }
                     </div>
+                    <div className='lg:hidden block -mx-5 bg-[#111]'>
+                        <Swiper
+                            modules={[Navigation, Pagination]}
+                            slidesPerView={1}
+                            pagination={{ clickable: true }}
+                            loop={true}
+                            className='mobile-banner'
+                        >
+                            {
+                                images?.map((singleImage, i) => {
+                                    return (
+                                        <SwiperSlide key={i}>
+                                            <div className=''>
+                                                <Image src={singleImage?.src || default_image} width={649} height={649} className='w-full h-full object-cover aspect-[1]' alt={singleImage?.alt} />
+                                                {
+                                                    singleImage?.video &&
+                                                    <span onClick={() => {
+                                                        setOpen(true)
+                                                        setSlide(i)
+                                                    }} className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10'>
+                                                        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <rect x="1.5" y="1.5" width="53" height="53" rx="26.5" stroke="white" stroke-width="3" stroke-dasharray="10 10"></rect>
+                                                            <path d="M37 26.2679C38.3333 27.0377 38.3333 28.9623 37 29.7321L25 36.6603C23.6667 37.4301 22 36.4678 22 34.9282L22 21.0718C22 19.5322 23.6667 18.5699 25 19.3397L37 26.2679Z" fill="white"></path>
+                                                        </svg>
+                                                    </span>
+                                                }
+                                            </div>
+                                        </SwiperSlide>
+                                    )
+                                })
+                            }
+                        </Swiper>
+                    </div>
                 </div>
-                <div className='w-[40%]'>
-                    <h2 className="lg:text-[38px] font-bold leading-[100%]">{data?.name}</h2>
-                    {/* <div
-            dangerouslySetInnerHTML={{ __html: data?.description }}
-          /> */}
+
+
+                {/* Details */}
+                <div className='lg:w-[40%] w-full'>
+                    <ProductDetails data={data} />
                 </div>
             </div>
 
+            {/* Characteristics */}
+            <FaqSection acf={acf} />
 
-            {/* Review */}
+
+            {/* Reviews */}
             <Reviews acf={acf} />
 
 
 
-            {/* Pop Up */}
+            {/* Pop Up for image gallery*/}
             <PopUp isOpen={isOpen}>
-                <div className='w-full h-full bg-white relative flex items-center justify-center'>
+                <div className='w-full h-full overflow-hidden bg-white relative flex items-center justify-center'>
                     <div className='absolute top-2 right-2 z-10 rounded-full border border-black text-black p-1 cursor-pointer'>
                         <X className='w-5 h-5' onClick={() => setOpen(!isOpen)} />
                     </div>
                     <div className='w-full h-full'>
-                        <div className='w-full h-full mx-auto flex flex-col items-center justify-center'>
+                        <div className='w-full h-full mx-auto flex flex-col items-center justify-center relative'>
                             <Swiper
                                 modules={[Navigation, Pagination]}
                                 navigation={{
@@ -147,25 +212,25 @@ const SingleProduct = () => {
                                 initialSlide={default_slide}
                                 onSwiper={(swiper) => (swiperRef.current = swiper)}
                                 onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
-                                className="mySwiper z-20 w-[80%] h-[80%] relative"
+                                className="mySwiper z-20 lg:w-[80%] w-[90%] h-[80%] relative"
                             >
                                 {
                                     images?.map((img, i) => {
                                         return (
                                             <SwiperSlide key={i} className='w-full h-full'>
-                                                <div className='w-full h-full'>
+                                                <div className='w-full h-full relative flex items-center justify-center'>
                                                     {
                                                         img?.video ?
                                                             <>
                                                                 <iframe
-                                                                    width="78%"
-                                                                    height="90%"
+                                                                    width="100%"
+                                                                    height=""
                                                                     src={activeIndex === i ? `https://www.youtube.com/embed/${extractYouTubeID(img.link)}?autoplay=1&mute=0` : ""}
                                                                     title="YouTube video"
                                                                     frameBorder="0"
                                                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                                     allowFullScreen
-                                                                    className="rounded-[4px] mx-auto"
+                                                                    className="rounded-[4px] mx-auto block"
                                                                 ></iframe>
                                                             </> :
                                                             <Image src={img?.src} className='w-full h-full rounded-[4px] object-contain aspect-[1]' width={649} height={649} alt={img?.alt} />
@@ -177,10 +242,10 @@ const SingleProduct = () => {
                                 }
 
                                 {/* Pagination */}
-                                <div className='absolute left-0 right-0 bottom-0 px-3 py-[10px] w-full z-50 backdrop-blur-[4px] border border-gray-200 rounded-[4px] flex items-center justify-center bg-white/20 gap-2'>
+                                <div className='absolute left-0 right-0 bottom-0 px-3 py-[10px] w-full z-50 backdrop-blur-[4px] border border-gray-200 rounded-[4px] items-center justify-center bg-white/20 gap-2 md:flex hidden'>
                                     {
                                         images?.map((singleImage, index) => {
-                                            const isActive = activeIndex === index;
+                                            const isActive = activeIndex === index || default_slide === index;
                                             return (
                                                 <div
                                                     onClick={() => swiperRef.current?.slideTo(index)}
@@ -206,13 +271,13 @@ const SingleProduct = () => {
                             {/* Navigation Button */}
                             <button
                                 id="customPrev"
-                                className="absolute top-1/2 left-4 -translate-y-1/2 z-50 border border-black p-2 rounded-full shadow cursor-pointer"
+                                className="absolute md:top-1/2 md:left-4 md:bottom-auto md:right-auto bottom-5 right-20  md:-translate-y-1/2 z-50 border border-black p-2 rounded-full shadow cursor-pointer"
                             >
                                 <ArrowLeft className='w-4 h-4' />
                             </button>
                             <button
                                 id="customNext"
-                                className="absolute top-1/2 right-4 -translate-y-1/2 z-50 border border-black p-2 rounded-full shadow cursor-pointer"
+                                className="absolute md:top-1/2 md:bottom-auto md:right-4 md:-translate-y-1/2  bottom-5 right-5 z-50 border border-black p-2 rounded-full shadow cursor-pointer"
                             >
                                 <ArrowRight className='w-4 h-4' />
                             </button>

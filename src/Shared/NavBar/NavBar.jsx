@@ -78,9 +78,9 @@ const Navbar = ({ NAV_LINKS }) => {
 
     return (
         <>
-            <nav className='fixed left-0 right-0 top-0 md:z-50 z-[110] text-white w-full'>
+            <nav className='fixed left-0 right-0 top-0 md:z-50 z-110 text-white w-full'>
                 {/* Logo and Search Part */}
-                <div className='py-[16px] bg-black global-padding border-b border-gray-600 w-full flex items-center justify-between' onMouseEnter={() => handleShow(null)}>
+                <div className='py-4 bg-black global-padding border-b border-gray-600 w-full flex items-center justify-between' onMouseEnter={() => handleShow(null)}>
                     {/* Logo */}
                     <Link href="/" className="hidden md:flex items-center">
                         <Image
@@ -109,9 +109,11 @@ const Navbar = ({ NAV_LINKS }) => {
                         </div>
 
                         {/* Profile */}
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4 20.5714V17.1429C4 16.2335 4.42143 15.3615 5.17157 14.7185C5.92172 14.0755 6.93913 13.7143 8 13.7143H12H16C17.0609 13.7143 18.0783 14.0755 18.8284 14.7185C19.5786 15.3615 20 16.2335 20 17.1429V20.5714M16 6.85714C16.1205 9.14337 14.2894 11.1429 12 11.1429C9.7106 11.1429 7.87952 9.14337 8 6.85714C8.1142 4.6901 9.82995 3 12 3C14.17 3 15.8858 4.6901 16 6.85714Z" stroke="white" stroke-width="1.5" stroke-linecap="square" />
-                        </svg>
+                        <Link href={'/login'}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4 20.5714V17.1429C4 16.2335 4.42143 15.3615 5.17157 14.7185C5.92172 14.0755 6.93913 13.7143 8 13.7143H12H16C17.0609 13.7143 18.0783 14.0755 18.8284 14.7185C19.5786 15.3615 20 16.2335 20 17.1429V20.5714M16 6.85714C16.1205 9.14337 14.2894 11.1429 12 11.1429C9.7106 11.1429 7.87952 9.14337 8 6.85714C8.1142 4.6901 9.82995 3 12 3C14.17 3 15.8858 4.6901 16 6.85714Z" stroke="white" stroke-width="1.5" stroke-linecap="square" />
+                            </svg>
+                        </Link>
                         {/* Cart */}
                         <button
                             onClick={() => setIsCartOpen(true)}

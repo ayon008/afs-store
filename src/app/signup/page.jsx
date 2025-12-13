@@ -1,4 +1,4 @@
-import Register from '@/Shared/Form/Register';
+import Register from '../../Shared/Form/Register';
 import Link from 'next/link';
 import React from 'react';
 import FeatureBar from '../../constants/FeatureBar';

@@ -7,9 +7,7 @@ import Link from 'next/link';
 import { useForm } from "react-hook-form";
 import { loginUser } from "../../funtions/getRegisterStoreUser"
 
-
 const Login = () => {
-
     const {
         register,
         handleSubmit,

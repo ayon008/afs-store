@@ -42,7 +42,7 @@ const PopUp = ({ isOpen, children }) => {
     // CreatePortal render the jsx outside the normal React Tree
 
     return createPortal(
-        <div className='fixed z-[9999] inset-0 flex items-center justify-center backdrop-blur-[10px] pointer-events-auto'>
+        <div className='fixed z-[9999] inset-0 flex items-center justify-center backdrop-blur-[10px] pointer-events-auto bg-black/40'>
             <div className='z-[10000] relative w-full h-screen flex items-center justify-center overflow-hidden'>
                 {children}
             </div>

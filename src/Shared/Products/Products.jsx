@@ -160,7 +160,7 @@ const Products = ({ minPrice, maxPrice, childCategories, min = null, max = null,
                                 const { images } = product;
                                 const bestseller = product?.acf?.bestseller;
                                 return (
-                                    <ProjectCard price={product?.price} type={product?.type} name={product?.name} bestseller={bestseller} hoverImage={images[1]?.src} image={images[0]?.src} key={product?.id} slug={product?.slug} />
+                                    <ProjectCard price={product?.price_html} type={product?.type} name={product?.name} bestseller={bestseller} hoverImage={images[1]?.src} image={images[0]?.src} key={product?.id} slug={product?.slug} />
                                 )
                             })
                         }

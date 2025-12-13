@@ -4,7 +4,7 @@ import moment from "moment";
 import BlogContent from "../../../components/BlogContent/BlogContent"
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { getPosts } from "@/lib/wp";
+import { getPosts } from "../../../lib/wp";
 
 
 export async function generateMetadata({ params }) {

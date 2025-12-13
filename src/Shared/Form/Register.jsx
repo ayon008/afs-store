@@ -5,7 +5,7 @@ import Input from "../Input/input";
 import FormButton from "../Button/FormButton";
 import Password from "../Input/Password";
 import Link from "next/link";
-import { registerStoreUser } from "@/funtions/getRegisterStoreUser";
+import { registerStoreUser } from "../../funtions/getRegisterStoreUser";
 
 const Register = () => {
     const {
@@ -23,7 +23,9 @@ const Register = () => {
         const { first_name, last_name, email, password } = data;
         try {
             const response = await registerStoreUser({
-                username: email, name: `${first_name + " " + last_name}`, first_name: first_name, last_name: last_name, email: email, password: password});
+                username: email, display_name: `${first_name} ${last_name}`, first_name: first_name, last_name: last_name, email: email, password: password, name: `${first_name} ${last_name}`
+            });
+
             if (response.id) {
                 console.log(response);
                 return reset()
@@ -147,11 +149,24 @@ const Register = () => {
             </div>
 
             {/* NEWSLETTER CHECK */}
-            <div className="flex items-center mt-6 gap-1">
-                <input type="checkbox" {...register("yes")} />
-                <p className="text-[15px] leading-[19px]">
-                    I would like to receive exclusive offers
-                </p>
+            <div className="flex flex-col mt-6 gap-1">
+                <div className="flex items-center gap-2">
+                    <input
+                        type="checkbox"
+                        {...register("yes", { required: "You must agree to continue" })}
+                        className="w-4 h-4"
+                    />
+                    <p className="text-[15px] leading-[19px]">
+                        I would like to receive exclusive offers
+                    </p>
+                </div>
+
+                {/* Error message */}
+                {errors.yes && (
+                    <p className="text-red-500 text-sm mt-1">
+                        {errors.yes.message}
+                    </p>
+                )}
             </div>
 
             {/* PRIVACY INFO */}

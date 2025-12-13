@@ -118,11 +118,10 @@ export default function ProjectCard({
           <h2 className="text-[clamp(0.875rem,0.805rem+0.2667vw,1.125rem)] uppercase lg:leading-[20px] leading-[100%] font-bold">
             {cleanTitle}
           </h2>
-          <p className="text-[clamp(0.8125rem,0.76rem+0.2vw,1rem)] leading-[100%] text-[#111111bf] font-bold mt-1">
-            {
-              type === "simple" ? (price ? formatPrice(price) : "") : "From" + " " + (price ? formatPrice(price) : "")
-            }
-          </p>
+          <p
+            className="text-[clamp(0.8125rem,0.76rem+0.2vw,1rem)] leading-[100%] text-[#111111bf] font-bold mt-1"
+            dangerouslySetInnerHTML={{ __html: price }}
+          />
         </div>
         <div className="">
           <Link href={`/product/${slug}`}>
