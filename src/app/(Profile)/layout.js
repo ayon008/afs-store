@@ -1,6 +1,7 @@
 import '../globals.css';
 import { allianceNo2 } from '../fonts';
 import { Clipboard, LogOut, User } from 'lucide-react';
+import { getAuthenticatedUser } from '../../funtions/auth';
 
 export const metadata = {
     title: 'Mon profil - AFS',
@@ -44,14 +45,17 @@ export const metadata = {
 const navItems = ["Information", "Orders", "Payment Methods", "SAV", "Change Password", "Log Out"];
 
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+
+    const user = await getAuthenticatedUser();
+
     return (
         <html lang="en" className={allianceNo2.variable}>
             <body className="font-alliance">
                 <main className='global-padding pt-4 global-margin'>
                     <div className=''>
                         <div className='pb-10 global-b-bottom'>
-                            <h1 className='global-h1'>Bonjour, Aa</h1>
+                            <h1 className='global-h1'>Bonjour, {user?.last_name}</h1>
                         </div>
                     </div>
                     <div className='flex items-start justify-between xl:flex-row flex-col gap-10 mt-10'>

@@ -6,8 +6,11 @@ import FormButton from "../Button/FormButton"
 import Link from 'next/link';
 import { useForm } from "react-hook-form";
 import { loginUser } from "../../funtions/getRegisterStoreUser"
+import { useRouter } from 'next/navigation';
+import useAuth from '../../hooks/use-auth';
 
 const Login = () => {
+    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -15,13 +18,23 @@ const Login = () => {
         formState: { errors }
     } = useForm();
 
+    const { refreshUser } = useAuth();
+
     const onSubmit = async (data) => {
         console.log("FORM DATA:", data);
         const { email, password } = data;
         try {
             const response = await loginUser({ username: email, password: password });
-            console.log(response);
-            reset();
+            if (response) {
+                reset();
+                // refresh auth context so user data becomes available without full page reload
+                try {
+                    await refreshUser();
+                } catch (e) {
+                    console.warn('refreshUser failed', e);
+                }
+                router.push('/my-profile');
+            }
         } catch (error) {
             console.log(error);
         }
@@ -38,7 +51,7 @@ const Login = () => {
                 <Input
                     label='Identifiant ou e-mail'
                     id='email'
-                    type='email'
+                    type='text'
                     placeholder=''
                     register={register("email", { required: "Email is required" })}
                     error={errors.email?.message}

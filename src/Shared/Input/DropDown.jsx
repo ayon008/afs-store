@@ -1,0 +1,47 @@
+"use client";
+import React from "react";
+import { Check } from "lucide-react";
+
+const CountrySelect = ({ label, id, register, error, value, registerPage = false, countries = [], show = true }) => {
+    const showAyon = value && value.length >= 2;
+
+    return (
+        <div>
+            <div className="relative">
+                <label
+                    htmlFor={id}
+                    className="bg-[#F0F0F0] absolute left-3 font-semibold -top-[14px] text-[#666] text-sm leading-[28px]"
+                >
+                    <span className="uppercase">{label}</span>
+                    {registerPage && (
+                        error
+                            ? <span className="text-red-800 ml-1 font-normal">× Woops</span>
+                            : showAyon
+                                ? <Check className="inline ml-1" size={14} strokeWidth={6} color="#2A7029" />
+                                : null
+                    )}
+                </label>
+
+                <select
+                    disabled={!show}
+                    {...register}
+                    id={id}
+                    className={`border border-[#BFBFBF] rounded-[4px] w-full py-3 px-3 focus:outline-none text-lg leading-[23px] text-black font-semibold
+                        appearance-none -webkit-appearance-none -moz-appearance-none cursor-pointer
+            ${error ? "border-red-500" : ""}`}
+                    value={value}
+                >
+                    <option value="">Select a country</option>
+                    {countries.map((country) => (
+                        <option key={country.code} value={country.code}>
+                            {country.name}
+                        </option>
+                    ))}
+                </select>
+            </div>
+            {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+        </div>
+    );
+};
+
+export default CountrySelect;

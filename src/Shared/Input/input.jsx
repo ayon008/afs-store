@@ -1,7 +1,7 @@
 import { Check } from 'lucide-react';
 import React from 'react';
 
-const Input = ({ label, type, id, placeholder, register, error, registerPage = false, value }) => {
+const Input = ({ label, type, id, placeholder, register, error, registerPage = false, value, show = true }) => {
     // value: the current value of the input, passed from parent via react-hook-form's watch
     const showAyon = value && value.length >= 2;
 
@@ -29,6 +29,7 @@ const Input = ({ label, type, id, placeholder, register, error, registerPage = f
                     placeholder={placeholder}
                     className={`border border-[#BFBFBF] rounded-[4px] w-full py-3 px-3 focus:outline-none text-lg leading-[23px] text-black font-semibold
                     ${error ? "border-red-500" : ""}`}
+                    disabled={!show}
                 />
             </div>
             {error && <p className="text-red-500 text-xs mt-1">{error}</p>}

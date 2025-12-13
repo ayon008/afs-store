@@ -6,6 +6,7 @@ import FormButton from "../Button/FormButton";
 import Password from "../Input/Password";
 import Link from "next/link";
 import { registerStoreUser } from "../../funtions/getRegisterStoreUser";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
     const {
@@ -18,17 +19,20 @@ const Register = () => {
         mode: "onChange", // live validation
     });
 
+    const router = useRouter();
+
     const onSubmit = async (data) => {
         console.log("FORM DATA:", data);
         const { first_name, last_name, email, password } = data;
         try {
             const response = await registerStoreUser({
-                username: email, display_name: `${first_name} ${last_name}`, first_name: first_name, last_name: last_name, email: email, password: password, name: `${first_name} ${last_name}`
+                username: email, display_name: `${first_name} ${last_name}`, first_name: first_name, last_name: last_name, email: email, password: password, nickname: `${first_name} ${last_name}`
             });
 
             if (response.id) {
                 console.log(response);
-                return reset()
+                router.push('/login');
+                reset();
             }
 
         } catch (error) {

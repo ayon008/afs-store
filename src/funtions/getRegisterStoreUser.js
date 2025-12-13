@@ -30,6 +30,7 @@ export const registerStoreUser = async (userInfo) => {
 
 
 export const loginUser = async (userInfo) => {
+
     try {
         const response = await fetch(`${process.env.WP_BASE_URL}/wp-json/jwt-auth/v1/token`, {
             method: "POST",
@@ -40,15 +41,22 @@ export const loginUser = async (userInfo) => {
         })
 
         const data = await response.json();
+        console.log(data, 'login');
+
         const cookieStore = await cookies();
 
         if (data && data?.token) {
+            const payload = JSON.parse(
+                Buffer.from(data.token.split('.')[1], 'base64').toString()
+            )
+            const maxAge = payload.exp - Math.floor(Date.now() / 1000)
+
             cookieStore.set({
                 name: "auth_token",
                 value: data.token,
                 httpOnly: true,       // Secure: cannot access from client JS
                 path: "/",            // Cookie available on all pages
-                maxAge: 60 * 60 * 24 * 14, // 14 days
+                maxAge,               // Expiry time
                 sameSite: "strict",   // CSRF protection
                 priority: "high",
                 secure: process.env.NODE_ENV === "production",

@@ -282,7 +282,7 @@ const Navbar = ({ NAV_LINKS }) => {
                                     </div>
                                     <div>
                                         <p className='text-[16px] font-semibold tracking-wide'>Expédition et livraison</p>
-                                        <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#1D98FF]">
+                                        <ul className="mt-4 text-[16px] font-semibold tracking-wide text-[#1D98FF]">
                                             <li className='cursor-pointer'>Suivi de commande</li>
                                             <li className='cursor-pointer'>Envoi et livraison</li>
                                             <li className='cursor-pointer'>Retours</li>

@@ -2,7 +2,6 @@
 import Footer from "../components/Footer"
 import VhUpdater from "../components/utils/VhUpdater"
 import { ContentProvider } from "../context/ContentContext"
-import { AuthProvider, useAuth } from "../context/AuthContext"
 import { CartProvider } from "../components/cart-provider"
 import { NavigationProvider } from "../context/NavigationContext"
 // import TopBar from "../components/TopBar"
@@ -10,6 +9,7 @@ import FaqSection from "../components/FaqSection"
 import FeatureBar from "../constants/FeatureBar"
 import NavBar from "../Shared/NavBar/NavBar.jsx"
 import { getMenuItems } from "../funtions/getMenuData"
+import AuthProvider from "../Shared/Providers/AuthProvider"
 
 async function LayoutContent({ children }) {
   // const { isLoggedIn } = useAuth()
