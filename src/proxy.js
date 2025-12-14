@@ -14,7 +14,7 @@ function isExpired(token) {
 
 export async function proxy(req) {
     const authRoute = ["/login", "/signup"];
-    const protectedRoute = ["/my-profile"];
+    const protectedRoute = ["/my-profile","/my-profile/"];
     const pathName = req.nextUrl.pathname;
     const token = req.cookies.get("auth_token")?.value;
     const validToken = token && !isExpired(token);

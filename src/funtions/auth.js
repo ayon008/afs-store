@@ -51,13 +51,7 @@ export const getAuthenticatedUser = async () => {
         }
 
         const wcCustomer = await wcRes.json();
-        console.log({
-            ...wpUser,
-            billing: wcCustomer.billing || {},
-            shipping: wcCustomer.shipping || {},
-        }, 'userAL');
-
-
+      
         /* 3️⃣ Merge & return */
         return {
             ...wpUser,
@@ -214,7 +208,6 @@ export async function changePasswordAction(data) {
     if (!token) {
         return { success: false, error: 'Not authenticated' };
     }
-    const currentPassword = data?.currentPassword;
     const newPassword = data?.newPassword;
     try {
         const response = await fetch(`${process.env.WP_BASE_URL}/wp/v2/users/me`, {
@@ -339,10 +332,8 @@ export const updateShippingInfo = async (shippingData) => {
             }),
             cache: "no-store",
         });
-        console.log(wcRes, 'wcRes');
 
         const wcResult = await wcRes.json();
-        console.log(wcResult, 'wcResult');
 
         if (!wcRes.ok) {
             console.error("WC update error:", wcResult);
@@ -354,3 +345,6 @@ export const updateShippingInfo = async (shippingData) => {
         return { success: false, error: "Something went wrong" };
     }
 }
+
+
+

@@ -1,5 +1,8 @@
 "use server"
 
+import { cookies } from "next/headers";
+import { getAuthenticatedUser } from "./auth";
+
 const consumerKey = process.env.WC_CONSUMER_KEY;
 const consumerSecret = process.env.WC_CONSUMER_SECRET
 const authHeader = Buffer
@@ -253,3 +256,65 @@ export const getPrice = async (productId, selectedVariation) => {
 };
 
 
+
+// get woo-commerce orders 
+
+export const getOrders = async () => {
+    const authHeader =
+        "Basic " +
+        Buffer.from(
+            `${process.env.WC_CONSUMER_KEY}:${process.env.WC_CONSUMER_SECRET}`
+        ).toString("base64");
+
+    const cookieStore = await cookies();
+    const token = cookieStore.get("auth_token")?.value;
+
+    const user = await getAuthenticatedUser();
+
+    if (!token || !user?.id) {
+        return [];
+    }
+
+    const userId = user.id;
+    const perPage = 100;
+
+    let allOrders = [];
+
+    // 1️⃣ First request (to know total pages)
+    const firstRes = await fetch(
+        `${process.env.WP_BASE_URL}/wp-json/wc/v3/orders?customer=${userId}&page=1&per_page=${perPage}&orderby=date&order=desc`,
+        {
+            headers: { Authorization: authHeader },
+            cache: "no-store",
+        }
+    );
+
+    if (!firstRes.ok) {
+        throw new Error("Failed to fetch orders");
+    }
+
+    const totalPages = Number(firstRes.headers.get("X-WP-TotalPages")) || 1;
+    const firstOrders = await firstRes.json();
+
+    allOrders.push(...firstOrders);
+
+    // 2️⃣ Fetch remaining pages
+    for (let page = 2; page <= totalPages; page++) {
+        const res = await fetch(
+            `${process.env.WP_BASE_URL}/wp-json/wc/v3/orders?customer=${userId}&page=${page}&per_page=${perPage}&orderby=date&order=desc`,
+            {
+                headers: { Authorization: authHeader },
+                cache: "no-store",
+            }
+        );
+
+        if (!res.ok) {
+            throw new Error(`Failed to fetch orders on page ${page}`);
+        }
+
+        const orders = await res.json();
+        allOrders.push(...orders);
+    }
+
+    return allOrders;
+};

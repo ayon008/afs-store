@@ -49,6 +49,12 @@ const Register = () => {
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
+            onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    handleSubmit(onSubmit)();
+                }
+            }}
             className="max-w-[420px] w-full py-[50px] px-[35px] bg-[#F0F0F0] rounded-[4px]"
         >
             <h1 className="lg:text-5xl lg:leading-[53px] font-bold mb-8 text-2xl leading-[26px] text-center">

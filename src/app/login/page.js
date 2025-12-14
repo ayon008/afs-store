@@ -31,9 +31,10 @@ const page = async () => {
     <div>
       <div className='pt-4 global-padding bg-white/95 min-h-screen'>
         <BreadCums />
-        <div className='flex items-center justify-center lg:mt-[80px] mt-[40px] global-margin'>
+        {/* <div className=''>
           <Login />
-        </div>
+        </div> */}
+        <Login />
       </div>
       <FeatureBar />
     </div>

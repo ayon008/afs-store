@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/hooks/use-auth";
+
 // --- Icons Added ---
 import {
   User as UserIcon,
@@ -13,10 +13,11 @@ import {
   CheckCircle2,
   XCircle,
 } from "lucide-react";
+import useAuth from "../../hooks/use-auth";
 
 export default function Page() {
   const router = useRouter();
-  const { user, isLoading } = useAuth();
+  const { user, isLoading = false } = useAuth();
 
   useEffect(() => {
     if (!isLoading && !user) router.push("/login");

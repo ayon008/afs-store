@@ -41,7 +41,6 @@ export const loginUser = async (userInfo) => {
         })
 
         const data = await response.json();
-        console.log(data, 'login');
 
         const cookieStore = await cookies();
 
@@ -49,7 +48,13 @@ export const loginUser = async (userInfo) => {
             const payload = JSON.parse(
                 Buffer.from(data.token.split('.')[1], 'base64').toString()
             )
-            const maxAge = payload.exp - Math.floor(Date.now() / 1000)
+            const tokenExpirySeconds = payload.exp - Math.floor(Date.now() / 1000)
+
+            // If user asked to be remembered, request a longer-lived cookie when reasonable.
+            // Note: actual token validity is determined by the token's `exp` claim from the server.
+            const REMEMBER_30_DAYS = 60 * 60 * 24 * 30;
+            const requestedRemember = !!userInfo?.remember;
+            const maxAge = requestedRemember ? Math.max(tokenExpirySeconds, REMEMBER_30_DAYS) : tokenExpirySeconds;
 
             cookieStore.set({
                 name: "auth_token",
