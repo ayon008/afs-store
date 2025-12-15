@@ -555,6 +555,36 @@ iframe {
     background: transparent !important;
 }
 
+
+/* Cart Page Steps [Empty Cart] */
+
+/* .step-2{
+  position: relative;
+} */
+
+.step-2::before {
+  content: "";
+  position: absolute;
+  top: 47.5%;
+  transform: translateY(-50%);
+  left: 15px;
+  width: calc(50% - 40px) !important;
+  height: 2px;
+  border-bottom: 2px solid #111;
+}
+
+.step-3::before {
+  content: "";
+  position: absolute;
+  top: 47.5%;
+  transform: translateY(-50%);
+  left: 50%;
+  width: calc(50% - 40px) !important;
+  height: 2px;
+  border-bottom: 2px solid #ccc;
+}
+
+
 @media only screen and (max-width: 767px) {
 
 .table-container:not(:last-of-type) {

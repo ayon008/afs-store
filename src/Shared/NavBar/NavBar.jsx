@@ -1,22 +1,26 @@
 "use client"
-import { ArrowLeft, ArrowRight, Search } from 'lucide-react';
+import { ArrowLeft, Search } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import SearchOverlay from "../../components/search";
 import React, { useEffect, useRef, useState } from 'react';
-import { useCart } from '../../components/cart-provider';
 import "flag-icons/css/flag-icons.min.css";
-import parse from "html-react-parser";
 import Menu from '../../icons/Menu';
 import gsap from 'gsap';
+import useCart from '../../hooks/useCart';
 
 const Navbar = ({ NAV_LINKS }) => {
     // Search Open
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     // Shopping Cart
     const [isCartOpen, setIsCartOpen] = useState(false);
-    // 
-    const { totalQty } = useCart();
+
+    const { cart } = useCart();
+
+    const totalQty = cart?.items_count;
+
+
+
 
     // Hover Id [First Nav];
     const [hoverId, setHoverId] = useState(null);
@@ -81,31 +85,35 @@ const Navbar = ({ NAV_LINKS }) => {
             <nav className='fixed left-0 right-0 top-0 md:z-50 z-110 text-white w-full'>
                 {/* Logo and Search Part */}
                 <div className='py-4 bg-black global-padding border-b border-gray-600 w-full flex items-center justify-between' onMouseEnter={() => handleShow(null)}>
-                    {/* Logo */}
-                    <Link href="/" className="hidden md:flex items-center">
-                        <Image
-                            src="/logo.svg"
-                            alt="Alpago Properties Clone"
-                            width={150}
-                            height={45}
-                            priority
-                            className=""
-                        />
-                    </Link>
 
-                    {/* Menu */}
-                    <Menu isOpen={isOpen} setIsOpen={setIsOpen} />
+                    <div className='flex items-center gap-2'>
+                        {/* Menu */}
+                        <Menu isOpen={isOpen} setIsOpen={setIsOpen} />
+
+                        {/* Logo */}
+                        <Link href="/" className="flex items-center">
+                            <Image
+                                src="/logo.svg"
+                                alt="Alpago Properties Clone"
+                                width={150}
+                                height={45}
+                                priority
+                                className=""
+                            />
+                        </Link>
+                    </div>
+
                     {/* 2nd Part */}
                     <div className='flex items-center gap-2'>
                         {/* Search Button */}
-                        <Search className="w-5 h-5 md:hidden block" />
+                        <Search className="w-6 h-6 md:hidden block" />
                         <div className='relative mr-4 hidden md:block'>
                             <input
                                 onClick={() => setIsSearchOpen(true)}
                                 className="hidden md:flex items-center bg-[#3d3d3d] rounded-full h-9 w-64 px-3 placeholder:text-white placeholder:text-sm placeholder:pl-6 placeholder:font-semibold"
                                 placeholder='Rechercher...'
                             />
-                            <Search className="w-5 h-5 mr-2 text-white opacity-90 absolute -translate-y-1/2 left-3 top-1/2" />
+                            <Search className="w-6 h-6 mr-2 text-white opacity-90 absolute -translate-y-1/2 left-3 top-1/2" />
                         </div>
 
                         {/* Profile */}
@@ -155,7 +163,7 @@ const Navbar = ({ NAV_LINKS }) => {
                     </div>
                 </div>
                 {/* NAV LINKS  Desktop*/}
-                <div className="hidden md:flex flex-col h-full relative bg-black">
+                <div className="max-[1280px]:hidden flex flex-col h-full relative bg-black">
                     <div className="flex justify-center items-center whitespace-nowrap px-4 h-full">
                         {NAV_LINKS?.map((link, idx) => (
                             <div
@@ -212,7 +220,7 @@ const Navbar = ({ NAV_LINKS }) => {
                                                                     </h5>
 
                                                                     <p className="font-semibold text-xs leading-[100%] price-wrapper mt-1">
-                                                                        {parse(product.price)}
+                                                                        {parseFloat(product.price)}
                                                                     </p>
                                                                 </div>
                                                             ))}
@@ -339,13 +347,13 @@ const Navbar = ({ NAV_LINKS }) => {
                 <div className="absolute inset-0 z-30 backdrop-blur-[10px] md:block hidden" onMouseEnter={() => handleShow(null)}></div>
             }
             {/* 1st slide */}
-            <div id="mobile-navigation" ref={navRef} className='fixed inset-0 transform translate-x-full opacity-0 h-screen text-black/75 z-[60] bg-white md:hidden block' >
-                <div className='pt-[80px] px-6'>
+            <div id="mobile-navigation" ref={navRef} className='fixed inset-0 transform translate-x-full opacity-0 h-screen text-black/75 overflow-y-scroll z-[60] bg-white md:hidden block' >
+                <div className='pt-[90px] px-6'>
                     <p className='text-[12px] leading-[100%] font-bold uppercase text-[#999999]'>Products</p>
                     <ul className='mt-5 space-y-4'>
                         {
                             NAV_LINKS?.map((link, idx) => (
-                                <li onClick={() => handleShow(link.name)} key={idx} className='text-[22px] font-semibold leading-[100%] tracking-[-0.01em] flex items-center justify-between'>
+                                <li onClick={() => handleShow(link.name)} key={idx} className='text-[22px] font-semibold leading-[100%] tracking-[-0.01em] flex items-center justify-between pb-[10px] border-b border-b-[#E6E6E6]'>
                                     <span>{link.name}</span>
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M7.5 5L12.5 10L7.5 15" stroke="#111111" strokeOpacity="0.75" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="round" />
@@ -357,12 +365,12 @@ const Navbar = ({ NAV_LINKS }) => {
                 </div>
             </div>
             {/* 2nd slide */}
-            <div ref={secondRef} className='fixed inset-0 transform translate-x-full opacity-0 h-screen text-black/75 z-[110] bg-white p-6 block md:hidden'>
+            <div ref={secondRef} className='fixed inset-0 transform translate-x-full opacity-0 h-screen text-black/75 z-[70] bg-white px-6 pb-6 pt-[90px] block md:hidden overflow-y-scroll'>
                 <p onClick={() => handleShow(null)} className='text-[12px] leading-[100%] font-bold uppercase text-[#999999]'><ArrowLeft className='inline mr-1' />{hoverId}</p>
                 <ul className='mt-5 space-y-4'>
                     {
                         subLinks?.sublinks?.map((children, i) => (
-                            <li onClick={() => setDetailsDiv(children.name)} key={i} className='text-[22px] font-semibold leading-[100%] tracking-[-0.01em] flex items-center justify-between'>
+                            <li onClick={() => setDetailsDiv(children.name)} key={i} className='text-[22px] font-semibold leading-[100%] tracking-[-0.01em] flex items-center justify-between pb-[10px] border-b border-b-[#E6E6E6]'>
                                 <span>{children.name}</span>
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M7.5 5L12.5 10L7.5 15" stroke="#111111" strokeOpacity="0.75" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="round" />
@@ -374,7 +382,7 @@ const Navbar = ({ NAV_LINKS }) => {
             </div>
             {/* 3rd Part */}
 
-            <div ref={thirdRef} className='fixed inset-0 transform translate-x-full opacity-0 h-screen text-black/75 z-[120] bg-white block md:hidden'>
+            <div ref={thirdRef} className='fixed inset-0 transform translate-x-full opacity-0 h-screen text-black/75 z-[120] bg-white block md:hidden  overflow-y-scroll'>
                 <div className='p-6'>
                     <p onClick={() => setDetailsDiv(null)} className='text-[12px] leading-[100%] font-bold uppercase text-[#999999]'><ArrowLeft className='inline mr-1' />{detailsDiv}</p>
                     <div className='mt-5'>
@@ -388,7 +396,7 @@ const Navbar = ({ NAV_LINKS }) => {
                                     <span>{product.name}</span>
                                 </div>
                                 <p className="font-semibold text-xs leading-[100%] price-wrapper mt-1">
-                                    {parse(product.price)}
+                                    {parseFloat(product.price)}
                                 </p>
                             </li>
                         ))}

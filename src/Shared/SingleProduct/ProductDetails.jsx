@@ -5,22 +5,32 @@ import PopUp from '../Team/PopUp';
 import { useForm } from "react-hook-form";
 import Image from 'next/image';
 import { getPrice } from '../../funtions/getWooCommerce';
+import useCart from '../../hooks/useCart';
 
 
 const ProductDetails = ({ data }) => {
 
+
     const [priceLoading, setLoading] = useState(true);
-    const product_id = data?.id;
 
     const { register, handleSubmit, watch } = useForm();
     const [variationPrice, setVariationPrice] = useState(null);
     const [isReady, setIsReady] = useState(true);
+    const [variationId, setVariationId] = useState(null);
+    const [selectedAttributes, setSelectedAttributes] = useState({});
+    const productId = data?.id;
 
 
-    const onSubmit = async (data) => {
-        const price = await getPrice(product_id, data);
-        setVariationPrice(price);
-        setLoading(false)
+    const { handleAddToCart } = useCart();
+
+    const onSubmit = async (formData) => {
+        const matchedVariation = await getPrice(productId, formData);
+        setVariationPrice(matchedVariation.price);
+        setVariationId(matchedVariation.id);
+        setSelectedAttributes(formData);
+        setLoading(false);
+        const result = await handleAddToCart(productId, 1, matchedVariation.id || null, formData);
+        console.log(result, 'result');
     };
 
     const [isOpen, setOpen] = useState(false);
@@ -30,34 +40,39 @@ const ProductDetails = ({ data }) => {
 
     // for Pop Up
     const compatibilite = acf?.compatibilite;
-    const dimensions = data?.dimensions;
     const short_description = data?.short_description;
-
-    const product_type = data?.type;
     const price = data?.price_html;
     const attributes = data?.attributes;
 
-    useEffect(() => {
-        if (!attributes) return;
+    // useEffect(() => {
+    //     if (!attributes) return;
 
-        // Build selected values object
-        const selected = attributes.reduce((acc, attr) => {
-            acc[attr.name] = watch(attr.name);
-            return acc;
-        }, {});
+    //     // Build selected values object
+    //     const selected = attributes.reduce((acc, attr) => {
+    //         acc[attr.name] = watch(attr.name);
+    //         return acc;
+    //     }, {});
 
-        // Check if all fields are selected
-        const allSelected = Object.values(selected).every(Boolean);
+    //     // Check if all fields are selected
+    //     const allSelected = Object.values(selected).every(Boolean);
 
-        // Update button state
-        setIsReady(allSelected);
+    //     // Update button state
+    //     setIsReady(allSelected);
 
-        // If all selected → auto fetch price
-        if (allSelected) {
-            onSubmit(selected);
-        }
+    //     // If all selected → auto fetch price
+    //     if (allSelected) {
+    //         onSubmit(selected);
+    //     }
 
-    }, [watch(), attributes]);
+    // }, [watch(), attributes]);
+
+
+    // const handleCart = async () => {
+       
+
+    // }
+
+
 
     return (
         <>

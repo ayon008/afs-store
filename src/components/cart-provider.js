@@ -11,13 +11,13 @@ function useLocalStorageCart() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY)
       if (raw) setState(JSON.parse(raw))
-    } catch {}
+    } catch { }
   }, [])
   const set = (s) => {
     setState(s)
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(s))
-    } catch {}
+    } catch { }
   }
   return [state, set]
 }

@@ -30,18 +30,18 @@ export default function Menu({ isOpen, setIsOpen }) {
   }, [isOpen]);
 
   return (
-    <div className="block md:hidden cursor-pointer">
+    <div className="max-[1280px]:block hidden cursor-pointer">
       <button
-        className="w-10 flex flex-col justify-between h-6 cursor-pointer"
+        className="w-8 flex flex-col justify-between h-5 cursor-pointer"
         type="button"
         aria-label="Toggle navigation menu"
         aria-controls="mobile-navigation"
         aria-expanded={isOpen}
         onClick={toggleMenu}
       >
-        <div ref={top} className="h-[2px] w-8 bg-white"></div>
-        <div ref={middle} className="h-[2px] w-8 bg-white"></div>
-        <div ref={bottom} className="h-[2px] w-8 bg-white"></div>
+        <div ref={top} className="h-[2px] w-6 bg-white"></div>
+        <div ref={middle} className="h-[2px] w-6 bg-white"></div>
+        <div ref={bottom} className="h-[2px] w-6 bg-white"></div>
       </button>
     </div>
   );

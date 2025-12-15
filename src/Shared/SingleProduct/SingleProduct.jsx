@@ -19,6 +19,7 @@ import ProductDetails from './ProductDetails';
 import FaqSection from './FaqSection';
 
 
+// For youtube link in review and pop up section
 function extractYouTubeID(url) {
     const regExp =
         /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
@@ -49,9 +50,6 @@ const SingleProduct = () => {
         }
         load();
     }, [slug])
-
-
-    const categories = data?.categories;
 
     const [images, setImages] = useState([]);
     const [sliceLength, setLength] = useState(0);
@@ -88,11 +86,6 @@ const SingleProduct = () => {
 
 
     const acf = data?.acf;
-
-    const dimensions = data?.dimensions;
-
-
-    const product_id = data?.id;
 
 
 

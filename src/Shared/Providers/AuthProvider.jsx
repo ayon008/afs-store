@@ -11,6 +11,7 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
+    const [cartItems, setCartItems] = useState([]);
 
     const fetchUser = async () => {
         setLoading(true);

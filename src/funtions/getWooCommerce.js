@@ -48,7 +48,8 @@ export const calculatePriceWithTax = async (basePrice, tax_class = "standard", c
         const taxRate = parseFloat(standardTax.rate);
         const priceWithTax = basePrice + (basePrice * taxRate) / 100;
 
-        return parseFloat(priceWithTax.toFixed(2));
+        // return parseFloat(priceWithTax.toFixed(2));
+        return basePrice
     } catch (error) {
         console.error('Error calculating tax:', error);
         return basePrice; // fallback
@@ -245,9 +246,19 @@ export const getPrice = async (productId, selectedVariation) => {
         });
 
         const price = await calculatePriceWithTax(matchedVariation?.price, matchedVariation?.tax_class);
-        // console.log(price);
 
-        return price || null;
+        // Convert variation.attributes (array) into an attributes object expected by cart API
+        // e.g., [{ name: 'attribute_color', option: 'Blue' }] -> { color: 'Blue' }
+        // const attributesObj = (matchedVariation?.attributes || []).reduce((acc, a) => {
+        //     const key = a.name ? a.name.replace(/^attribute_/, "").toLowerCase().trim() : a.name;
+        //     acc[key] = a.option;
+        //     return acc;
+        // }, {});
+
+        // console.log(matchedVariation, 'matched');
+
+
+        return { price, id: matchedVariation?.id, attributes: matchedVariation } || null;
 
     } catch (error) {
         console.log(error);

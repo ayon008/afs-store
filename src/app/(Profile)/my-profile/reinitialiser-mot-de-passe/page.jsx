@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../../hooks/use-auth";
 import { changePasswordAction } from "../../../../funtions/auth";
+import Link from "next/link";
 
 const PasswordResetPage = () => {
     const [typeCurrent, setTypeCurrent] = useState("password");
@@ -42,9 +43,8 @@ const PasswordResetPage = () => {
 
         try {
 
-            const result = await changePasswordAction(data.new_password);
+            const result = await changePasswordAction({ currentPassword: data.current_password, newPassword: data.new_password });
             console.log(result);
-
 
             console.log("Password update result:", result);
         } catch (err) {
@@ -143,10 +143,12 @@ const PasswordResetPage = () => {
 
                         <div className="mt-5 flex items-center flex-wrap gap-10">
                             <FormButton type="submit" label="ENREGISTRER" />
-                            <button className="text-base uppercase flex items-center gap-1" type="button">
-                                <span>Forgot password</span>
-                                <ArrowUpRight className="inline w-5 h-5" />
-                            </button>
+                            <Link href={'/7pyqmxyzbbqyg7'}>
+                                <div className="text-base uppercase flex items-center gap-1" type="button">
+                                    <span>Forgot password</span>
+                                    <ArrowUpRight className="inline w-5 h-5" />
+                                </div>
+                            </Link>
                         </div>
                     </form>
                 </div>

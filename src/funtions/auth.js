@@ -1,7 +1,4 @@
 "use server"
-
-import { count } from "console";
-import { first } from "lodash";
 // app/actions/auth.ts
 import { cookies } from "next/headers";
 
@@ -51,7 +48,7 @@ export const getAuthenticatedUser = async () => {
         }
 
         const wcCustomer = await wcRes.json();
-      
+
         /* 3️⃣ Merge & return */
         return {
             ...wpUser,
@@ -200,37 +197,68 @@ export async function updateProfile(data) {
     }
 }
 
-
-
 export async function changePasswordAction(data) {
     const cookieStore = await cookies();
     const token = cookieStore.get('auth_token')?.value;
+
     if (!token) {
         return { success: false, error: 'Not authenticated' };
     }
-    const newPassword = data?.newPassword;
-    try {
-        const response = await fetch(`${process.env.WP_BASE_URL}/wp/v2/users/me`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-                password: newPassword,
-            }),
-        });
 
-        if (!response.ok) {
+    const { currentPassword, newPassword } = data;
+
+    console.log('currentPassword', currentPassword);
+
+
+    try {
+        // 1️⃣ Get current user (to obtain username/email)
+        const user = await getAuthenticatedUser();
+
+        const username = user.slug; // or user.email
+
+        // 2️⃣ Verify current password
+        const verifyRes = await fetch(
+            `${process.env.WP_BASE_URL}/wp-json/jwt-auth/v1/token`,
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username,
+                    password: currentPassword,
+                }),
+            }
+        );
+
+        if (!verifyRes.ok) {
+            return { success: false, error: 'Current password is incorrect' };
+        }
+
+        // 3️⃣ Change password
+        const changeRes = await fetch(
+            `${process.env.WP_BASE_URL}/wp-json/wp/v2/users/me`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    password: newPassword,
+                }),
+            }
+        );
+
+        if (!changeRes.ok) {
             return { success: false, error: 'Failed to change password' };
         }
 
         return { success: true };
-    } catch (error) {
-        console.error('Error changing password:', error);
+    } catch (err) {
+        console.error(err);
         return { success: false, error: 'Something went wrong' };
     }
 }
+
 
 
 export const updateBillingInfo = async (billingData) => {
@@ -348,3 +376,35 @@ export const updateShippingInfo = async (shippingData) => {
 
 
 
+// change password without current password (e.g., password reset)
+
+export async function lostPassword(email) {
+    console.log(email, 'email');
+
+    try {
+        const formData = new FormData();
+        formData.append('user_login', email);
+
+        const res = await fetch(`${process.env.WP_BASE_URL}/wp-login.php?action=lostpassword`, {
+            method: 'POST',
+            body: formData,
+        });
+
+        console.log(res,'res');
+
+
+        if (!res.ok) {
+            throw new Error('Failed to send password reset email');
+        }
+
+        return {
+            success: true,
+            message: 'Password reset email sent successfully',
+        };
+    } catch (error) {
+        return {
+            success: false,
+            message: error.message,
+        };
+    }
+}

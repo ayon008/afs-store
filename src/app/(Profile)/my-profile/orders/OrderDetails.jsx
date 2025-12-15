@@ -94,8 +94,8 @@ const OrderDetails = ({ order }) => {
 
     return (
         <div ref={orderRef} className='bg-white p-5'>
-            <div className='grid grid-cols-5 gap-2 items-center cursor-pointer h-[60px]' onClick={() => setIsOpen(!isOpen)}>
-                <div className='col-span-2'>
+            <div className='grid md:grid-cols-5 grid-cols-2 gap-2 items-center cursor-pointer md:h-[60px]' onClick={() => setIsOpen(!isOpen)}>
+                <div className='md:col-span-2 col-span-1'>
                     <div className={`flex items-center flex-wrap ${isOpen ? "hidden" : "block"}`}>
                         {line_items.slice(0, visibleCount).map((item, i) => {
                             const src = item.image?.src || "";
@@ -133,7 +133,7 @@ const OrderDetails = ({ order }) => {
                         }
                     </div>
                 </div>
-                <div className='space-y-2'>
+                <div className='space-y-2 md:text-left text-right'>
                     {
                         !isOpen && <>
                             <p className='text-base leading-[100%] font-semibold'>№{order?.id}</p>
@@ -211,8 +211,12 @@ const OrderDetails = ({ order }) => {
                                     line_items.map((item, i) => {
                                         const src = item.image?.src || "";
                                         return (
-                                            <li key={i} className='bg-[#F7F7F7] flex p-[10px] gap-[10px] items-center justify-between'>
-                                                <div>
+                                            <li
+                                                key={i}
+                                                className="bg-[#F7F7F7] grid grid-cols-2 grid-rows-2 md:grid-cols-5 md:grid-rows-1 p-[10px] gap-[10px] items-center"
+                                            >
+                                                {/* Image */}
+                                                <div className="row-span-1 col-span-1">
                                                     <Image
                                                         key={i}
                                                         src={src}
@@ -222,28 +226,39 @@ const OrderDetails = ({ order }) => {
                                                         className="w-[60px] h-[60px] aspect-[1]"
                                                     />
                                                 </div>
-                                                <div className='text-sm leading-[100%] text-[#111]'>
+
+                                                {/* Name */}
+                                                <div className="row-span-1 col-span-1 text-sm leading-[100%] text-[#111] md:text-left text-right">
                                                     {item.name}
                                                 </div>
-                                                <div className='flex flex-col text-right gap-[10px]'>
-                                                    <p className='text-sm font-semibold leading-[100%] uppercase text-[#111]/40'>Prix</p>
-                                                    <span className='block text-lg leading-[130%] text-[#111] font-medium'>
-                                                        {parseFloat(item.price).toFixed(2)}{order?.currency_symbol}
+
+                                                {/* Price */}
+                                                <div className="row-span-1 col-span-1 flex flex-col gap-[10px] md:text-right text-left">
+                                                    <p className="text-sm font-semibold leading-[100%] uppercase text-[#111]/40">Prix</p>
+                                                    <span className="block text-lg leading-[130%] text-[#111] font-medium">
+                                                        {parseFloat(item.price).toFixed(2)}
+                                                        {order?.currency_symbol}
                                                     </span>
                                                 </div>
-                                                <div className='flex flex-col text-right gap-[10px]'>
-                                                    <p className='text-sm font-semibold leading-[100%] uppercase text-[#111]/40'>Qté</p>
-                                                    <span className='block text-lg leading-[130%] text-[#111] font-medium'>
+
+                                                {/* Quantity */}
+                                                <div className="row-span-1 col-span-1 flex flex-col gap-[10px] text-right">
+                                                    <p className="text-sm font-semibold leading-[100%] uppercase text-[#111]/40">Qté</p>
+                                                    <span className="block text-lg leading-[130%] text-[#111] font-medium">
                                                         {item.quantity}
                                                     </span>
                                                 </div>
-                                                <div className='flex flex-col text-right gap-[10px]'>
-                                                    <p className='text-sm font-semibold leading-[100%] uppercase text-[#111]/40'>Sous-total</p>
-                                                    <span className='block text-lg leading-[130%] text-[#111] font-medium'>
-                                                        {item?.subtotal}{order?.currency_symbol}
+
+                                                {/* Subtotal */}
+                                                <div className="row-span-1 col-span-2 md:col-span-1 flex flex-col gap-[10px] md:text-right text-left">
+                                                    <p className="text-sm font-semibold leading-[100%] uppercase text-[#111]/40">Sous-total</p>
+                                                    <span className="block text-lg leading-[130%] text-[#111] font-medium">
+                                                        {item?.subtotal}
+                                                        {order?.currency_symbol}
                                                     </span>
                                                 </div>
                                             </li>
+
                                         )
                                     })
                                 }
