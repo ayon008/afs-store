@@ -223,3 +223,189 @@ export async function clearCart() {
         return { success: false, error: error.message };
     }
 }
+
+// Default France location
+const DEFAULT_LOCATION = {
+    country: 'FR',
+    state: '',
+    city: 'Paris',
+    postcode: '75001'
+};
+
+// Get shipping methods based on location
+export async function getShippingMethods() {
+    try {
+        const cookieHeader = await getWooCommerceCookies();
+
+        // First, get the cart to check for existing addresses
+        const cartResponse = await fetch(`${WC_STORE_URL}/cart`, {
+            method: 'GET',
+            headers: {
+                'Cookie': cookieHeader,
+                'Accept': 'application/json',
+            },
+            cache: 'no-store',
+        });
+
+        await setCookiesFromResponse(cartResponse);
+
+        if (!cartResponse.ok) {
+            throw new Error(`Failed to get cart: ${cartResponse.status}`);
+        }
+
+        const cartData = await cartResponse.json();
+        console.log(cartData, 'cartData');
+        
+
+        // Determine the location with fallbacks: shipping → billing → France
+        const shippingAddress = cartData?.shipping_address;
+        const billingAddress = cartData?.billing_address;
+
+        let location;
+
+        if (shippingAddress?.country) {
+            location = {
+                country: shippingAddress.country,
+                state: shippingAddress.state || '',
+                city: shippingAddress.city || '',
+                postcode: shippingAddress.postcode || ''
+            };
+        } else if (billingAddress?.country) {
+            location = {
+                country: billingAddress.country,
+                state: billingAddress.state || '',
+                city: billingAddress.city || '',
+                postcode: billingAddress.postcode || ''
+            };
+        } else {
+            location = DEFAULT_LOCATION;
+        }
+
+        // Update shipping address to get accurate shipping rates
+        const updateResponse = await fetch(`${WC_STORE_URL}/cart/update-customer`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Cookie': cookieHeader,
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                shipping_address: location
+            }),
+        });
+
+        await setCookiesFromResponse(updateResponse);
+
+        if (!updateResponse.ok) {
+            const errorData = await updateResponse.json();
+            throw new Error(errorData.message || `Failed to update customer: ${updateResponse.status}`);
+        }
+
+        const updatedCart = await updateResponse.json();
+
+        // Extract shipping rates from the cart
+        const shippingRates = updatedCart?.shipping_rates || [];
+
+        return {
+            success: true,
+            data: {
+                location,
+                shipping_rates: shippingRates,
+                selected_rate: shippingRates?.[0]?.shipping_rates?.find(rate => rate.selected) || null
+            }
+        };
+
+    } catch (error) {
+        console.error('Get shipping methods error:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// Update shipping location and get new rates
+export async function updateShippingLocation(country, state = '', city = '', postcode = '') {
+    try {
+        const cookieHeader = await getWooCommerceCookies();
+
+        const location = {
+            country: country || DEFAULT_LOCATION.country,
+            state: state,
+            city: city,
+            postcode: postcode
+        };
+
+        const response = await fetch(`${WC_STORE_URL}/cart/update-customer`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Cookie': cookieHeader,
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                shipping_address: location
+            }),
+        });
+
+        await setCookiesFromResponse(response);
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || `Failed to update shipping location: ${response.status}`);
+        }
+
+        const shippingRates = data?.shipping_rates || [];
+
+        return {
+            success: true,
+            data: {
+                location,
+                shipping_rates: shippingRates,
+                selected_rate: shippingRates?.[0]?.shipping_rates?.find(rate => rate.selected) || null
+            }
+        };
+
+    } catch (error) {
+        console.error('Update shipping location error:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// Select a shipping rate
+export async function selectShippingRate(rateId, packageId = 0) {
+    try {
+        const cookieHeader = await getWooCommerceCookies();
+
+        const response = await fetch(`${WC_STORE_URL}/cart/select-shipping-rate`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Cookie': cookieHeader,
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                rate_id: rateId,
+                package_id: packageId
+            }),
+        });
+
+        await setCookiesFromResponse(response);
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || `Failed to select shipping rate: ${response.status}`);
+        }
+
+        revalidatePath('/cart');
+
+        return {
+            success: true,
+            message: 'Shipping rate selected',
+            data
+        };
+
+    } catch (error) {
+        console.error('Select shipping rate error:', error);
+        return { success: false, error: error.message };
+    }
+}
