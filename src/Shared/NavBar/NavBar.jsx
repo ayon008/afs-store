@@ -20,6 +20,9 @@ const Navbar = ({ NAV_LINKS }) => {
     const totalQty = cart?.items_count;
 
 
+    console.log(NAV_LINKS, 'NAV_LINKS');
+
+
 
 
     // Hover Id [First Nav];
@@ -215,12 +218,12 @@ const Navbar = ({ NAV_LINKS }) => {
                                                         <div className="grid [grid-auto-flow:column] [grid-template-rows:repeat(4,1fr)] gap-5 grid-cols-[max-content_max-content_max-content] flex-1 xl:h-[160px] 2xl:h-full xl:overflow-y-auto 2xl:overflow-y-hidden scroll-smooth scroll-bar pr-10">
                                                             {productList?.map((product, i) => (
                                                                 <div key={i} className='max-w-[270px] w-fit'>
-                                                                    <h5 onMouseEnter={() => setHoverImageLink(product.image)} className="text-lg leading-[130%] font-semibold cursor-pointer hover:text-[#1D98FF] hover:underline">
-                                                                        {product.name}
-                                                                    </h5>
-
-                                                                    <p className="font-semibold text-xs leading-[100%] price-wrapper mt-1">
-                                                                        {parseFloat(product.price)}
+                                                                    <Link href={`${product.url}`}>
+                                                                        <h5 onMouseEnter={() => setHoverImageLink(product.image)} className="text-lg leading-[130%] font-semibold cursor-pointer hover:text-[#1D98FF] hover:underline">
+                                                                            {product.name}
+                                                                        </h5>
+                                                                    </Link>
+                                                                    <p className="font-semibold text-xs leading-[100%] price-wrapper mt-1" dangerouslySetInnerHTML={{ __html: product.price }}>
                                                                     </p>
                                                                 </div>
                                                             ))}
@@ -238,7 +241,7 @@ const Navbar = ({ NAV_LINKS }) => {
                                             {
                                                 (allProducts?.button_one?.label || allProducts?.button_two?.label) && <div className='flex items-center justify-center gap-10 py-6 border-t border-gray-500'>
                                                     {allProducts?.button_one?.label && <button>
-                                                        <Link href={''} className='text-black/75 font-semibold flex items-center gap-1'>
+                                                        <Link href={`${allProducts?.button_one?.url}`} className='text-black/75 font-semibold flex items-center gap-1'>
                                                             <span className='inline-block'>
                                                                 {allProducts?.button_one.label}
                                                             </span>
@@ -248,7 +251,7 @@ const Navbar = ({ NAV_LINKS }) => {
                                                         </Link>
                                                     </button>}
                                                     {allProducts?.button_two?.label && <button>
-                                                        <Link href={''} className='text-black/75 font-semibold flex items-center gap-1'>
+                                                        <Link href={allProducts?.button_two?.url} className='text-black/75 font-semibold flex items-center gap-1'>
                                                             <span className='inline-block'>
                                                                 {allProducts?.button_two.label}
                                                             </span>
@@ -268,10 +271,10 @@ const Navbar = ({ NAV_LINKS }) => {
                         <>
                             {/* Service Section */}
                             <div className='bg-white w-full h-fit md:block hidden'>
-                                <div className='grid grid-cols-6 text-black/75 global-padding pt-[22px]'>
+                                <div className='grid grid-cols-6 gap-6 text-black/75 global-padding pt-[22px]'>
                                     <div>
                                         <p className='text-[16px] font-semibold tracking-wide'>Choisir</p>
-                                        <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#1D98FF]">
+                                        <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#111]">
                                             <li className='cursor-pointer'>Configurateur foil</li>
                                             <li className='cursor-pointer'>Best match stab</li>
                                             <li className='cursor-pointer'>Comparateur 3 stabs / aile avant</li>
@@ -284,13 +287,13 @@ const Navbar = ({ NAV_LINKS }) => {
                                     </div>
                                     <div>
                                         <p className='text-[16px] font-semibold tracking-wide'>Payer</p>
-                                        <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#1D98FF]">
+                                        <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#111]">
                                             <li className='cursor-pointer'>Options paiement</li>
                                         </ul>
                                     </div>
                                     <div>
                                         <p className='text-[16px] font-semibold tracking-wide'>Expédition et livraison</p>
-                                        <ul className="mt-4 text-[16px] font-semibold tracking-wide text-[#1D98FF]">
+                                        <ul className="mt-4 text-[16px] font-semibold tracking-wide text-[#111]">
                                             <li className='cursor-pointer'>Suivi de commande</li>
                                             <li className='cursor-pointer'>Envoi et livraison</li>
                                             <li className='cursor-pointer'>Retours</li>
@@ -298,7 +301,7 @@ const Navbar = ({ NAV_LINKS }) => {
                                     </div>
                                     <div>
                                         <p className='text-[16px] font-semibold tracking-wide'>Réparation et maintenance</p>
-                                        <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#1D98FF]">
+                                        <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#111]">
                                             <li className='cursor-pointer'>Support</li>
                                             <li className='cursor-pointer'>Demande de SAV</li>
                                             <li className='cursor-pointer'>Garantie</li>
@@ -307,7 +310,7 @@ const Navbar = ({ NAV_LINKS }) => {
                                     </div>
                                     <div>
                                         <p className='text-[16px] font-semibold tracking-wide'>Contact</p>
-                                        <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#1D98FF]">
+                                        <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#111]">
                                             <li className='cursor-pointer'>Mail</li>
                                             <li className='cursor-pointer'>Whatsapp</li>
                                             <li className='cursor-pointer'>Réserver un appel avec un expert AFS</li>
@@ -318,18 +321,18 @@ const Navbar = ({ NAV_LINKS }) => {
                                     </div>
                                     <div>
                                         <p className='text-[16px] font-semibold tracking-wide'>Equipe</p>
-                                        <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#1D98FF]">
+                                        <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#111]">
                                             <li className='cursor-pointer'>Equipe de travail</li>
                                             <li className='cursor-pointer'>Ambassadeurs</li>
                                             <li className='cursor-pointer'>Map revendeurs</li>
                                         </ul>
                                     </div>
                                 </div>
-                                <div className='flex items-center justify-center gap-2 text-black/75 py-2'>
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <div className='flex flex-row-reverse items-center justify-center gap-2 text-black/75 py-4 border-t mt-6'>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M19 5L5 19M19 5H6.4M19 5V17.6" stroke="black" stroke-width="2" />
                                     </svg>
-                                    <span className='text-[#1D98FF] font-semibold cursor-pointer'> Visite de l’usine</span>
+                                    <span className='text-[#111] font-semibold cursor-pointer'> Visite de l’usine</span>
                                 </div>
                             </div>
                         </>
@@ -347,17 +350,25 @@ const Navbar = ({ NAV_LINKS }) => {
                 <div className="absolute inset-0 z-30 backdrop-blur-[10px] md:block hidden" onMouseEnter={() => handleShow(null)}></div>
             }
             {/* 1st slide */}
-            <div id="mobile-navigation" ref={navRef} className='fixed inset-0 transform translate-x-full opacity-0 h-screen text-black/75 overflow-y-scroll z-[60] bg-white md:hidden block' >
+            <div id="mobile-navigation" ref={navRef} className='fixed inset-0 transform translate-x-full opacity-0 h-screen text-black/75 overflow-y-scroll z-[60] bg-white md:hidden block pb-[60px]' >
                 <div className='pt-[90px] px-6'>
                     <p className='text-[12px] leading-[100%] font-bold uppercase text-[#999999]'>Products</p>
                     <ul className='mt-5 space-y-4'>
                         {
                             NAV_LINKS?.map((link, idx) => (
                                 <li onClick={() => handleShow(link.name)} key={idx} className='text-[22px] font-semibold leading-[100%] tracking-[-0.01em] flex items-center justify-between pb-[10px] border-b border-b-[#E6E6E6]'>
-                                    <span>{link.name}</span>
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M7.5 5L12.5 10L7.5 15" stroke="#111111" strokeOpacity="0.75" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="round" />
-                                    </svg>
+                                    <span className='w-fit'>
+                                        <Link href={`${link.href}`}>
+                                            {link.name}
+                                        </Link>
+                                    </span>
+                                    {
+                                        link.sublinks?.length > 0 && (
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7.5 5L12.5 10L7.5 15" stroke="#111111" strokeOpacity="0.75" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="round" />
+                                            </svg>
+                                        )
+                                    }
                                 </li>
                             ))
                         }
@@ -365,47 +376,126 @@ const Navbar = ({ NAV_LINKS }) => {
                 </div>
             </div>
             {/* 2nd slide */}
-            <div ref={secondRef} className='fixed inset-0 transform translate-x-full opacity-0 h-screen text-black/75 z-[70] bg-white px-6 pb-6 pt-[90px] block md:hidden overflow-y-scroll'>
-                <p onClick={() => handleShow(null)} className='text-[12px] leading-[100%] font-bold uppercase text-[#999999]'><ArrowLeft className='inline mr-1' />{hoverId}</p>
-                <ul className='mt-5 space-y-4'>
-                    {
-                        subLinks?.sublinks?.map((children, i) => (
-                            <li onClick={() => setDetailsDiv(children.name)} key={i} className='text-[22px] font-semibold leading-[100%] tracking-[-0.01em] flex items-center justify-between pb-[10px] border-b border-b-[#E6E6E6]'>
-                                <span>{children.name}</span>
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M7.5 5L12.5 10L7.5 15" stroke="#111111" strokeOpacity="0.75" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="round" />
-                                </svg>
-                            </li>
-                        ))
-                    }
-                </ul>
-            </div>
-            {/* 3rd Part */}
+            {
+                subLinks?.sublinks?.length > 0 && (
+                    <div ref={secondRef} className='fixed inset-0 transform translate-x-full opacity-0 h-screen text-black/75 z-[70] bg-white px-6 pb-6 pt-[90px] block md:hidden overflow-y-scroll'>
+                        <p onClick={() => handleShow(null)} className='text-[12px] leading-[100%] font-bold uppercase text-[#999999]'><ArrowLeft className='inline mr-1' />{hoverId}</p>
+                        {
+                            hoverId !== 'Service' ?
+                                <>
+                                    <ul className='mt-5 space-y-4'>
+                                        {
+                                            subLinks?.sublinks?.map((children, i) => (
+                                                <li onClick={() => setDetailsDiv(children.name)} key={i} className='text-[22px] font-semibold leading-[100%] tracking-[-0.01em] flex items-center justify-between pb-[10px] border-b border-b-[#E6E6E6]'>
+                                                    <span className='w-fit'>{children.name}</span>
+                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M7.5 5L12.5 10L7.5 15" stroke="#111111" strokeOpacity="0.75" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="round" />
+                                                    </svg>
+                                                </li>
+                                            ))
+                                        }
+                                    </ul>
+                                </>
+                                :
+                                <>
+                                    <div className='grid grid-cols-1 gap-6 text-black/75 pt-[22px]'>
+                                        <div>
+                                            <p className='text-[16px] font-semibold tracking-wide'>Choisir</p>
+                                            <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#111]">
+                                                <li className='cursor-pointer'>Configurateur foil</li>
+                                                <li className='cursor-pointer'>Best match stab</li>
+                                                <li className='cursor-pointer'>Comparateur 3 stabs / aile avant</li>
+                                                <li className='cursor-pointer'>Comparatif mât</li>
+                                                <li className='cursor-pointer'>Construction planche</li>
+                                                <li className='cursor-pointer'>Reprise matériel</li>
+                                                <li className='cursor-pointer'>Caractéristiques des foils</li>
+                                                <li className='cursor-pointer'>Taille des vis</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <p className='text-[16px] font-semibold tracking-wide'>Payer</p>
+                                            <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#111]">
+                                                <li className='cursor-pointer'>Options paiement</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <p className='text-[16px] font-semibold tracking-wide'>Expédition et livraison</p>
+                                            <ul className="mt-4 text-[16px] font-semibold tracking-wide text-[#111]">
+                                                <li className='cursor-pointer'>Suivi de commande</li>
+                                                <li className='cursor-pointer'>Envoi et livraison</li>
+                                                <li className='cursor-pointer'>Retours</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <p className='text-[16px] font-semibold tracking-wide'>Réparation et maintenance</p>
+                                            <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#111]">
+                                                <li className='cursor-pointer'>Support</li>
+                                                <li className='cursor-pointer'>Demande de SAV</li>
+                                                <li className='cursor-pointer'>Garantie</li>
+                                                <li className='cursor-pointer'>Notice d'utilisation</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <p className='text-[16px] font-semibold tracking-wide'>Contact</p>
+                                            <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#111]">
+                                                <li className='cursor-pointer'>Mail</li>
+                                                <li className='cursor-pointer'>Whatsapp</li>
+                                                <li className='cursor-pointer'>Réserver un appel avec un expert AFS</li>
+                                                <li className='cursor-pointer'>Venir nous rendre visite</li>
+                                                <li className='cursor-pointer'>Evenements</li>
+                                                <li className='cursor-pointer'>Blog</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <p className='text-[16px] font-semibold tracking-wide'>Equipe</p>
+                                            <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#111]">
+                                                <li className='cursor-pointer'>Equipe de travail</li>
+                                                <li className='cursor-pointer'>Ambassadeurs</li>
+                                                <li className='cursor-pointer'>Map revendeurs</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div className='flex flex-row-reverse items-center justify-center gap-2 text-black/75 py-4 border-t mt-6'>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M19 5L5 19M19 5H6.4M19 5V17.6" stroke="black" stroke-width="2" />
+                                        </svg>
+                                        <span className='text-[#111] font-semibold cursor-pointer'> Visite de l’usine</span>
+                                    </div>
+                                </>
+                        }
+                    </div>
+                )
+            }
 
-            <div ref={thirdRef} className='fixed inset-0 transform translate-x-full opacity-0 h-screen text-black/75 z-[120] bg-white block md:hidden  overflow-y-scroll'>
+
+
+
+            {/* 3rd Part */}
+            <div ref={thirdRef} className='fixed inset-0 transform translate-x-full opacity-0 h-screen text-black/75 z-[70] bg-white block md:hidden pt-[90px] overflow-y-scroll'>
                 <div className='p-6'>
                     <p onClick={() => setDetailsDiv(null)} className='text-[12px] leading-[100%] font-bold uppercase text-[#999999]'><ArrowLeft className='inline mr-1' />{detailsDiv}</p>
                     <div className='mt-5'>
                         <h4 className='font-semibold text-base leading-[110%]'>{hoverId}</h4>
-                        <h3 className='font-semibold text-[28px] leading-[100%]'>{detailsDiv}</h3>
+                        <h3 className='font-semibold text-[28px] leading-[100%] mt-[6px] text-[#1D98FF]'>{detailsDiv}</h3>
                     </div>
-                    <ul className='mt-5 space-y-6'>
+                    <ul className='mt-5 flex flex-col gap-4'>
                         {productList?.map((product, i) => (
-                            <li key={i}>
-                                <div className='text-[22px] font-semibold leading-[100%] tracking-[-0.01em] flex items-center justify-between'>
-                                    <span>{product.name}</span>
-                                </div>
-                                <p className="font-semibold text-xs leading-[100%] price-wrapper mt-1">
-                                    {parseFloat(product.price)}
-                                </p>
-                            </li>
+                            <Link href={`${product.url}`} key={i}>
+                                <li>
+                                    <div className='text-[22px] font-semibold leading-[100%] tracking-[-0.01em] flex items-center justify-between'>
+                                        <span>{product.name}</span>
+                                    </div>
+                                    <p className="font-semibold text-xs leading-[100%] price-wrapper mt-1" dangerouslySetInnerHTML={{ __html: product.price }}>
+                                    </p>
+                                </li>
+                            </Link>
                         ))}
                     </ul>
                 </div>
                 {
                     (allProducts?.button_one?.label || allProducts?.button_two?.label) && <div className='flex flex-col items-start justify-start bg-[#f0f0f0] mt-6 gap-2 p-6'>
                         {allProducts?.button_one?.label && <button>
-                            <Link href={''} className='text-black/75 font-semibold flex items-center gap-1'>
+                            <Link href={`${allProducts?.button_one?.url}`} className='text-black/75 font-semibold flex items-center gap-1'>
                                 <span className='inline-block'>
                                     {allProducts?.button_one.label}
                                 </span>
@@ -415,7 +505,7 @@ const Navbar = ({ NAV_LINKS }) => {
                             </Link>
                         </button>}
                         {allProducts?.button_two?.label && <button>
-                            <Link href={''} className='text-black/75 font-semibold flex items-center gap-1'>
+                            <Link href={`${allProducts?.button_two?.url}`} className='text-black/75 font-semibold flex items-center gap-1'>
                                 <span className='inline-block'>
                                     {allProducts?.button_two.label}
                                 </span>

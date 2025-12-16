@@ -9,6 +9,9 @@ const Cart = ({ cartItems }) => {
     const [loading, setLoading] = useState(true);
 
 
+    console.log(cartItems, 'cartItems');
+
+
     console.log(shippingData, 'shippingData');
 
 

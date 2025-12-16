@@ -25,7 +25,7 @@ async function LayoutContent({ children }) {
       {/* <Navbar /> */}
       <NavBar NAV_LINKS={NAV_LINKS} />
       {/* <HamburgerMenu /> */}
-      <main className="flex-grow lg:pt-[139px] pt-[64px] z-20">{children}</main>
+      <main className="flex-grow xl:pt-[139px] pt-[64px] z-20">{children}</main>
       {/* {pathname.startsWith('/product') && <FeatureBar />}
       {pathname === '/made-in-france' && <FeatureBar />}
       {pathname !== '/' &&

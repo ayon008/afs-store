@@ -7,6 +7,8 @@ import Link from 'next/link';
 
 const page = async () => {
   const getAllCartItems = await getCart();
+  console.log(getAllCartItems, 'getAllCartItems');
+  
   const cartItems = getAllCartItems.data.items || [];
 
 
