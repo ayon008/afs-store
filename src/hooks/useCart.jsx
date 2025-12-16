@@ -1,15 +1,20 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
+import { createContext, useContext, useEffect, useState } from 'react';
 
 import {
     getCart as getCartAction, addToCart as addToCartAction, updateCartItem,
     removeCartItem,
-    clearCart
+    clearCart,
+    applyCoupon,
+    removeCoupon
 } from '../funtions/StoreApi/cart';
 
-const useCart = () => {
+// Create the Cart Context
+const CartContext = createContext(null);
+
+// Cart Provider Component
+export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -113,10 +118,13 @@ const useCart = () => {
                 setCart(prev => {
                     if (!prev || !prev.items) return prev;
 
+                    const removedItem = prev.items.find(item => item.key === itemKey);
+                    const removedQty = removedItem?.quantity || 1;
+
                     return {
                         ...prev,
                         items: prev.items.filter(item => item.key !== itemKey),
-                        items_count: prev.items_count - 1
+                        items_count: (prev.items_count || 0) - removedQty
                     };
                 });
 
@@ -144,6 +152,57 @@ const useCart = () => {
             console.error('Clear cart error:', err);
             return { success: false, error: err.message };
         }
+    };
+
+    // Apply coupon code
+    const handleApplyCoupon = async (couponCode) => {
+        try {
+            setError(null);
+            const result = await applyCoupon(couponCode);
+
+            if (result.success) {
+                await loadCart();
+            } else {
+                setError(result.error);
+            }
+
+            return result;
+        } catch (err) {
+            console.error('Apply coupon error:', err);
+            setError(err.message);
+            return { success: false, error: err.message };
+        }
+    };
+
+    // Remove coupon code
+    const handleRemoveCoupon = async (couponCode) => {
+        try {
+            setError(null);
+            const result = await removeCoupon(couponCode);
+
+            if (result.success) {
+                await loadCart();
+            } else {
+                setError(result.error);
+            }
+
+            return result;
+        } catch (err) {
+            console.error('Remove coupon error:', err);
+            setError(err.message);
+            return { success: false, error: err.message };
+        }
+    };
+
+    // Get applied coupons
+    const getAppliedCoupons = () => {
+        return cart?.coupons || [];
+    };
+
+    // Get discount total
+    const getDiscountTotal = () => {
+        if (!cart || !cart.totals || !cart.totals.total_discount) return 0;
+        return (cart.totals.total_discount / 100).toFixed(2);
     };
 
     // Get total price
@@ -187,7 +246,7 @@ const useCart = () => {
         return item ? item.quantity : 0;
     };
 
-    return {
+    const value = {
         cart,
         loading,
         error,
@@ -195,12 +254,31 @@ const useCart = () => {
         handleUpdateCartItem,
         handleRemoveCartItem,
         handleClearCart,
-        loadCart, // Expose for manual refresh
+        handleApplyCoupon,
+        handleRemoveCoupon,
+        loadCart,
         getTotalPrice,
         getItemCount,
         isInCart,
-        getItemQuantity
+        getItemQuantity,
+        getAppliedCoupons,
+        getDiscountTotal
     };
+
+    return (
+        <CartContext.Provider value={value}>
+            {children}
+        </CartContext.Provider>
+    );
+};
+
+// Hook to use the cart context
+const useCart = () => {
+    const context = useContext(CartContext);
+    if (!context) {
+        throw new Error('useCart must be used within a CartProvider');
+    }
+    return context;
 };
 
 export default useCart;

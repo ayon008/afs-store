@@ -3,18 +3,20 @@ import React, { useEffect, useState } from 'react'
 import CartList from './CartList'
 import FormButton from '../../Shared/Button/FormButton';
 import { getShippingMethods, selectShippingRate } from '../../funtions/StoreApi/cart';
+import useCart from '../../hooks/useCart';
+import { X } from 'lucide-react';
 
 const Cart = ({ cartItems }) => {
     const [shippingData, setShippingData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [couponCode, setCouponCode] = useState('');
+    const [couponLoading, setCouponLoading] = useState(false);
+    const [couponError, setCouponError] = useState('');
+    const [couponSuccess, setCouponSuccess] = useState('');
 
-
-    console.log(cartItems, 'cartItems');
-
-
-    console.log(shippingData, 'shippingData');
-
-
+    const { handleApplyCoupon, handleRemoveCoupon, getAppliedCoupons, getDiscountTotal } = useCart();
+    const appliedCoupons = getAppliedCoupons();
+    const discountTotal = getDiscountTotal();
 
     useEffect(() => {
         const fetchShippingMethods = async () => {
@@ -38,6 +40,42 @@ const Cart = ({ cartItems }) => {
         console.log('Select Rate Result:', result);
     };
 
+    const handleCouponSubmit = async (e) => {
+        e.preventDefault();
+        if (!couponCode.trim()) return;
+
+        setCouponLoading(true);
+        setCouponError('');
+        setCouponSuccess('');
+
+        const result = await handleApplyCoupon(couponCode);
+
+        if (result.success) {
+            setCouponSuccess('Coupon appliqué avec succès !');
+            setCouponCode('');
+        } else {
+            setCouponError(result.error || 'Code promo invalide');
+        }
+
+        setCouponLoading(false);
+    };
+
+    const handleRemoveCouponClick = async (code) => {
+        setCouponLoading(true);
+        setCouponError('');
+        setCouponSuccess('');
+
+        const result = await handleRemoveCoupon(code);
+
+        if (result.success) {
+            setCouponSuccess('Coupon retiré avec succès');
+        } else {
+            setCouponError(result.error || 'Erreur lors de la suppression du coupon');
+        }
+
+        setCouponLoading(false);
+    };
+
     return (
         <div className='flex items-start gap-5 justify-between'>
             {/* left Side */}
@@ -58,11 +96,55 @@ const Cart = ({ cartItems }) => {
                         }
                     </div>
                 </div>
-                <div className='lg:mt-10 mt-5 p-5 border rounded-sm'>
-                    <form className='flex items-center gap-5 flex-wrap'>
-                        <input type="text" name='coupon-code' placeholder='Enter coupon code' className='px-[15px] py-3 border border-[#ccc] text-sm flex-[2_0_0]' />
-                        <FormButton label={'Appliquer le code promo'} type='submit' />
+                <div className='lg:mt-10 mt-5 p-5 border rounded-sm space-y-4'>
+                    <form onSubmit={handleCouponSubmit} className='flex items-center gap-5 flex-wrap'>
+                        <input 
+                            type="text" 
+                            name='coupon-code' 
+                            placeholder='Enter coupon code' 
+                            value={couponCode}
+                            onChange={(e) => setCouponCode(e.target.value)}
+                            className='px-[15px] py-3 border border-[#ccc] text-sm flex-[2_0_0]' 
+                            disabled={couponLoading}
+                        />
+                        <FormButton 
+                            label={couponLoading ? 'Chargement...' : 'Appliquer le code promo'} 
+                            type='submit' 
+                            disabled={couponLoading || !couponCode.trim()}
+                        />
                     </form>
+                    
+                    {couponError && (
+                        <p className='text-red-500 text-sm'>{couponError}</p>
+                    )}
+                    {couponSuccess && (
+                        <p className='text-green-500 text-sm'>{couponSuccess}</p>
+                    )}
+                    
+                    {appliedCoupons.length > 0 && (
+                        <div className='flex flex-wrap gap-2'>
+                            <span className='text-sm font-semibold'>Coupons appliqués :</span>
+                            {appliedCoupons.map((coupon, index) => (
+                                <div 
+                                    key={index} 
+                                    className='flex items-center gap-2 bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm'
+                                >
+                                    <span>{coupon.code}</span>
+                                    <span className='font-semibold'>
+                                        (-{(coupon.totals?.total_discount / 100 || 0).toFixed(2)}€)
+                                    </span>
+                                    <button 
+                                        type='button'
+                                        onClick={() => handleRemoveCouponClick(coupon.code)}
+                                        disabled={couponLoading}
+                                        className='hover:text-red-500 disabled:opacity-50'
+                                    >
+                                        <X className='w-4 h-4' />
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
             {/* Right Side */}

@@ -329,3 +329,37 @@ export const getOrders = async () => {
 
     return allOrders;
 };
+
+
+
+export const getRecentProducts = async () => {
+    const url = `${process.env.WP_BASE_URL}/wp-json/wc/v2/products?orderby=date&order=desc&per_page=20`;
+    try {
+        const response = await fetch(url, {
+            headers: { Authorization: authHeader },
+            cache: "no-store",
+        });
+        const data = await response.json();
+        return data || [];
+    }
+    catch (error) {
+        console.log(error);
+        return error;
+    }
+}
+
+
+export async function searchProducts(query) {
+    if (!query) return [];
+
+    const res = await fetch(
+        `${process.env.WP_BASE_URL}/wp-json/wc/v3/products?search=${encodeURIComponent(query)}&per_page=100&_fields=name`,
+        {
+            headers: { Authorization: authHeader },
+            cache: "no-store",
+        }
+    );
+
+    if (!res.ok) return [];
+    return await res.json();
+}

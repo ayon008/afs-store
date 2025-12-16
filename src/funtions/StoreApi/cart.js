@@ -409,3 +409,89 @@ export async function selectShippingRate(rateId, packageId = 0) {
         return { success: false, error: error.message };
     }
 }
+
+// Apply coupon code
+export async function applyCoupon(couponCode) {
+    try {
+        if (!couponCode || couponCode.trim() === '') {
+            return { success: false, error: 'Please enter a coupon code' };
+        }
+
+        const cookieHeader = await getWooCommerceCookies();
+
+        const response = await fetch(`${WC_STORE_URL}/cart/apply-coupon`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Cookie': cookieHeader,
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                code: couponCode.trim()
+            }),
+        });
+
+        await setCookiesFromResponse(response);
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || `Failed to apply coupon: ${response.status}`);
+        }
+
+        revalidatePath('/cart');
+
+        return {
+            success: true,
+            message: 'Coupon applied successfully',
+            data
+        };
+
+    } catch (error) {
+        console.error('Apply coupon error:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// Remove coupon code
+export async function removeCoupon(couponCode) {
+    try {
+        if (!couponCode || couponCode.trim() === '') {
+            return { success: false, error: 'Invalid coupon code' };
+        }
+
+        const cookieHeader = await getWooCommerceCookies();
+
+        const response = await fetch(`${WC_STORE_URL}/cart/remove-coupon`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Cookie': cookieHeader,
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                code: couponCode.trim()
+            }),
+        });
+
+        await setCookiesFromResponse(response);
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || `Failed to remove coupon: ${response.status}`);
+        }
+
+        revalidatePath('/cart');
+
+        return {
+            success: true,
+            message: 'Coupon removed successfully',
+            data
+        };
+
+    } catch (error) {
+        console.error('Remove coupon error:', error);
+        return { success: false, error: error.message };
+    }
+}

@@ -2,7 +2,7 @@
 import Footer from "../components/Footer"
 import VhUpdater from "../components/utils/VhUpdater"
 import { ContentProvider } from "../context/ContentContext"
-import { CartProvider } from "../components/cart-provider"
+import { CartProvider } from "../hooks/useCart"
 import { NavigationProvider } from "../context/NavigationContext"
 // import TopBar from "../components/TopBar"
 import FaqSection from "../components/FaqSection"
@@ -10,6 +10,9 @@ import FeatureBar from "../constants/FeatureBar"
 import NavBar from "../Shared/NavBar/NavBar.jsx"
 import { getMenuItems } from "../funtions/getMenuData"
 import AuthProvider from "../Shared/Providers/AuthProvider"
+import QueryProvider from "../Shared/Providers/QueryProvider.jsx"
+
+
 
 async function LayoutContent({ children }) {
   // const { isLoggedIn } = useAuth()
@@ -47,14 +50,16 @@ async function LayoutContent({ children }) {
 export default function AppLayout({ children }) {
   // keep this simple: always render the full layout
   return (
-    <AuthProvider>
-      <ContentProvider>
-        <CartProvider>
-          <NavigationProvider>
-            <LayoutContent>{children}</LayoutContent>
-          </NavigationProvider>
-        </CartProvider>
-      </ContentProvider>
-    </AuthProvider>
+    <QueryProvider>
+      <AuthProvider>
+        <ContentProvider>
+          <CartProvider>
+            <NavigationProvider>
+              <LayoutContent>{children}</LayoutContent>
+            </NavigationProvider>
+          </CartProvider>
+        </ContentProvider>
+      </AuthProvider>
+    </QueryProvider>
   )
 }

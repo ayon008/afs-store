@@ -8,6 +8,7 @@ import "flag-icons/css/flag-icons.min.css";
 import Menu from '../../icons/Menu';
 import gsap from 'gsap';
 import useCart from '../../hooks/useCart';
+import SideCart from '../siteCart/SideCart';
 
 const Navbar = ({ NAV_LINKS }) => {
     // Search Open
@@ -18,11 +19,6 @@ const Navbar = ({ NAV_LINKS }) => {
     const { cart } = useCart();
 
     const totalQty = cart?.items_count;
-
-
-    console.log(NAV_LINKS, 'NAV_LINKS');
-
-
 
 
     // Hover Id [First Nav];
@@ -468,8 +464,6 @@ const Navbar = ({ NAV_LINKS }) => {
             }
 
 
-
-
             {/* 3rd Part */}
             <div ref={thirdRef} className='fixed inset-0 transform translate-x-full opacity-0 h-screen text-black/75 z-[70] bg-white block md:hidden pt-[90px] overflow-y-scroll'>
                 <div className='p-6'>
@@ -517,6 +511,7 @@ const Navbar = ({ NAV_LINKS }) => {
                     </div>
                 }
             </div>
+            <SideCart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
         </>
     );
 };

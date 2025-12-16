@@ -1,465 +1,207 @@
-"use client";
+"use client"
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import Image from "next/image";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import { Search, X } from 'lucide-react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { getRecentProducts, searchProducts } from '../funtions/getWooCommerce';
+import useGetData from '../funtions/ClientFetch/GetData';
+import { useRef, useState, useEffect } from 'react';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { useForm } from 'react-hook-form';
 
-// --- SVG Icons ---
-const SearchIcon = ({ className }) => (
-  <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-  </svg>
-);
+const SEARCH_HISTORY_KEY = 'search_history';
+const MAX_HISTORY_ITEMS = 10;
 
-const CloseIcon = ({ className }) => (
-  <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-  </svg>
-);
 
-const ChevronLeftIcon = ({ className }) => (
-  <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-  </svg>
-);
 
-const ChevronRightIcon = ({ className }) => (
-  <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-  </svg>
-);
 
-// --- Skeleton Component ---
-const SkeletonCard = () => (
-  <div className="flex-shrink-0 w-48 h-60 border border-gray-200 rounded-lg p-3 animate-pulse snap-center">
-    <div className="relative mb-2 h-32 flex items-center justify-center bg-gray-200 rounded"></div>
-    <div className="h-4 bg-gray-200 rounded w-3/4 mx-auto mb-2"></div>
-    <div className="h-4 bg-gray-200 rounded w-1/2 mx-auto"></div>
-  </div>
-);
+const SearchOverlay = ({ isOpen, onClose }) => {
 
-// --- Main Component ---
-export default function SearchOverlay({ isOpen, onClose }) {
-  const [latestSearches, setLatestSearches] = useState(["silk"]);
-  const [searchInput, setSearchInput] = useState("");
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [searchResults, setSearchResults] = useState([]);
-  const [recommendedProducts, setRecommendedProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  // React Hook Form
+  const { register, handleSubmit, watch, reset, setValue } = useForm();
+  const searchValue = watch('search', '');
+
+
+  const { isLoading, isError, error, data, refetch } = useGetData('recent-products', getRecentProducts);
+
+  console.log(data, 'data');
+
+  const [products, setProducts] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
-  const scrollContainerRef = useRef(null);
-  const searchTimeoutRef = useRef(null);
 
-  // Fetch recommended products on mount
-  const fetchRecommendedProducts = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const response = await fetch('/api/wc/products?per_page=15');
-      const data = await response.json();
-      if (data.data && Array.isArray(data.data)) {
-        const formattedProducts = data.data.map(product => ({
-          id: product.id,
-          name: product.name,
-          price: parseFloat(product.price) || 0,
-          imageUrl: product.images && product.images.length > 0 
-            ? product.images[0].src 
-            : `https://placehold.co/300x200/f0f0f0/333?text=${encodeURIComponent(product.name.substring(0, 10))}`,
-          slug: product.slug,
-        }));
-        setRecommendedProducts(formattedProducts);
-      }
-    } catch (error) {
-      console.error('Error fetching recommended products:', error);
-      setRecommendedProducts(Array.from({ length: 15 }).map((_, i) => ({
-        id: i + 1,
-        name: `Placeholder Product ${i + 1}`,
-        price: 0,
-        imageUrl: `https://placehold.co/300x200/f0f0f0/333?text=Product+${i + 1}`,
-        slug: `product-${i + 1}`,
-      })));
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  useEffect(() => {
 
-  // Search function with debouncing
-  const searchProducts = useCallback(async (query) => {
-    if (!query.trim()) {
-      setSearchResults([]);
-      setIsSearching(false);
+    if (!searchValue || searchValue.length === 0) {
+      setProducts(data?.products || []);
       return;
     }
 
-    try {
+
+    const timeoutId = setTimeout(async () => {
       setIsSearching(true);
-      const response = await fetch(`/api/wc/products?search=${encodeURIComponent(query)}&per_page=15`);
-      const data = await response.json();
-      
-      if (data.data && Array.isArray(data.data)) {
-        const formattedResults = data.data.map(product => ({
-          id: product.id,
-          name: product.name,
-          price: parseFloat(product.price) || 0,
-          imageUrl: product.images && product.images.length > 0 
-            ? product.images[0].src 
-            : `https://placehold.co/300x200/f0f0f0/333?text=${encodeURIComponent(product.name.substring(0, 10))}`,
-          slug: product.slug,
-        }));
-        setSearchResults(formattedResults);
-      } else {
-        setSearchResults([]);
+      try {
+        const results = await searchProducts(searchValue);
+        const matched = results?.products?.filter((product) => product?.name?.toLowerCase().includes(searchValue?.toLowerCase()));
+        setProducts(matched || results || []);
+      } catch (err) {
+        console.error('Search error:', err);
+        setProducts([]);
+      } finally {
+        setIsSearching(false);
       }
-    } catch (error) {
-      console.error('Error searching products:', error);
-      setSearchResults([]);
-    } finally {
-      setIsSearching(false);
-    }
-  }, []);
-
-  // Handle search input with debouncing
-  const handleSearchInput = useCallback((value) => {
-    setSearchInput(value);
-    
-    if (searchTimeoutRef.current) {
-      clearTimeout(searchTimeoutRef.current);
-    }
-
-    searchTimeoutRef.current = setTimeout(() => {
-      searchProducts(value);
     }, 300);
-  }, [searchProducts]);
 
+    return () => clearTimeout(timeoutId);
+  }, [searchValue, data])
+
+
+  // Lock body scroll when overlay is open
   useEffect(() => {
     if (isOpen) {
-      setIsAnimating(true);
-      fetchRecommendedProducts();
-      const inputElement = document.querySelector("input[type='text']");
-      if (inputElement) inputElement.focus();
+      document.body.style.overflow = 'hidden';
     } else {
-      setIsAnimating(false);
-      setSearchInput("");
-      setSearchResults([]);
-      if (searchTimeoutRef.current) {
-        clearTimeout(searchTimeoutRef.current);
-      }
+      document.body.style.overflow = '';
     }
-  }, [isOpen, fetchRecommendedProducts]);
-
-  // Cleanup timeout on unmount
-  useEffect(() => {
     return () => {
-      if (searchTimeoutRef.current) {
-        clearTimeout(searchTimeoutRef.current);
-      }
+      document.body.style.overflow = '';
     };
+  }, [isOpen]);
+
+  // Search history state
+  const [searchHistory, setSearchHistory] = useState([]);
+
+  // Load history from localStorage on mount
+  useEffect(() => {
+    const stored = localStorage.getItem(SEARCH_HISTORY_KEY);
+    if (stored) {
+      setSearchHistory(JSON.parse(stored));
+    }
   }, []);
 
-  const removeSearch = (termToRemove) => setLatestSearches(latestSearches.filter((t) => t !== termToRemove));
-  const clearAllSearches = () => setLatestSearches([]);
-  const clearSearchInput = () => {
-    setSearchInput("");
-    setSearchResults([]);
-    if (searchTimeoutRef.current) {
-      clearTimeout(searchTimeoutRef.current);
-    }
+  // Save to history when user submits
+  const onSubmit = (data) => {
+    const term = data.search?.trim();
+    if (!term) return;
+
+    const newHistory = [term, ...searchHistory.filter(h => h !== term)].slice(0, MAX_HISTORY_ITEMS);
+    setSearchHistory(newHistory);
+    localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(newHistory));
+
+    // TODO: handle search navigation
+    reset();
   };
 
-  const handleSearchSubmit = (query) => {
-    const trimmedQuery = query.trim();
-    if (trimmedQuery && !latestSearches.includes(trimmedQuery)) {
-      setLatestSearches(prev => [trimmedQuery, ...prev.slice(0, 4)]);
-    }
+  // Remove single item from history
+  const removeFromHistory = (term) => {
+    const newHistory = searchHistory.filter(h => h !== term);
+    setSearchHistory(newHistory);
+    localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(newHistory));
   };
 
-  const scroll = (dir) => {
-    if (scrollContainerRef.current) {
-      // Calculate scroll distance based on card width (48rem) + spacing (1rem)
-      const cardWidth = 208; // 48 (w-48) + 16 (space-x-4 converted to pixels)
-      const cardsToScroll = 3; // Scroll 3 cards at a time for smoother navigation
-      const scrollAmount = cardWidth * cardsToScroll;
-      scrollContainerRef.current.scrollBy({
-        left: dir === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
+  // Clear all history
+  const clearHistory = () => {
+    setSearchHistory([]);
+    localStorage.removeItem(SEARCH_HISTORY_KEY);
   };
 
-  if (!isOpen && !isAnimating) return null;
+
+
+  const searchRef = useRef(null);
+  useGSAP(() => {
+    if (!searchRef.current) return;
+    const ctx = gsap.context(() => {
+      gsap.to(searchRef.current, {
+        clipPath: isOpen
+          ? "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"
+          : "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
+        duration: 0.5,
+        ease: "power2.inOut"
+      })
+    })
+    return () => ctx.revert();
+  }, { dependencies: [isOpen], revertOnUpdate: true })
+
 
   return (
-    <>
-      {/* Backdrop with blur */}
-      <div
-        className={`fixed top-0 left-0 w-full h-full bg-black/50 backdrop-blur-md z-[998] transition-opacity duration-300 ${
-          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-        onClick={onClose}
-      />
+    <div className={`fixed top-0 left-0 right-0 w-full h-full bg-black/50 backdrop-blur-md z-[998] transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
 
-      {/* Search Overlay */}
-      <div
-        className={`fixed top-0 left-0 w-full h-auto min-h-[50%] bg-white font-sans p-4 md:p-6 shadow-2xl transform transition-transform duration-300 ease-in-out z-[999] overflow-hidden ${
-          isOpen ? "translate-y-0" : "-translate-y-full"
-        }`}
-      >
-        {/* Header */}
-        <header className="flex items-center space-x-4 mb-3">
-          <button onClick={onClose} className="text-gray-600 hover:text-gray-900 flex items-center space-x-2 text-sm">
-            <CloseIcon className="w-5 h-5" />
-            <span>Close</span>
+      <div className="bg-white p-6 space-y-6" ref={searchRef} style={{ clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)" }}>
+        <div className="flex items-center justify-between gap-[10px]">
+          <button onClick={onClose} className="flex items-center gap-2 text-[#111] text-sm cursor-pointer">
+            <X className="w-4 h-4" /> Close
           </button>
-          <div className="relative flex-grow">
-            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <form className="flex-[1_0_0] w-full relative" onSubmit={handleSubmit(onSubmit)}>
             <input
               type="text"
-              placeholder="Search..."
-              value={searchInput}
-              onChange={(e) => handleSearchInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  handleSearchSubmit(searchInput);
-                }
-              }}
-              className="w-full pl-10 pr-10 py-2 border-b-2 border-blue-500 focus:outline-none"
+              placeholder="Search for..."
+              className="px-4 py-2 flex-[1_0_0] w-full focus:outline-none border-b-2 border-b-[#1D98FF] pl-10"
+              {...register('search')}
             />
-            {searchInput && (
-              <button
-                type="button"
-                onClick={clearSearchInput}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700"
-              >
-                <CloseIcon className="w-5 h-5" />
-              </button>
-            )}
-          </div>
-        </header>
-
-        {/* Latest Searches */}
-        {latestSearches.length > 0 && (
-          <div className="flex items-center flex-wrap gap-2 mb-6 text-sm text-gray-600">
-            <span className="font-medium">Latest searches:</span>
-            {latestSearches.map((term) => (
-              <div key={term} className="flex items-center bg-gray-100 rounded-md px-2 py-1">
-                <button 
-                  onClick={() => {
-                    setSearchInput(term);
-                    handleSearchInput(term);
-                    handleSearchSubmit(term);
-                  }}
-                  className="hover:text-blue-500"
-                >
-                  {term}
-                </button>
-                <button onClick={() => removeSearch(term)} className="ml-2 text-gray-400 hover:text-gray-700">
-                  <CloseIcon className="w-3 h-3" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#111]" />
+          </form>
+        </div>
+        {/* Search History */}
+        {searchHistory.length > 0 && (
+          <div className="flex flex-wrap items-center gap-4">
+            <span>Latest searches :</span>
+            {searchHistory.map((term, index) => (
+              <div onClick={() => setValue('search', term)} key={index} className="flex items-center gap-1 justify-center cursor-pointer bg-[#f7F7F7] rounded-sm text-sm w-fit py-1 px-2">
+                <span>{term}</span>
+                <button type="button" onClick={() => removeFromHistory(term)}>
+                  <X className="w-4 h-4" />
                 </button>
               </div>
             ))}
-            <button onClick={clearAllSearches} className="text-blue-500 hover:underline">
+            <button type="button" onClick={clearHistory} className="text-[#1D98FF] font-semibold text-sm cursor-pointer">
               Delete all
             </button>
           </div>
         )}
+        {/* Products */}
+        <div className='space-y-4'>
+          <h2 className="text-[#111] text-sm font-semibold">Recommended products</h2>
 
-        {/* Content */}
-        <main className="overflow-hidden m-0 p-0">
-          {/* Search Results or Recommended Products */}
-          <section className="relative overflow-visible m-0 p-0">
-            {/* Loading State */}
-            {isSearching && (
-              <div className="relative">
-                <button
-                  onClick={() => scroll("left")}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white shadow-md rounded-full p-2 z-10 hover:bg-gray-100 transition-opacity duration-300"
-                >
-                  <ChevronLeftIcon className="w-6 h-6 text-gray-600" />
-                </button>
-                <div
-                  ref={scrollContainerRef}
-                  className="flex space-x-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory"
-                  style={{ scrollBehavior: "smooth", marginBottom: 0 }}
-                >
-                  {Array.from({ length: 15 }).map((_, i) => (
-                    <SkeletonCard key={i} />
-                  ))}
-                </div>
-                <button
-                  onClick={() => scroll("right")}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white shadow-md rounded-full p-2 z-10 hover:bg-gray-100 transition-opacity duration-300"
-                >
-                  <ChevronRightIcon className="w-6 h-6 text-gray-600" />
-                </button>
-              </div>
-            )}
+          <Swiper
+            modules={[Navigation]}
+            spaceBetween={"16px"}
+            slidesPerView={"auto"}
+            loop={false}
+            navigation={true}
+            grabCursor={true}
+            className={`${isSearching ? 'opacity-70' : 'opacity-100'} search-swiper items-stretch!`}
+          >
+            {
+              products?.map((product) => {
+                const image = product?.images[0]?.src.large;
+                const name = product?.name;
+                const price = product?.prices?.price;
+                const currency = product?.prices?.currency.currency_symbol;
+                const slug = product?.slug;
 
-            {/* Search Results */}
-            {searchInput.trim() && !isSearching && (
-              <>
-                <h2 className="font-semibold text-gray-800 m-0 p-0 text-sm mb-3">
-                  Search results for "{searchInput}" ({searchResults.length} found)
-                </h2>
-                {searchResults.length > 0 ? (
-                  <div className="relative">
-                    <button
-                      onClick={() => scroll("left")}
-                      className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white shadow-md rounded-full p-2 z-10 hover:bg-gray-100 transition-opacity duration-300"
-                    >
-                      <ChevronLeftIcon className="w-6 h-6 text-gray-600" />
-                    </button>
-                    <div
-                      ref={scrollContainerRef}
-                      className="flex space-x-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory"
-                      style={{ scrollBehavior: "smooth", marginBottom: 0 }}
-                    >
-                      {searchResults.map((product) => (
-                        <a
-                          key={product.id}
-                          href={`/product/${product.slug}`}
-                          className="flex-shrink-0 w-48 h-60 border border-gray-200 rounded-lg p-3 group text-center hover:shadow-lg transition-all duration-300 ease-in-out snap-center"
-                        >
-                          <div className="relative mb-2 h-32 flex items-center justify-center bg-gray-50 rounded overflow-hidden transition-transform duration-300 group-hover:scale-105">
-                            <Image
-                              src={product.imageUrl}
-                              alt={product.name}
-                              width={300}
-                              height={200}
-                              className="w-full h-full object-contain transition-opacity duration-300"
-                            />
-                          </div>
-                          <h3 className="text-sm font-medium text-gray-800 h-10 line-clamp-2 transition-colors duration-300 group-hover:text-blue-500">
-                            {product.name}
-                          </h3>
-                          <div className="mt-1 text-base font-semibold text-gray-700 transition-colors duration-300">
-                            ${product.price.toFixed(2)}
-                          </div>
-                        </a>
-                      ))}
-                    </div>
-                    <button
-                      onClick={() => scroll("right")}
-                      className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white shadow-md rounded-full p-2 z-10 hover:bg-gray-100 transition-opacity duration-300"
-                    >
-                      <ChevronRightIcon className="w-6 h-6 text-gray-600" />
-                    </button>
-                  </div>
-                ) : (
-                  <div className="text-center py-8 text-gray-500">
-                    <p>No products found for "{searchInput}"</p>
-                    <p className="text-sm mt-2">Try different keywords.</p>
-                  </div>
-                )}
-              </>
-            )}
-
-            {/* Recommended Products (shown when no search) */}
-            {!searchInput.trim() && !isSearching && (
-              <>
-                <h2 className="font-semibold text-gray-800 m-0 p-0 text-sm">
-                  Recommended products
-                </h2>
-                {isLoading ? (
-                  <div className="relative">
-                    <button
-                      onClick={() => scroll("left")}
-                      className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white shadow-md rounded-full p-2 z-10 hover:bg-gray-100 transition-opacity duration-300"
-                    >
-                      <ChevronLeftIcon className="w-6 h-6 text-gray-600" />
-                    </button>
-                    <div
-                      ref={scrollContainerRef}
-                      className="flex space-x-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory"
-                      style={{ scrollBehavior: "smooth", marginBottom: 0 }}
-                    >
-                      {Array.from({ length: 15 }).map((_, i) => (
-                        <SkeletonCard key={i} />
-                      ))}
-                    </div>
-                    <button
-                      onClick={() => scroll("right")}
-                      className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white shadow-md rounded-full p-2 z-10 hover:bg-gray-100 transition-opacity duration-300"
-                    >
-                      <ChevronRightIcon className="w-6 h-6 text-gray-600" />
-                    </button>
-                  </div>
-                ) : (
-                  <div className="relative">
-                    <button
-                      onClick={() => scroll("left")}
-                      className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white shadow-md rounded-full p-2 z-10 hover:bg-gray-100 transition-opacity duration-300"
-                    >
-                      <ChevronLeftIcon className="w-6 h-6 text-gray-600" />
-                    </button>
-                    <div
-                      ref={scrollContainerRef}
-                      className="flex space-x-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory"
-                      style={{ scrollBehavior: "smooth", marginBottom: 0 }}
-                    >
-                      {recommendedProducts.map((product) => (
-                        <a
-                          key={product.id}
-                          href={`/product/${product.slug}`}
-                          className="flex-shrink-0 w-48 h-60 border border-gray-200 rounded-lg p-3 group text-center hover:shadow-lg transition-all duration-300 ease-in-out snap-center"
-                        >
-                          <div className="relative mb-2 h-32 flex items-center justify-center bg-gray-50 rounded overflow-hidden transition-transform duration-300 group-hover:scale-105">
-                            <Image
-                              src={product.imageUrl}
-                              alt={product.name}
-                              width={300}
-                              height={200}
-                              className="w-full h-full object-contain transition-opacity duration-300"
-                            />
-                          </div>
-                          <h3 className="text-sm font-medium text-gray-800 h-10 line-clamp-2 transition-colors duration-300 group-hover:text-blue-500">
-                            {product.name}
-                          </h3>
-                          <div className="mt-1 text-base font-semibold text-gray-700 transition-colors duration-300">
-                            ${product.price.toFixed(2)}
-                          </div>
-                        </a>
-                      ))}
-                    </div>
-                    <button
-                      onClick={() => scroll("right")}
-                      className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white shadow-md rounded-full p-2 z-10 hover:bg-gray-100 transition-opacity duration-300"
-                    >
-                      <ChevronRightIcon className="w-6 h-6 text-gray-600" />
-                    </button>
-                  </div>
-                )}
-              </>
-            )}
-          </section>
-        </main>
-
-        {/* Footer */}
-
-        {/* Hide Scrollbars and Enhance Carousel */}
-        <style jsx global>{`
-          .scrollbar-hide::-webkit-scrollbar {
-            display: none;
-          }
-          .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-          }
-          .line-clamp-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-          }
-          .snap-x {
-            scroll-snap-type: x mandatory;
-          }
-          .snap-center {
-            scroll-snap-align: center;
-          }
-          .scroll-container {
-            scroll-behavior: smooth;
-            transition: scroll-left 0.3s ease-in-out;
-          }
-        `}</style>
+                return (
+                  <SwiperSlide key={product.id} className='h-auto! max-w-[240px] w-full'>
+                    <Link onClick={onClose} className='h-full p-5 flex flex-col justify-between gap-6 bg-[#f7F7F7] rounded-sm' href={`/product/${slug}`}>
+                      <div className='flex flex-col gap-[10px] text-center'>
+                        <Image src={image} width={100} height={100} alt='' className='w-full h-full aspect-[1] object-contain' />
+                        <font className='text-[#111] text-lg uppercase leading-[100%] font-bold'>{name}</font>
+                      </div>
+                      <font className='text-[#111] text-sm leading-[100%] text-center'>{price}{currency}</font>
+                    </Link>
+                  </SwiperSlide>
+                )
+              })
+            }
+          </Swiper>
+        </div>
       </div>
-    </>
-  );
+
+    </div >
+  )
 }
+
+export default SearchOverlay;
