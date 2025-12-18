@@ -1,7 +1,7 @@
 import { Check } from 'lucide-react';
 import React from 'react';
 
-const Input = ({ label, type, id, placeholder, register, error, registerPage = false, value, show = true }) => {
+const Input = ({ label, type, id, placeholder, register, error, registerPage = false, value, show = true, checkout = false }) => {
     // value: the current value of the input, passed from parent via react-hook-form's watch
     const showAyon = value && value.length >= 2;
 
@@ -10,7 +10,7 @@ const Input = ({ label, type, id, placeholder, register, error, registerPage = f
             <div className='relative'>
                 <label
                     htmlFor={id}
-                    className='bg-[#F0F0F0] absolute left-3 font-semibold -top-[14px] text-[#666] text-sm leading-[28px]'
+                    className={`${checkout ? 'bg-white' : 'bg-[#F0F0F0]'} absolute left-3 font-semibold -top-[14px] text-[#666] text-sm leading-[28px]`}
                 >
                     <span className='uppercase'>{label}</span>
                     {registerPage && (

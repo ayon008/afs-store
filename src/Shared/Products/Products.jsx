@@ -10,7 +10,6 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Filter, X } from 'lucide-react';
 import PopUp from '../Team/PopUp';
-import FormButton from '../Button/FormButton';
 import { useGSAP } from '@gsap/react';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -89,8 +88,6 @@ const Products = ({ minPrice, maxPrice, childCategories, min = null, max = null,
 
     const [isOpen, setOpen] = useState(false);
 
-
-
     const filterRef = useRef(null);
     const productRef = useRef(null);
 
@@ -160,7 +157,7 @@ const Products = ({ minPrice, maxPrice, childCategories, min = null, max = null,
                                 const { images } = product;
                                 const bestseller = product?.acf?.bestseller;
                                 return (
-                                    <ProjectCard price={product?.price_html} type={product?.type} name={product?.name} bestseller={bestseller} hoverImage={images[1]?.src} image={images[0]?.src} key={product?.id} slug={product?.slug} />
+                                    <ProjectCard price={product?.price_html} singlePrice={product?.price_with_tax} type={product?.type} name={product?.name} bestseller={bestseller} hoverImage={images[1]?.src} image={images[0]?.src} key={product?.id} slug={product?.slug} />
                                 )
                             })
                         }

@@ -4,26 +4,45 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react'
 import useCart from '../../hooks/useCart';
-import FormButton from '../../Shared/Button/FormButton';
 
 const CartList = ({ item }) => {
+
+  
+    const { handleUpdateCartItem, handleRemoveCartItem } = useCart();
+
+    const basePriceWithTax = parseInt(item?.prices?.price || 0);
+
+    // const line_total = parseInt(item?.totals?.line_total || 0);
+    // const line_total_tax = parseInt(item?.totals?.line_total_tax || 0);
+    // const total = line_total + line_total_tax;
+
+
+    const sub_total = (parseInt(item?.totals?.line_subtotal) + parseInt(item?.totals?.line_subtotal_tax)) || 0;
+
     const image = item.images?.[0]?.src || item.image;
     const name = item.name || item.title;
-    const price = item?.prices?.price || 0;
-    const total = item?.totals?.line_subtotal || 0;
+
+
     const currency_symbol = item?.prices?.currency_symbol || '€';
     const total_Currency_Symbol = item?.totals?.currency_symbol || '€';
     const variations = item?.variation || [];
     const itemKey = item?.key;
     const slug = item?.permalink?.split('/product/')?.[1]?.replace(/\/$/, '') || '';
 
+    // Check if product is in stock
+    const isInStock = item?.stock_status === 'instock' || item?.is_in_stock === true || item?.catalog_visibility !== 'hidden';
+
+    // Get maximum quantity from stock or quantity limits
+    const maxQuantity = item?.quantity_limits?.maximum || item?.stock_quantity || item?.quantity_limit || Infinity;
+
     const [quantity, setQuantity] = useState(parseInt(item.quantity));
     const [updating, setUpdating] = useState(false);
 
-    const { handleUpdateCartItem, handleRemoveCartItem } = useCart();
+    // Check if maximum quantity reached
+    const isMaxReached = quantity >= maxQuantity;
 
     const handleIncrement = async () => {
-        if (updating) return;
+        if (updating || isMaxReached) return;
         setUpdating(true);
         const newQuantity = quantity + 1;
         setQuantity(newQuantity);
@@ -51,6 +70,8 @@ const CartList = ({ item }) => {
     const formatPrice = (value) => {
         return (parseInt(value) / 100).toFixed(2);
     };
+
+    
 
     return (
         <div>
@@ -81,12 +102,12 @@ const CartList = ({ item }) => {
                     }
                 </span>
                 <span className='flex-[1_0_0] text-sm text-[#111] leading-[100%] font-medium'>
-                    {`${formatPrice(price)} ${currency_symbol}`}
+                    {`${formatPrice(basePriceWithTax)} ${currency_symbol}`}
                 </span>
                 <span className='flex-[1_0_0] flex items-center gap-2'>
                     <button
                         onClick={handleDecrement}
-                        disabled={quantity <= 1 || updating}
+                        disabled={quantity <= 1 || updating || !isInStock}
                         className='cursor-pointer hover:bg-gray-100 rounded p-1 disabled:opacity-30 disabled:cursor-not-allowed'
                     >
                         <Minus className='w-4 h-4' />
@@ -94,14 +115,14 @@ const CartList = ({ item }) => {
                     <span className='min-w-[20px] text-center'>{quantity}</span>
                     <button
                         onClick={handleIncrement}
-                        disabled={updating}
-                        className='cursor-pointer hover:bg-gray-100 rounded p-1 disabled:opacity-30'
+                        disabled={updating || !isInStock || isMaxReached}
+                        className='cursor-pointer hover:bg-gray-100 rounded p-1 disabled:opacity-30 disabled:cursor-not-allowed'
                     >
                         <Plus className='w-4 h-4' />
                     </button>
                 </span>
                 <span className='flex-[1_0_0] text-sm text-[#111] leading-[100%] font-medium'>
-                    {`${formatPrice(total)} ${total_Currency_Symbol}`}
+                    {`${formatPrice(sub_total)} ${total_Currency_Symbol}`}
                 </span>
             </div>
         </div>

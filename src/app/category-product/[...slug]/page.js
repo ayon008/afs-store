@@ -19,10 +19,11 @@ const page = async ({ params, searchParams }) => {
 
     // Category Image
     const image = category?.image?.src || default_image;
-    
     const productData = await getProductsByCategoryId(category?.id);
+
     const maxPrice = Math.max(...productData.map(p => p?.price_with_tax));
     const minPrice = Math.min(...productData.map(p => p?.price_with_tax));
+
     const childCategories = await getChildCategories(category?.id);
 
     const { min = null, max = null } = await searchParams;

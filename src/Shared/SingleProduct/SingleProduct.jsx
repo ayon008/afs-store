@@ -17,6 +17,7 @@ import default_image from "../../assets/images/Team/Group-1-3.png.webp"
 import ShimmerLoader from './SingleProductLoader';
 import ProductDetails from './ProductDetails';
 import FaqSection from './FaqSection';
+import { type } from 'os';
 
 
 // For youtube link in review and pop up section
@@ -50,6 +51,13 @@ const SingleProduct = () => {
         }
         load();
     }, [slug])
+
+
+    const productType = data?.type;
+    // type: 'variable',
+    // type='simple'
+
+
 
     const [images, setImages] = useState([]);
     const [sliceLength, setLength] = useState(0);

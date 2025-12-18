@@ -141,7 +141,7 @@ const ThirdForm = () => {
                     </div>
                     <Input
                         label="Code Postal"
-                        type="number"
+                        type="text"
                         id="billing_postcode"
                         register={register("billing_postcode", { required: true })}
                         error={showErrorIfMissing(watchFields.billing_postcode)}

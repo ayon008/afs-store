@@ -7,7 +7,7 @@ export async function getWooCommerceCookies() {
     try {
         const cookieStore = await cookies();
         const allCookies = cookieStore.getAll();
-
+        
         // Filter WooCommerce/WP specific cookies
         const wooCookies = allCookies
             .filter(cookie =>
@@ -19,7 +19,6 @@ export async function getWooCommerceCookies() {
             )
             .map(cookie => `${cookie.name}=${cookie.value}`)
             .join('; ');
-
         return wooCookies;
     } catch (error) {
         console.error('Error getting cookies:', error);

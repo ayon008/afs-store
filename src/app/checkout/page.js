@@ -1,739 +1,460 @@
-"use client"
+/* eslint-disable react-hooks/exhaustive-deps */
+"use client";
+import React, { useState } from 'react'
+import Input from '../../Shared/Input/input';
+import Select from '../../Shared/Input/Select';
+import Link from 'next/link';
+import { useForm } from 'react-hook-form';
+import useCart from '../../hooks/useCart';
+import { useEffect } from 'react';
+import CountrySelect from '../../Shared/Input/DropDown';
+import { countriesList } from '../../Shared/Input/countries';
+import { getCountryDetails, getPaymentMethods } from '../../funtions/getWooCommerce';
+import { selectShippingRate } from '../../funtions/StoreApi/cart';
 
-import React, { useState, useEffect } from "react"
-import { useCart } from "@/components/cart-provider"
-import { useAuth } from "@/hooks/use-auth"
-import { Button } from "@/components/ui/button"
-import CheckoutStepper from "@/components/CheckoutStepper"
-import YourOrderSection from "@/components/YourOrderSection"
-import CheckoutPayPal from "@/components/CheckoutPayPal"
-import CheckoutMonetico from "@/components/CheckoutMonetico"
-import Link from "next/link"
-import {
-  CheckCircle,
-  MapPin,
-  ShoppingBag,
-  Truck,
-  ArrowLeft,
-  Shield,
-  Lock,
-} from "lucide-react"
-import App from "./emptycart"
 
-const steps = [
-  { id: 1, name: "Basket" },
-  { id: 2, name: "Secure payment and delivery" },
-  { id: 3, name: "Summary" },
-]
+const Page = () => {
 
-export default function CheckoutPage() {
-  const { items, clear, totalPrice, updateQty, removeItem } = useCart()
-  const { user } = useAuth()
-
-  const [billing, setBilling] = useState({
-    first_name: "",
-    last_name: "",
-    address_1: "",
-    address_2: "",
-    company: "",
-    city: "",
-    country: "FR",
-    postcode: "",
-    email: "",
-    phone: "",
-  })
-  const [shipping, setShipping] = useState({
-    first_name: "",
-    last_name: "",
-    company: "",
-    address_1: "",
-    address_2: "",
-    city: "",
-    country: "FR",
-    postcode: "",
-    email: "",
-    phone: "",
-  })
-  const [shipToDifferent, setShipToDifferent] = useState(true)
-  const [shippingOptions, setShippingOptions] = useState([])
-  const [selectedShipping, setSelectedShipping] = useState(null)
-  const [appliedCoupon, setAppliedCoupon] = useState(null)
-  const [couponError, setCouponError] = useState("")
-
-  const hasItems = items.length > 0
-  const [currentStep, setCurrentStep] = useState(1)
-  const [placedOrder, setPlacedOrder] = useState(null)
-  const [placedPayUrl, setPlacedPayUrl] = useState("")
-  
-  const [showLoginForm, setShowLoginForm] = useState(false)
-  const [loginData, setLoginData] = useState({ username: "", password: "", remember: false })
-  const [couponCode, setCouponCode] = useState("")
-  const [showCouponForm, setShowCouponForm] = useState(false)
-
-  useEffect(() => {
-    if (user?.email && !billing.email) {
-      setBilling((prev) => ({ ...prev, email: user.email || "" }))
-    }
-  }, [user, billing.email])
-
-  useEffect(() => {
-    async function load() {
-      try {
-        const res = await fetch("/api/shipping-options")
-        if (!res.ok) return
-        const j = await res.json()
-        const opts = j.options || []
-        setShippingOptions(opts)
-        if (opts.length) setSelectedShipping(opts[0].id)
-      } catch {}
-    }
-    if (currentStep === 1 || currentStep === 2) load()
-  }, [currentStep])
-
-  const handlePayPalSuccess = (orderDetails) => {
-    console.log('PayPal payment successful:', orderDetails);
-    const wooOrder = orderDetails.wooOrder || {};
-    setPlacedOrder({
-      wooOrderId: wooOrder.id,
-      id: wooOrder.id,
-      status: wooOrder.status || 'processing',
-      payment_method: 'paypal',
-      transactionId: orderDetails.transactionId,
-    });
-    setCurrentStep(3);
-    clear();
-    if (typeof window !== "undefined") {
-      try {
-        localStorage.removeItem("cart_v1");
-      } catch (error) {
-        console.error('Error clearing cart from localStorage:', error);
-      }
-    }
+  const [shippingAddress, setShippingAddress] = useState(false);
+  const handleShow = event => {
+    setShippingAddress(event.target.checked);
   }
 
-  const handleWireTransfer = async () => {
-    try {
-      const selectedShippingObj = shippingOptions.find((s) => s.id === selectedShipping) || null
-      const res = await fetch("/api/orders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          billing,
-          shipping: shipToDifferent
-            ? shipping
-            : {
-                first_name: billing.first_name,
-                last_name: billing.last_name,
-                address_1: billing.address_1,
-                address_2: billing.address_2,
-                city: billing.city,
-                country: billing.country,
-                postcode: billing.postcode,
-              },
-          line_items: items.map((i) => ({ product_id: i.productId, quantity: i.quantity })),
-          shipping_option: selectedShippingObj
-            ? { id: selectedShippingObj.id, title: selectedShippingObj.title, cost: selectedShippingObj.cost }
-            : undefined,
-          payment_method: "bacs",
-        }),
+  // Cart
+  const { cart, loadCart } = useCart();
+
+  const cartBillingAddress = cart?.billing_address;
+  const cartShippingAddress = cart?.shipping_address;
+  const items = cart?.items;
+
+  // React Hook Form
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    trigger,
+    setValue,
+    formState: { errors }
+  } = useForm({
+    mode: 'onBlur',
+    defaultValues: {
+      billing_first_name: '',
+      billing_last_name: '',
+      billing_company: '',
+      billing_country: '',
+      billing_address_1: '',
+      billing_city: '',
+      billing_state: '',
+      billing_postcode: '',
+      billing_phone: '',
+      billing_email: '',
+      survey: '',
+      shipping_first_name: '',
+      shipping_last_name: '',
+      shipping_company: '',
+      shipping_country: '',
+      shipping_address_1: '',
+      shipping_city: '',
+      shipping_state: '',
+      shipping_postcode: '',
+      order_comments: '',
+      payment_method: '',
+      shipping_method: 'free',
+      terms: false
+    }
+  });
+
+  useEffect(() => {
+    if (cartShippingAddress) {
+      reset({
+        shipping_first_name: cartShippingAddress.first_name,
+        shipping_last_name: cartShippingAddress.last_name,
+        shipping_company: cartShippingAddress.company,
+        shipping_country: cartShippingAddress.country,
+        shipping_address_1: cartShippingAddress.address_1,
+        shipping_city: cartShippingAddress.city,
+        shipping_state: cartShippingAddress.state,
+        shipping_postcode: cartShippingAddress.postcode,
+        // shipping_method: cartShippingAddress.method,
       })
-
-      const data = await res.json()
-      if (!res.ok) throw new Error(data?.error || "Failed to create order")
-      setPlacedOrder({ wooOrderId: data.orderId, status: data.status, payment_method: data.payment_method })
-      setPlacedPayUrl(data.payUrl || "")
-      clear()
-      try { localStorage.removeItem("cart_v1") } catch {}
-      setCurrentStep(3)
-    } catch (e) {
-      alert(e?.message || "Wire transfer order failed")
     }
-  }
+    if (cartBillingAddress) {
+      reset({
+        billing_first_name: cartBillingAddress.first_name,
+        billing_last_name: cartBillingAddress.last_name,
+        billing_company: cartBillingAddress.company,
+        billing_country: cartBillingAddress.country,
+        billing_address_1: cartBillingAddress.address_1,
+        billing_city: cartBillingAddress.city,
+        billing_state: cartBillingAddress.state,
+        billing_postcode: cartBillingAddress.postcode,
+        billing_phone: cartBillingAddress.phone,
+        billing_email: cartBillingAddress.email,
+        // survey: cartBillingAddress.survey,
+      })
+      trigger();
+    }
+  }, [reset, cartShippingAddress, cartBillingAddress, trigger]);
 
-  if (!hasItems) {
-    return <App />
-  }
+
+  const watchFields = watch();
+
+  // Show warning if field is empty (not required)
+  const showErrorIfMissing = (fieldValue) => {
+    return !fieldValue ? true : null;
+  };
+
+  const [countryDetails, setCountryDetails] = useState(null);
+  const [paymentMethods, setPaymentMethods] = useState(null);
+
+  useEffect(() => {
+    const fetchPaymentMethods = async () => {
+      const data = await getPaymentMethods();
+      setPaymentMethods(data);
+    };
+    fetchPaymentMethods();
+  }, []);
+
+  useEffect(() => {
+    if (watchFields.billing_country) {
+      const fetchCountryDetails = async () => {
+        const data = await getCountryDetails(watchFields.billing_country);
+        setCountryDetails(data);
+      };
+      fetchCountryDetails();
+    }
+  }, [watchFields.billing_country, setCountryDetails])
+
+  const states = countryDetails?.states || [];
+
+  const cartTotal = parseFloat(cart?.totals?.total_price).toFixed(2) / 100;
+  const sousTotal = cart?.items?.reduce(
+    (acc, item) =>
+      acc +
+      Number(item.totals.line_subtotal) +
+      Number(item.totals.line_subtotal_tax),
+    0
+  ) / 100;
+
+  const [shippingLoading, setShippingLoading] = useState(false);
+  const [selectedRateId, setSelectedRateId] = useState(null);
+
+  const allShippingRates = cart?.shipping_rates?.flatMap(pkg =>
+    pkg.shipping_rates?.map(rate => ({
+      ...rate,
+      package_id: pkg.package_id
+    })) || []
+  ) || [];
+
+
+  useEffect(() => {
+    const selected = allShippingRates.find(rate => rate.selected);
+
+    if (selected) {
+      setSelectedRateId(selected.rate_id);
+    } else {
+      setSelectedRateId(null);
+    }
+  }, [allShippingRates]);
+
+
+  const handleSelectRate = async (value) => {
+    const [packageId, rateId] = value.split(':');
+    if (rateId === selectedRateId) return;
+    setShippingLoading(true);
+    const result = await selectShippingRate(rateId, packageId);
+    if (result.success) {
+      setSelectedRateId(rateId);
+      await loadCart();
+      setShippingLoading(false);
+    }
+  };
+
+  const payment_method = cart?.payment_methods;
+
 
   return (
-    <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8">
-      <CheckoutStepper
-        steps={steps}
-        currentStep={currentStep}
-        onStepClick={(id) => {
-          if (id < currentStep) setCurrentStep(id)
-        }}
-      />
-
-      <div className={`grid grid-cols-1 ${currentStep === 2 ? "lg:grid-cols-1" : "lg:grid-cols-2"} gap-4 sm:gap-6 lg:gap-8 mt-6 sm:mt-8`}>
-        <div className="space-y-4 sm:space-y-6">
-          {currentStep === 1 ? (
-            <>
-              <div className="bg-white border border-gray-200 shadow-sm">
-                <div className="hidden sm:grid grid-cols-[30px_1fr_120px_120px_120px] font-semibold text-gray-700 uppercase tracking-wider text-xs sm:text-sm border-b border-gray-200 px-4 sm:px-6 py-4">
-                  <div></div>
-                  <div>Product</div>
-                  <div className="text-center">Price</div>
-                  <div className="text-center">Quantity</div>
-                  <div className="text-right">Subtotal</div>
-                </div>
-
-                <div className="divide-y divide-gray-200">
-                  {items.map((item) => (
-                    <div key={item.productId} className="grid grid-cols-1 sm:grid-cols-[30px_1fr_120px_120px_120px] items-start px-3 sm:px-6 py-4 gap-3 sm:gap-0">
-                      <button
-                        className="text-blue-500 hover:text-blue-700 text-lg font-bold w-fit sm:mt-1"
-                        onClick={() => removeItem(item.productId)}
-                        aria-label={`Remove ${item.name}`}
-                      >
-                        &times;
-                      </button>
-
-                      <div className="flex items-start space-x-3 sm:space-x-4 sm:pr-4">
-                        <img
-                          src="https://placehold.co/40x40/f3f4f6/000?text=I"
-                          alt={item.name}
-                          className="w-8 h-8 sm:w-10 sm:h-10 object-contain flex-shrink-0"
-                        />
-                        <div className="flex-1 text-sm">
-                          <div className="text-blue-600 font-medium hover:underline cursor-pointer text-sm sm:text-base">
-                            {item.name}
-                          </div>
-                          <div className="text-xs text-gray-500 mt-1">
-                            Surface: {item.quantity * 2}m2
-                          </div>
-                          <div className="text-xs text-gray-500">
-                            Boom Clip On System: Yes
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="flex sm:block justify-between sm:text-center text-xs sm:text-sm text-gray-800 sm:pt-1">
-                        <span className="sm:hidden font-semibold">Price:</span>
-                        <span>{(item.price).toFixed(2).replace('.', ',')}€</span>
-                      </div>
-
-                      <div className="flex items-center justify-between sm:justify-center gap-2 sm:pt-1">
-                        <span className="sm:hidden text-xs font-semibold">Qty:</span>
-                        <input
-                          type="number"
-                          min="1"
-                          value={item.quantity}
-                          onChange={(e) => updateQty(item.productId, parseInt(e.target.value) || 1)}
-                          className="w-12 sm:w-16 h-8 text-center border border-gray-300 focus:ring-blue-500 focus:border-blue-500 p-0 text-xs sm:text-sm"
-                        />
-                      </div>
-
-                      <div className="flex sm:block justify-between sm:text-right text-xs sm:text-sm text-gray-800 sm:pt-1">
-                        <span className="sm:hidden font-semibold">Subtotal:</span>
-                        <span>
-                          {((item.price * item.quantity)).toFixed(2).replace('.', ',')}€ <span className="text-xs text-gray-500 whitespace-nowrap">(incl. VAT)</span>
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="p-3 sm:p-6 sm:pt-0 flex justify-start border-t border-gray-200">
-<button
-  type="button"
-  className="mt-2 bg-white text-blue-500 border border-blue-500 hover:bg-blue-50 px-4 sm:px-6 py-2 font-semibold text-xs sm:text-sm uppercase tracking-wider transition duration-150 whitespace-nowrap"
->
-  Update basket
-</button>
-
-                </div>
-                
-                <div className="p-3 sm:p-6 border-t border-gray-200">
-                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-                    <input
-                      type="text"
-                      className="flex-1 border border-gray-400 px-3 py-2 placeholder-gray-500 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                      value={couponCode}
-                      onChange={(e) => setCouponCode(e.target.value)}
-                      placeholder="Coupon code"
-                    />
-                    <button
-                      type="button"
-                      className="bg-white text-blue-500 border-2 border-blue-500 hover:bg-blue-50 px-4 sm:px-6 py-2 font-semibold text-xs sm:text-sm uppercase tracking-wider transition duration-150 whitespace-nowrap w-full sm:w-auto"
-                      onClick={async () => {
-                        try {
-                          if (!couponCode.trim()) {
-                            setCouponError("Please enter a coupon code");
-                            return;
-                          }
-                          const res = await fetch("/api/coupons", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ code: couponCode })
-                          });
-                          const data = await res.json();
-                          if (!res.ok) throw new Error(data.message);
-                          if (!data.valid) throw new Error("Invalid coupon code");
-                          setAppliedCoupon(data);
-                          setCouponError("");
-                          setCouponCode("");
-                        } catch (error) {
-                          setCouponError(error.message || "Failed to apply coupon");
-                        }
-                      }}
-                    >
-                      Apply promo code
-                    </button>
-                  </div>
-                  {couponError && (
-                    <p className="text-red-600 text-xs mt-2">{couponError}</p>
-                  )}
-                  {appliedCoupon && (
-                    <p className="text-green-600 text-xs mt-2">
-                      Coupon {appliedCoupon.code} applied successfully!
-                      {appliedCoupon.discount_percent && ` (${appliedCoupon.discount_percent}% off)`}
-                      {appliedCoupon.free_shipping && " (Free shipping)"}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </>
-          ) : currentStep === 2 ? (
-            <div className="space-y-4 sm:space-y-8">
-<div className="border border-[#1d98ff] bg-gray-50 rounded mb-4 p-3">
-  <button
-    type="button"
-    onClick={() => setShowLoginForm(!showLoginForm)}
-    className="flex items-center cursor-pointer w-full text-left"
-  >
-    <input 
-      type="checkbox" 
-      className="mr-2 pointer-events-none accent-[#1d98ff]" 
-      checked={showLoginForm}
-      readOnly
-    />
-    <span className="text-[#1d98ff] font-normal text-sm">Returning customer? Click here to login</span>
-  </button>
-</div>
-
-{showLoginForm && (
-  <div className="border border-gray-200 rounded mb-4 p-4 sm:p-6 bg-white">
-    <p className="text-xs sm:text-sm text-gray-700 mb-4">
-      If you have shopped with us before, please enter your details below. If you are a new customer, please proceed to the Billing section.
-    </p>
-    <div className="space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-        <div>
-          <label className="text-xs sm:text-sm text-gray-700 mb-1 block">
-            Username or email <span className="text-red-600">*</span>
-          </label>
-          <input
-            type="text"
-            className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
-            value={loginData.username}
-            onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
-          />
+    <div>
+      {/* Steps */}
+      <div className='flex items-center justify-between max-w-[1080px] mx-auto relative py-[80px] lg:py-[100px]'>
+        <div className='flex flex-col items-center justify-center step-1'>
+          <span className='w-[clamp(1.75rem,1.0594rem+1.4406vw,2.5rem)] h-[clamp(1.75rem,1.0594rem+1.4406vw,2.5rem)] text-[clamp(0.9375rem,0.362rem+1.2005vw,1.5625rem)] font-bold  rounded-full text-center text-white z-10! bg-[#1D98FF]'>1</span>
+          <span className='text-base text-[clamp(0.875rem,0.7599rem+0.2401vw,1rem)] text-center leading-[120%]'>
+            Basket
+          </span>
         </div>
-        <div>
-          <label className="text-xs sm:text-sm text-gray-700 mb-1 block">
-            Password <span className="text-red-600">*</span>
-          </label>
-          <input
-            type="password"
-            className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
-            value={loginData.password}
-            onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-          />
+        <div className='flex flex-col items-center justify-center step-2'>
+          <span className='w-[clamp(1.75rem,1.0594rem+1.4406vw,2.5rem)] h-[clamp(1.75rem,1.0594rem+1.4406vw,2.5rem)] text-[clamp(0.9375rem,0.362rem+1.2005vw,1.5625rem)] font-bold  rounded-full text-center text-white z-10! bg-[#1D98FF]'>2</span>
+          <span className='text-base text-[clamp(0.875rem,0.7599rem+0.2401vw,1rem)] text-center leading-[120%]'>
+            Secure payment and delivery
+          </span>
+        </div>
+        <div className='flex flex-col items-center justify-center step-3'>
+          <span className='w-[clamp(1.75rem,1.0594rem+1.4406vw,2.5rem)] h-[clamp(1.75rem,1.0594rem+1.4406vw,2.5rem)] border border-[#111] text-[clamp(0.9375rem,0.362rem+1.2005vw,1.5625rem)] font-bold text-[#111] rounded-full text-center bg-white z-10!'>3</span>
+          <span className='text-base text-[clamp(0.875rem,0.7599rem+0.2401vw,1rem)] text-center leading-[120%]'>
+            Summary
+          </span>
         </div>
       </div>
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-<Button
-  type="button"
-  className="bg-gray-200 hover:bg-gray-300 !text-black px-6 text-sm w-full sm:w-auto font-medium transition-all duration-200"
-  onClick={() => console.log('Login clicked', loginData)}
->
-  Login
-</Button>
+      {/*  */}
+      <div className='global-padding global-margin'>
+        {/* checkout forms */}
+        <form className='space-y-10'>
 
-        <label className="flex items-center cursor-pointer">
-          <input
-            type="checkbox"
-            checked={loginData.remember}
-            onChange={(e) => setLoginData({ ...loginData, remember: e.target.checked })}
-            className="mr-2 accent-[#1d98ff]"
-          />
-          <span className="text-xs sm:text-sm text-gray-700">Remember me</span>
-        </label>
-      </div>
-      <a href="#" className="text-xs sm:text-sm text-blue-600 hover:underline block">
-        Lost your password?
-      </a>
-    </div>
-  </div>
-)}
-
-<>
-  <div className="border border-[#1d98ff] bg-gray-50 rounded mb-4 p-3">
-    <button
-      type="button"
-      onClick={() => setShowCouponForm(!showCouponForm)}
-      className="flex items-center cursor-pointer w-full text-left"
-    >
-      <input 
-        type="checkbox" 
-        className="mr-2 pointer-events-none accent-[#1d98ff]" 
-        checked={showCouponForm}
-        readOnly
-      />
-      <span className="text-[#1d98ff] font-normal text-sm">Have a coupon? Click here to enter your code</span>
-    </button>
-  </div>
-
-  {showCouponForm && (
-    <div className="border border-gray-200 rounded mb-4 p-4 sm:p-6 bg-white">
-      <div className="flex flex-col sm:flex-row gap-3">
-        <input
-          type="text"
-          className="w-full sm:flex-grow border border-gray-300 rounded px-3 py-2 text-sm"
-          value={couponCode}
-          onChange={(e) => setCouponCode(e.target.value)}
-          placeholder="Coupon code"
-        />
-<Button
-  type="button"
-  className="bg-gray-200 hover:bg-gray-300 !text-black px-6 text-sm w-full sm:w-auto font-medium transition-all duration-200"
-  onClick={async () => {
-    try {
-      if (!couponCode.trim()) {
-        setCouponError("Please enter a coupon code");
-        return;
-      }
-
-      const res = await fetch("/api/coupons", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code: couponCode }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.message);
-      if (!data.valid) throw new Error("Invalid coupon code");
-
-      setAppliedCoupon(data);
-      setCouponError("");
-      setCouponCode("");
-    } catch (error) {
-      setCouponError(error.message || "Failed to apply coupon");
-    }
-  }}
->
-  Apply Coupon
-</Button>
-
-      </div>
-      {couponError && (
-        <p className="text-red-600 text-xs mt-2">{couponError}</p>
-      )}
-      {appliedCoupon && (
-        <p className="text-green-600 text-xs mt-2">
-          Coupon {appliedCoupon.code} applied successfully!
-          {appliedCoupon.discount_percent && ` (${appliedCoupon.discount_percent}% off)`}
-          {appliedCoupon.free_shipping && " (Free shipping)"}
-        </p>
-      )}
-    </div>
-  )}
-</>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-                <div className="bg-white rounded-md border border-gray-200 p-4 sm:p-6">
-                  <h3 className="text-base sm:text-lg font-semibold mb-4">Billing Information</h3>
-                  <div className="space-y-3 sm:space-y-4">
-                    {[
-                      { label: "First name", key: "first_name", required: true },
-                      { label: "Last name", key: "last_name", required: true },
-                      { label: "Company name (optional)", key: "company", required: false },
-                    ].map(field => (
-                      <div key={field.key}>
-                        <label className="text-xs sm:text-sm text-gray-700 mb-1 block">
-                          {field.label} {field.required && <span className="text-red-600">*</span>}
-                        </label>
-                        <input 
-                          className="w-full border rounded px-3 py-2 text-sm" 
-                          placeholder={field.label}
-                          value={billing[field.key]}
-                          onChange={e => setBilling({ ...billing, [field.key]: e.target.value })}
-                        />
-                      </div>
-                    ))}
-                    <div>
-                      <label className="text-xs sm:text-sm text-gray-700 mb-1 block">Country / Region *</label>
-                      <select className="w-full border rounded px-3 py-2 text-sm" value={billing.country} onChange={e => setBilling({ ...billing, country: e.target.value })}>
-                        <option value="FR">France</option>
-                      </select>
-                    </div>
-                    {[
-                      { label: "Street address", key: "address_1", required: true },
-                      { label: "Apartment, suite, unit, etc. (optional)", key: "address_2", required: false },
-                      { label: "Postcode / ZIP", key: "postcode", required: true },
-                      { label: "Town / City", key: "city", required: true },
-                      { label: "Phone", key: "phone", required: true },
-                      { label: "Email address", key: "email", required: true },
-                    ].map(field => (
-                      <div key={field.key}>
-                        <label className="text-xs sm:text-sm text-gray-700 mb-1 block">
-                          {field.label} {field.required && <span className="text-red-600">*</span>}
-                        </label>
-                        <input 
-                          className="w-full border rounded px-3 py-2 text-sm" 
-                          placeholder={field.label}
-                          value={billing[field.key]}
-                          onChange={e => setBilling({ ...billing, [field.key]: e.target.value })}
-                        />
-                      </div>
-                    ))}
-                    <div>
-                      <label className="text-xs sm:text-sm text-gray-700 mb-1 block">How did you hear about the brand? *</label>
-                      <select className="w-full border rounded px-3 py-2 text-sm" value="" onChange={() => {}}>
-                        <option value="">Please select…</option>
-                      </select>
-                    </div>
-                  </div>
+          {/* 1st section */}
+          <div className='grid grid-cols-1 gap-10 lg:grid-cols-2'>
+            {/* Billing address */}
+            <div className='flex flex-col lg:gap-8 gap-6'>
+              <h3 className='lg:text-[28px] text-[22px] leading-[100%] font-semibold text-[#111]'>Détails de facturation</h3>
+              <div className='grid grid-cols-1 gap-5'>
+                <div className='grid grid-cols-2 gap-5'>
+                  <Input
+                    label="First Name"
+                    type="text"
+                    id="billing_first_name"
+                    register={register("billing_first_name", { required: true })}
+                    error={showErrorIfMissing(watchFields.billing_first_name)}
+                    value={watchFields.billing_first_name}
+                    checkout={true}
+                  />
+                  <Input
+                    label="Last Name"
+                    type="text"
+                    id="billing_last_name"
+                    register={register("billing_last_name", { required: true })}
+                    error={showErrorIfMissing(watchFields.billing_last_name)}
+                    value={watchFields.billing_last_name}
+                    checkout={true}
+                  />
                 </div>
-
-                <div className="bg-white rounded-md border border-gray-200 p-4 sm:p-6">
-                  <div className="flex items-center space-x-3 mb-4">
-                    <input 
-                      type="checkbox" 
-                      className="w-4 h-4 sm:w-5 sm:h-5" 
-                      checked={shipToDifferent} 
-                      onChange={e => setShipToDifferent(e.target.checked)} 
+                <Input
+                  label="Company (Optional)"
+                  type="text"
+                  id="billing_company"
+                  register={register("billing_company", { required: false })}
+                  error={showErrorIfMissing(watchFields.billing_company)}
+                  value={watchFields.billing_company}
+                  checkout={true}
+                />
+                <CountrySelect
+                  label="Country"
+                  id="billing_country"
+                  value={watchFields.billing_country}
+                  register={register("country", { required: true })}
+                  countries={countriesList}
+                  checkout={true}
+                  error={showErrorIfMissing(watchFields.billing_country)}
+                  onChange={() => trigger('billing_country')}
+                />
+                <Input
+                  label="Street number and name"
+                  type="text"
+                  id="billing_address_1"
+                  register={register("billing_address_1", { required: true })}
+                  error={showErrorIfMissing(watchFields.billing_address_1)}
+                  value={watchFields.billing_address_1}
+                  checkout={true}
+                />
+                <Input
+                  label="Ville"
+                  type="text"
+                  id="billing_city"
+                  register={register("billing_city", { required: true })}
+                  error={showErrorIfMissing(watchFields.billing_city)}
+                  value={watchFields.billing_city}
+                  checkout={true}
+                />
+                {
+                  states.length > 0 && (
+                    <Select
+                      label="State"
+                      id="billing_state"
+                      register={register("billing_state", { required: true })}
+                      error={showErrorIfMissing(watchFields.billing_state)}
+                      value={watchFields.billing_state}
+                      checkout={true}
                     />
-                    <h3 className="text-base sm:text-lg font-semibold">Ship to a different address?</h3>
-                  </div>
-
-                  {shipToDifferent ? (
-                    <div className="space-y-3 sm:space-y-4">
-                      {[
-                        { label: "First name", key: "first_name" },
-                        { label: "Last name", key: "last_name" },
-                        { label: "Company name (optional)", key: "company" },
-                      ].map(field => (
-                        <div key={field.key}>
-                          <label className="text-xs sm:text-sm text-gray-700 mb-1 block">{field.label} *</label>
-                          <input 
-                            className="w-full border rounded px-3 py-2 text-sm" 
-                            placeholder={field.label}
-                            value={shipping[field.key]}
-                            onChange={e => setShipping({ ...shipping, [field.key]: e.target.value })}
-                          />
-                        </div>
-                      ))}
-                      <div>
-                        <label className="text-xs sm:text-sm text-gray-700 mb-1 block">Country / Region *</label>
-                        <select className="w-full border rounded px-3 py-2 text-sm" value={shipping.country} onChange={e => setShipping({ ...shipping, country: e.target.value })}>
-                          <option value="FR">France</option>
-                        </select>
-                      </div>
-                      {[
-                        { label: "Street address", key: "address_1" },
-                        { label: "Apartment, suite, unit, etc. (optional)", key: "address_2" },
-                        { label: "Postcode / ZIP", key: "postcode" },
-                        { label: "Town / City", key: "city" },
-                        { label: "Phone", key: "phone" },
-                      ].map(field => (
-                        <div key={field.key}>
-                          <label className="text-xs sm:text-sm text-gray-700 mb-1 block">{field.label} *</label>
-                          <input 
-                            className="w-full border rounded px-3 py-2 text-sm" 
-                            placeholder={field.label}
-                            value={shipping[field.key]}
-                            onChange={e => setShipping({ ...shipping, [field.key]: e.target.value })}
-                          />
-                        </div>
-                      ))}
-                      <div>
-                        <label className="text-xs sm:text-sm text-gray-700 mb-1 block">Order notes (optional)</label>
-                        <input 
-                          className="w-full border rounded px-3 py-2 text-sm" 
-                          placeholder="Notes about your order, e.g. special notes for delivery."
-                          value={shipping.note || ""}
-                          onChange={e => setShipping({ ...shipping, note: e.target.value })}
-                        />
-                      </div>
-                    </div>
-                  ) : (
-                    <p className="text-gray-500 text-xs sm:text-sm">Shipping will be sent to your billing address</p>
-                  )}
-                </div>
-              </div>
-
-              <div className="bg-white rounded-md border border-gray-200 p-4 sm:p-6">
-                <YourOrderSection
-                  items={items}
-                  totalPrice={totalPrice}
-                  selectedShipping={selectedShipping}
-                  shippingOptions={shippingOptions}
-                  appliedCoupon={appliedCoupon}
-                  onShippingChange={setSelectedShipping}
-                  onWireTransfer={handleWireTransfer}
-                  paypalButton={
-                    <CheckoutPayPal
-                      cartData={{
-                        lineItems: items.map((i) => ({ product_id: i.productId, quantity: i.quantity })),
-                        shippingLines: selectedShipping
-                          ? [{ method_id: selectedShipping, total: shippingOptions.find((s) => s.id === selectedShipping)?.cost || "0.00" }]
-                          : [],
-                      }}
-                      customerData={{
-                        billing,
-                        shipping: shipToDifferent ? shipping : { first_name: billing.first_name, last_name: billing.last_name, company: billing.company, address_1: billing.address_1, address_2: billing.address_2, city: billing.city, country: billing.country, postcode: billing.postcode, email: billing.email, phone: billing.phone },
-                      }}
-                      onSuccess={handlePayPalSuccess}
-                    />
-                  }
-                  moneticoButton={
-                    <CheckoutMonetico
-                      cartData={{
-                        lineItems: items.map((i) => ({ product_id: i.productId, quantity: i.quantity })),
-                        shippingLines: selectedShipping
-                          ? [
-                              {
-                                method_id: selectedShipping,
-                                total: shippingOptions.find((s) => s.id === selectedShipping)?.cost || "0.00",
-                              },
-                            ]
-                          : [],
-                      }}
-                      customerData={{
-                        billing,
-                        shipping: shipToDifferent
-                          ? shipping
-                          : {
-                              first_name: billing.first_name,
-                              last_name: billing.last_name,
-                              company: billing.company,
-                              address_1: billing.address_1,
-                              address_2: billing.address_2,
-                              city: billing.city,
-                              country: billing.country,
-                              postcode: billing.postcode,
-                              email: billing.email,
-                              phone: billing.phone,
-                            },
-                      }}
-                      onSuccess={(orderDetails) => {
-                        console.log('Monetico payment successful:', orderDetails)
-                        setPlacedOrder(orderDetails)
-                        setCurrentStep(3)
-                        clear()
-                        try {
-                          localStorage.removeItem("cart_v1")
-                        } catch (error) {
-                          console.error('Error clearing cart:', error)
-                        }
-                      }}
-                      onError={(error) => {
-                        console.error('Monetico payment error:', error)
-                        alert('Payment failed: ' + error.message)
-                      }}
-                    />
-                  }
+                  )
+                }
+                <Input
+                  label="Code Postal"
+                  type="text"
+                  id="billing_postcode"
+                  register={register("billing_postcode", { required: true })}
+                  error={showErrorIfMissing(watchFields.billing_postcode)}
+                  value={watchFields.billing_postcode}
+                  checkout={true}
+                />
+                <Select
+                  checkout={true}
+                  label='Comment avez-vous entendu parlé de la marque ?'
+                  id='survey'
+                  options={[
+                    { value: 'Recherche Google/Bing', label: 'Recherche Google/Bing' },
+                    { value: 'facebook', label: 'Facebook' },
+                    { value: 'instagram', label: 'Instagram' },
+                    { value: 'youtube', label: 'YouTube' },
+                    { value: 'Publicité Google (Google Ads)', label: 'Publicité Google (Google Ads)' },
+                    { value: "Recommandation d'un ami ou d'un membre de la famille", label: "Recommandation d'un ami ou d'un membre de la famille" },
+                    { value: "Article de blog ou revue en ligne", label: "Article de blog ou revue en ligne" },
+                    { value: "Lien direct (j'ai tapé l'adresse du site)", label: "Lien direct (j'ai tapé l'adresse du site)" },
+                    { value: "Publicité Display/Bannière", label: "Publicité Display/Bannière" },
+                    { value: "Autre (veuillez préciser)", label: "Autre (veuillez préciser)" },
+                  ]}
+                  placeholder="Veuillez sélectionner..."
                 />
               </div>
-
-              <div className="flex justify-end">
-                <Button 
-                  onClick={() => setCurrentStep(3)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-2 text-sm sm:text-base w-full sm:w-auto"
+            </div>
+            {/* Shipping address */}
+            <div className='flex flex-col lg:gap-8 gap-6'>
+              <div className='flex items-center gap-1 flex-wrap'>
+                <input onChange={handleShow} type="checkbox" id='shipping_address' />
+                <h3 className='lg:text-[28px] text-[22px] leading-[100%] font-semibold text-[#111]'>Détails de livraison</h3>
+              </div>
+              {
+                shippingAddress && (
+                  <div className='grid grid-cols-1 gap-5'>
+                    <div className='grid grid-cols-2 gap-5'>
+                      <Input checkout={true} label='First Name' type='text' id='first_name' />
+                      <Input checkout={true} label='Last Name' type='text' id='last_name' />
+                    </div>
+                    <Input checkout={true} label='Company (Optional)' type='text' id='company' />
+                    <Input checkout={true} label='Country' type='text' id='country' />
+                    <Input checkout={true} label='Post Code' type='text' id='zip' />
+                    <Input checkout={true} label='State' type='text' id='state' />
+                    <Input checkout={true} label='City' type='text' id='city' />
+                    <Input checkout={true} label='Street number and name' type='text' id='street_number_and_name' />
+                  </div>
+                )
+              }
+              <div className='relative'>
+                <label
+                  htmlFor='comments'
+                  className='bg-white absolute left-3 font-semibold -top-[14px] text-[#666] text-sm leading-[28px] uppercase'
                 >
-                  Continue to Payment
-                </Button>
+                  Notes de commande (facultatif)
+                </label>
+                <textarea
+                  id='comments'
+                  className='border border-[#BFBFBF] rounded-[4px] w-full py-3 px-3 focus:outline-none text-lg leading-[23px] text-black font-semibold min-h-[120px] resize-y'
+                  placeholder='Commentaires concernant votre commande, ex. : consignes de livraison.'
+                />
               </div>
             </div>
-          ) : (
-<div className="bg-white rounded-md border border-gray-200 p-4 sm:p-8 mx-auto relative left-1/2 -translate-x-[50%]">
-  <h2 className="text-lg sm:text-2xl font-bold mb-4 text-green-700 flex justify-center items-center flex-wrap gap-2">
-    <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 flex-shrink-0" /> 
-    Order Placed Successfully
-  </h2>
-
-  {placedOrder ? (
-    <div className="text-center">
-      <div className="mb-4 text-sm sm:text-lg">
-        Order ID: <span className="font-bold">{placedOrder.wooOrderId || placedOrder.id}</span>
-      </div>
-
-      {placedOrder.payment_method === 'bacs' ? (
-        <div className="space-y-3">
-          <div className="mb-2 text-xs sm:text-base">
-            Your order has been created. Please complete the payment via bank transfer using the instructions on the next page.
           </div>
-          {placedPayUrl && (
-            <Link href={placedPayUrl}>
-              <Button className="text-xs sm:text-sm">Go to payment instructions</Button>
-            </Link>
-          )}
-        </div>
-      ) : (
-        <div className="mb-2 text-xs sm:text-base">
-          Thank you for your purchase! Your order has been placed and is being processed.
-        </div>
-      )}
-    </div>
-  ) : (
-    <div className="text-red-600 text-xs sm:text-base text-center">
-      No order details found.
-    </div>
-  )}
 
-  <Link href="/shop" className="flex justify-center">
-    <Button
-      className="mt-6 bg-blue-500 hover:bg-blue-600 text-white px-6 sm:px-8 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold tracking-wide uppercase rounded-md shadow-sm hover:shadow-md transition-all duration-200"
-    >
-      Continue Shopping
-    </Button>
-  </Link>
-</div>
-
-          )}
-        </div>
-
-        {currentStep === 1 && (
-          <div className="space-y-4 sm:space-y-6">
-            <div className="bg-white rounded-md border border-gray-200 p-4 sm:p-6">
-              <YourOrderSection
-                items={items}
-                totalPrice={totalPrice}
-                selectedShipping={selectedShipping}
-                shippingOptions={shippingOptions}
-                appliedCoupon={appliedCoupon}
-                onShippingChange={setSelectedShipping}
-                onWireTransfer={handleWireTransfer}
-                paypalButton={
-                  <CheckoutPayPal
-                    cartData={{
-                      lineItems: items.map((i) => ({ product_id: i.productId, quantity: i.quantity })),
-                      shippingLines: selectedShipping
-                        ? [{ method_id: selectedShipping, total: shippingOptions.find((s) => s.id === selectedShipping)?.cost || "0.00" }]
-                        : [],
-                    }}
-                    customerData={{
-                      billing,
-                      shipping: shipToDifferent ? shipping : { first_name: billing.first_name, last_name: billing.last_name, company: billing.company, address_1: billing.address_1, address_2: billing.address_2, city: billing.city, country: billing.country, postcode: billing.postcode, email: billing.email, phone: billing.phone },
-                    }}
-                    onSuccess={handlePayPalSuccess}
-                  />
+          {/* 2nd section */}
+          <div className=''>
+            <h3 className='lg:text-[28px] text-[22px] leading-[100%] font-semibold text-[#111] block mb-6'>Votre commande</h3>
+            <table className='w-full border border-[#111]'>
+              <thead>
+                <tr className='border-b border-[#111]'>
+                  <th className='!px-3 py-2 text-left'>Produit</th>
+                  <th className='!px-3 py-2 !border-l text-left border-[#111]'>Sous-total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  items?.map((singleItem, i) => {
+                    const totalPrice = parseFloat(singleItem?.totals?.line_subtotal) / 100 + parseFloat(singleItem?.totals?.line_subtotal_tax) / 100;
+                    return (
+                      <>
+                        <tr className='border-b border-[#111]'>
+                          <td className='!px-3 py-2 text-left'>{singleItem?.name} x {singleItem?.quantity}</td>
+                          <td className='!px-3 py-2 !border-l text-left border-[#111]'>{totalPrice} {singleItem?.totals?.currency_symbol} (TTC)</td>
+                        </tr>
+                      </>
+                    )
+                  })
                 }
-              />
-            </div>
-            <div className="flex justify-center px-0">
-              <Button 
-                onClick={() => setCurrentStep(2)}
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 sm:py-3.5 text-sm sm:text-base font-bold tracking-wider uppercase rounded-lg shadow-md transition duration-150"
-              >
-                Continue to Payment
-              </Button>
+              </tbody>
+              <tfoot>
+                <tr className='border-b border-[#111]'>
+                  <th className='!px-3 py-2 text-left'>Sous-total</th>
+                  <td className='!px-3 py-2 !border-l text-left border-[#111]'>{sousTotal} {cart?.totals?.currency_symbol} (TTC)</td>
+                </tr>
+                <tr className='border-b border-[#111]'>
+                  <th className='!px-3 py-2 text-left'>Shipping</th>
+                  <td className={`!px-3 py-2 !border-l text-left border-[#111]`}>
+                    <div>
+                      <ul className={`space-y-2 ${shippingLoading ? 'opacity-50' : 'opacity-100'}`}>
+                        {allShippingRates?.map((rate, i) => {
+                          return (
+                            <li key={i} className='border border-[#ccc] rounded-sm p-[15px] flex items-center gap-3 flex-wrap justify-between'>
+                              <div className='flex items-center gap-3'>
+                                <input
+                                  checked={selectedRateId === rate.rate_id}
+                                  value={`${rate.package_id}:${rate.rate_id}`}
+                                  onChange={(e) => handleSelectRate(e.target.value)}
+                                  defaultChecked={selectedRateId === rate.rate_id}
+                                  type="radio"
+                                  name="shipping_method"
+                                />
+                                <label htmlFor="" className="break-normal max-w-full">{rate.name}</label>
+                              </div>
+                              <div className='text-base text-[#111] font-semibold leading-[100%]'>
+                                {
+                                  (rate.price / 100 + rate.taxes / 100) === 0 ? <span className='text-green-600'>Gratuit</span> : `${(rate.price / 100 + rate.taxes / 100).toFixed(2)}${rate.currency_symbol}`
+                                }
+                              </div>
+                            </li>
+                          )
+                        })}
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th className='!px-3 py-2 text-left'>Total</th>
+                  <td className='!px-3 py-2 !border-l text-left border-[#111] flex items-center gap-1'>
+                    <span>
+                      <strong>{cartTotal}{cart?.totals?.currency_symbol}</strong>
+                    </span>
+                    <span>
+                      (dont <strong>{Number(cart?.totals?.total_tax).toFixed(2) / 100} {cart?.totals?.currency_symbol}</strong> TVA)
+                    </span>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          {/* 3rd section */}
+          <div className='bg-[#F7F7F7]'>
+            <ul className='flex flex-col gap-2 p-4 border-b border-[#DDD8E3]'>
+              {
+                payment_method?.map((method, i) => {
+                  return (
+                    <li key={i} className='flex flex-col gap-3'>
+                      <div className='flex items-center gap-1'>
+                        <input type="radio" name="" id="" />
+                        <label htmlFor="" className=''>{method}</label>
+                      </div>
+                      <div className='bg-[#DDD8E3] rounded-sm p-3 hidden'>
+                        <p>Payer avec Paypal</p>
+                      </div>
+                    </li>
+                  )
+                })
+              }
+            </ul>
+            <div className='flex flex-col gap-2 p-4'>
+              <p>Your personal data will be used to process your order, assist you during your visit to the website, and for other reasons described in our
+                <Link href="/privacy-policy" className='inline'>privacy policy</Link>
+              </p>
+              <div className='flex items-center gap-1'>
+                <input required type="checkbox" name="" id="" />
+                <label htmlFor="">I have read and agree to the website terms and conditions </label>
+              </div>
+              <button className='w-fit ml-auto text-white bg-[#1D98FF] rounded-sm px-[50px] uppercase py-[18px] font-semibold'>Proceed to paypal</button>
             </div>
           </div>
-        )}
+
+        </form>
       </div>
     </div>
   )
 }
+
+export default Page;

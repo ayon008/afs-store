@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers";
 import { getAuthenticatedUser } from "./auth";
+import { getCart } from "./StoreApi/cart";
 
 const consumerKey = process.env.WC_CONSUMER_KEY;
 const consumerSecret = process.env.WC_CONSUMER_SECRET
@@ -9,50 +10,157 @@ const authHeader = Buffer
     .from(`${consumerKey}:${consumerSecret}`)
     .toString("base64");
 
-
-
-export const calculatePriceWithTax = async (basePrice, tax_class = "standard", country = "fr") => {
+// Get tax rate for user based on their country
+export const getUserTaxRate = async (tax_class = "standard", country = null) => {
     try {
+        // Get user country: param > shipping > billing > France (default)
+        let userCountry = country;
+
+        const cart = await getCart();
+        const defaultCountry = cart?.data?.shipping_address?.country || cart?.data?.billing_address?.country;
+
+
+        if (!userCountry) {
+            const user = await getAuthenticatedUser();
+            if (user) {
+                userCountry = user.shipping?.country || user.billing?.country || defaultCountry;
+            } else {
+                userCountry = defaultCountry;
+            }
+        }
+
+        // Fetch all tax rates (paginated)
         const per_page = 100;
         let page = 1;
-        let allTaxes = [];
-        const authHeader = Buffer.from(`${consumerKey}:${consumerSecret}`).toString("base64");
+        let allTaxRates = [];
 
-        // Fetch all pages
         while (true) {
-            const response = await fetch(`https://staging.afs-foiling.com/fr/wp-json/wc/v3/taxes?per_page=${per_page}&page=${page}`, {
-                headers: {
-                    Authorization: `Basic ${authHeader}`,
-                    'Content-Type': 'application/json',
-                },
-                cache: "no-cache"
-            });
+            const response = await fetch(
+                `https://staging.afs-foiling.com/wp-json/wc/v3/taxes?per_page=${per_page}&page=${page}&lang=fr`,
+                {
+                    headers: {
+                        Authorization: `Basic ${authHeader}`,
+                        'Content-Type': 'application/json',
+                    },
+                    cache: "no-cache"
+                }
+            );
 
             if (!response.ok) throw new Error('Failed to fetch tax rates');
 
             const taxes = await response.json();
-
             if (!Array.isArray(taxes) || taxes.length === 0) break;
 
-            allTaxes.push(...taxes);
-
-            if (taxes.length < per_page) break; // last page
+            allTaxRates.push(...taxes);
+            if (taxes.length < per_page) break;
             page++;
         }
 
-        // Find the correct tax for country & class
-        const standardTax = allTaxes.find(t => t?.country?.toLowerCase() === country.toLowerCase());
+        // Normalize tax_class (same logic as calculatePriceWithTax)
+        const normalizedTaxClass = (!tax_class || tax_class === "" || tax_class === "standard")
+            ? "standard"
+            : tax_class.toLowerCase();
 
-        if (!standardTax) return basePrice;
+        // Find matching tax rate by country AND tax_class
+        const matchingTax = allTaxRates.find(rate => {
+            const rateCountry = rate?.country?.toLowerCase() || "";
+            const rateClass = rate?.class?.toLowerCase() || "standard";
 
-        const taxRate = parseFloat(standardTax.rate);
+            // Match country (case-insensitive)
+            const countryMatch = rateCountry === userCountry.toLowerCase();
+
+            // Match tax class (WooCommerce stores standard class as empty string)
+            const classMatch = (normalizedTaxClass === "standard" && (rateClass === "" || rateClass === "standard"))
+                || rateClass === normalizedTaxClass;
+
+            return countryMatch && classMatch;
+        });
+
+        return {
+            rate: parseFloat(matchingTax?.rate) || 0,
+            country: userCountry,
+            tax_class: matchingTax?.class || "standard"
+        };
+
+    } catch (error) {
+        console.error('Error getting user tax rate:', error);
+        return { rate: 20, country: 'FR', tax_class: 'standard' };
+    }
+};
+
+
+
+export const calculatePriceWithTax = async (basePrice, tax_class = "standard", country = null) => {
+    try {
+        // Get user country from shipping/billing address, default to France
+        let userCountry = country;
+        const cart = await getCart();
+        const defaultCountry = cart?.data?.shipping_address?.country || cart?.data?.billing_address?.country || "FR";
+
+        if (!userCountry) {
+            const user = await getAuthenticatedUser();
+            if (user) {
+                userCountry = user.shipping?.country || user.billing?.country || defaultCountry;
+            } else {
+                userCountry = defaultCountry;
+            }
+        }
+
+        // Fetch all tax rates (paginated)
+        const per_page = 100;
+        let page = 1;
+        let allTaxRates = [];
+
+        while (true) {
+            const response = await fetch(
+                `https://staging.afs-foiling.com/wp-json/wc/v3/taxes?per_page=${per_page}&page=${page}&lang=fr`,
+                {
+                    headers: {
+                        Authorization: `Basic ${authHeader}`,
+                        'Content-Type': 'application/json',
+                    },
+                    cache: "no-cache"
+                }
+            );
+
+            if (!response.ok) throw new Error('Failed to fetch tax rates');
+
+            const taxes = await response.json();
+            if (!Array.isArray(taxes) || taxes.length === 0) break;
+
+            allTaxRates.push(...taxes);
+            if (taxes.length < per_page) break;
+            page++;
+        }
+
+        // Normalize tax_class (same logic as getUserTaxRate)
+        const normalizedTaxClass = (!tax_class || tax_class === "" || tax_class === "standard")
+            ? "standard"
+            : tax_class.toLowerCase();
+
+        // Find matching tax rate by country AND tax_class
+        const matchingTax = allTaxRates.find(rate => {
+            const rateCountry = rate?.country?.toLowerCase() || "";
+            const rateClass = rate?.class?.toLowerCase() || "standard";
+
+            // Match country (case-insensitive)
+            const countryMatch = rateCountry === userCountry.toLowerCase();
+
+            // Match tax class (WooCommerce stores standard class as empty string)
+            const classMatch = (normalizedTaxClass === "standard" && (rateClass === "" || rateClass === "standard"))
+                || rateClass === normalizedTaxClass;
+
+            return countryMatch && classMatch;
+        });
+
+        // Calculate and apply tax
+        const taxRate = parseFloat(matchingTax?.rate) || 0;
         const priceWithTax = basePrice + (basePrice * taxRate) / 100;
 
-        // return parseFloat(priceWithTax.toFixed(2));
-        return basePrice
+        return parseFloat(priceWithTax?.toFixed(2));
     } catch (error) {
         console.error('Error calculating tax:', error);
-        return basePrice; // fallback
+        return basePrice; // fallback to base price on error
     }
 };
 
@@ -64,7 +172,7 @@ export const getParentCategory = async (slug) => {
         throw new Error("A valid category slug must be provided.");
     }
 
-    const url = `https://staging.afs-foiling.com/fr/wp-json/wc/v3/products/categories?slug=${encodeURIComponent(slug)}`;
+    const url = `https://staging.afs-foiling.com/wp-json/wc/v3/products/categories?slug=${encodeURIComponent(slug)}&lang=fr`;
 
     try {
         const response = await fetch(url, {
@@ -96,7 +204,7 @@ export const getParentCategory = async (slug) => {
 
 // Child Categories
 export const getChildCategories = async (parentId) => {
-    const url = `https://staging.afs-foiling.com/fr/wp-json/wc/v3/products/categories?parent=${parentId}&per_page=100&_fields=id,name,slug`;
+    const url = `https://staging.afs-foiling.com/wp-json/wc/v3/products/categories?parent=${parentId}&per_page=100&_fields=id,name,slug&lang=fr`;
     // const url = `https://afs-foiling.com/fr/wp-json/wc/v3/products/categories?parent=${parentId}&per_page=100&_fields=id,name,slug`;
     const response = await fetch(url, {
         headers: {
@@ -134,10 +242,7 @@ export const getProductsByCategoryId = async (ids, max, min) => {
 
         // 1️⃣ Fetch products only from first category
         for (let i = 1; ; i++) {
-            let url = `https://staging.afs-foiling.com/fr/wp-json/wc/v3/products?category=${firstCategory}&status=publish&_fields=id,name,acf,images,slug,categories,price,regular_price,sale_price,price_html,type&per_page=${per_page}&page=${i}&taxes=1`;
-            // let url = `https://afs-foiling.com/fr/wp-json/wc/v3/products?category=${firstCategory}&status=publish&_fields=id,name,acf,images,slug,categories,price,regular_price,sale_price,price_html,type&per_page=${per_page}&page=${i}&taxes=1`;
-
-            console.log(url, 'url');
+            let url = `https://staging.afs-foiling.com/wp-json/wc/v3/products?category=${firstCategory}&status=publish&_fields=id,name,acf,images,slug,categories,price,regular_price,sale_price,price_html,type&per_page=${per_page}&page=${i}&taxes=1&lang=fr`;
 
 
             if (min != null) url += `&min_price=${Number(min)}`;
@@ -161,7 +266,7 @@ export const getProductsByCategoryId = async (ids, max, min) => {
             const dataWithTax = await Promise.all(
                 data.map(async (product) => {
                     const basePrice = parseFloat(product.price) || 0;
-                    const priceWithTax = await calculatePriceWithTax(basePrice);
+                    const priceWithTax = await calculatePriceWithTax(basePrice, product.tax_class);
                     return { ...product, price_with_tax: priceWithTax };
                 })
             );
@@ -184,17 +289,24 @@ export const getProductsByCategoryId = async (ids, max, min) => {
 // Get single product by their slug
 
 export const getProductBySlug = async (slug) => {
-    const url = `https://staging.afs-foiling.com/fr/wp-json/wc/v3/products?slug=${slug}`;
+    const url = `https://staging.afs-foiling.com/wp-json/wc/v3/products?slug=${slug}&lang=fr`;
     // const url = `https://afs-foiling.com/fr/wp-json/wc/v3/products?slug=${slug}`;
     try {
         const response = await fetch(url, {
             headers: {
                 Authorization: `Basic ${authHeader}`
             },
-            next: { revalidate: 3600 },
+            cache: "no-cache",
         })
         const data = await response.json();
-        return data[0];
+        const product = data[0];
+
+        if (product) {
+            const basePrice = parseFloat(product.price) || 0;
+            const priceWithTax = await calculatePriceWithTax(basePrice, product.tax_class);
+            return { ...product, price_with_tax: priceWithTax };
+        }
+        return product;
     } catch (error) {
         console.log(error);
         return { error: true }
@@ -203,9 +315,20 @@ export const getProductBySlug = async (slug) => {
 
 export const getPrice = async (productId, selectedVariation) => {
     // const url = `https://afs-foiling.com/fr/wp-json/wc/v3/products/${productId}/variations?per_page=100`;
-    const url = `https://staging.afs-foiling.com/fr/wp-json/wc/v3/products/${productId}/variations?per_page=100`;
+    const url = `https://staging.afs-foiling.com/wp-json/wc/v3/products/${productId}/variations?per_page=100&lang=fr`;
 
     try {
+        // Get user country for tax calculation
+        // If logged in: use shipping country, then billing country
+        // If not logged in: default to France (FR)
+        let userCountry = "FR"; // Default to France
+
+        const user = await getAuthenticatedUser();
+        if (user) {
+            // Priority: shipping country > billing country > default FR
+            userCountry = user.shipping?.country || user.billing?.country || "FR";
+        }
+
         const response = await fetch(url, {
             headers: {
                 Authorization: `Basic ${authHeader}`,
@@ -245,20 +368,18 @@ export const getPrice = async (productId, selectedVariation) => {
             });
         });
 
-        const price = await calculatePriceWithTax(matchedVariation?.price, matchedVariation?.tax_class);
+        const basePrice = parseFloat(matchedVariation?.price) || 0;
+        const priceWithTax = await calculatePriceWithTax(basePrice, matchedVariation?.tax_class, userCountry);
+        const taxAmount = parseFloat((priceWithTax - basePrice).toFixed(2));
 
-        // Convert variation.attributes (array) into an attributes object expected by cart API
-        // e.g., [{ name: 'attribute_color', option: 'Blue' }] -> { color: 'Blue' }
-        // const attributesObj = (matchedVariation?.attributes || []).reduce((acc, a) => {
-        //     const key = a.name ? a.name.replace(/^attribute_/, "").toLowerCase().trim() : a.name;
-        //     acc[key] = a.option;
-        //     return acc;
-        // }, {});
-
-        // console.log(matchedVariation, 'matched');
-
-
-        return { price, id: matchedVariation?.id, attributes: matchedVariation } || null;
+        return {
+            price: priceWithTax,
+            priceExcludingTax: basePrice,
+            taxAmount: taxAmount,
+            userCountry: userCountry, // Return the country used for tax calculation
+            id: matchedVariation?.id,
+            attributes: matchedVariation
+        } || null;
 
     } catch (error) {
         console.log(error);
@@ -362,4 +483,186 @@ export async function searchProducts(query) {
 
     if (!res.ok) return [];
     return await res.json();
+}
+
+// Get coupon by code
+export async function getCouponByCode(code) {
+    try {
+        if (!code) {
+            return { success: false, error: 'Code promo requis' };
+        }
+
+        const res = await fetch(
+            `${process.env.WP_BASE_URL}/wp-json/wc/v3/coupons?code=${encodeURIComponent(code)}`,
+            {
+                headers: {
+                    Authorization: `Basic ${authHeader}`,
+                    'Content-Type': 'application/json'
+                },
+                cache: "no-store",
+            }
+        );
+
+        if (!res.ok) {
+            return { success: false, error: 'Erreur lors de la recherche du coupon' };
+        }
+
+        const coupons = await res.json();
+
+        if (!coupons || coupons.length === 0) {
+            return { success: false, error: 'Code promo invalide' };
+        }
+
+        const coupon = coupons[0];
+
+        // Check if coupon is expired
+        if (coupon.date_expires) {
+            const expiryDate = new Date(coupon.date_expires);
+            if (expiryDate < new Date()) {
+                return { success: false, error: 'Ce code promo a expiré' };
+            }
+        }
+
+        // Check usage limit
+        if (coupon.usage_limit && coupon.usage_count >= coupon.usage_limit) {
+            return { success: false, error: 'Ce code promo a atteint sa limite d\'utilisation' };
+        }
+
+        return {
+            success: true,
+            data: {
+                id: coupon.id,
+                code: coupon.code,
+                discount_type: coupon.discount_type, // percent, fixed_cart, fixed_product
+                amount: coupon.amount,
+                description: coupon.description,
+                date_expires: coupon.date_expires,
+                usage_count: coupon.usage_count,
+                usage_limit: coupon.usage_limit,
+                individual_use: coupon.individual_use,
+                minimum_amount: coupon.minimum_amount,
+                maximum_amount: coupon.maximum_amount,
+                free_shipping: coupon.free_shipping,
+                product_ids: coupon.product_ids,
+                excluded_product_ids: coupon.excluded_product_ids,
+                product_categories: coupon.product_categories,
+                excluded_product_categories: coupon.excluded_product_categories
+            }
+        };
+    } catch (error) {
+        console.error('Error fetching coupon:', error);
+        return { success: false, error: 'Erreur serveur' };
+    }
+}
+
+// Validate coupon for cart
+export async function validateCoupon(code, cartTotal = 0, productIds = []) {
+    try {
+        const couponResult = await getCouponByCode(code);
+
+        if (!couponResult.success) {
+            return couponResult;
+        }
+
+        const coupon = couponResult.data;
+
+        // Check minimum amount
+        if (coupon.minimum_amount && parseFloat(coupon.minimum_amount) > cartTotal) {
+            return {
+                success: false,
+                error: `Montant minimum requis: ${coupon.minimum_amount}€`
+            };
+        }
+
+        // Check maximum amount
+        if (coupon.maximum_amount && parseFloat(coupon.maximum_amount) > 0 && cartTotal > parseFloat(coupon.maximum_amount)) {
+            return {
+                success: false,
+                error: `Montant maximum autorisé: ${coupon.maximum_amount}€`
+            };
+        }
+
+        // Check product restrictions
+        if (coupon.product_ids && coupon.product_ids.length > 0) {
+            const hasValidProduct = productIds.some(id => coupon.product_ids.includes(id));
+            if (!hasValidProduct) {
+                return {
+                    success: false,
+                    error: 'Ce coupon n\'est pas valide pour les produits de votre panier'
+                };
+            }
+        }
+
+        // Check excluded products
+        if (coupon.excluded_product_ids && coupon.excluded_product_ids.length > 0) {
+            const hasExcludedProduct = productIds.every(id => coupon.excluded_product_ids.includes(id));
+            if (hasExcludedProduct) {
+                return {
+                    success: false,
+                    error: 'Ce coupon n\'est pas valide pour les produits de votre panier'
+                };
+            }
+        }
+
+        // Calculate discount
+        let discountAmount = 0;
+        if (coupon.discount_type === 'percent') {
+            discountAmount = (cartTotal * parseFloat(coupon.amount)) / 100;
+        } else if (coupon.discount_type === 'fixed_cart') {
+            discountAmount = parseFloat(coupon.amount);
+        }
+
+        return {
+            success: true,
+            data: {
+                ...coupon,
+                discount_amount: discountAmount.toFixed(2)
+            }
+        };
+    } catch (error) {
+        console.error('Error validating coupon:', error);
+        return { success: false, error: 'Erreur serveur' };
+    }
+}
+
+
+export const getCountryDetails = async (country) => {
+    const url = `https://staging.afs-foiling.com/wp-json/wc/v3/data/countries/${country}`;
+    try {
+        const response = await fetch(url, {
+            headers: { Authorization: `Basic ${authHeader}` },
+            cache: "no-store",
+        });
+        const data = await response.json();
+        return data;
+    }
+    catch (error) {
+        console.log(error);
+        return error;
+    }
+}
+
+
+export const getPaymentMethods = async () => {
+    const url = `https://staging.afs-foiling.com/wp-json/wc/v3/payment_methods`;
+    try {
+        const response = await fetch(url, {
+            headers: { Authorization: `Basic ${authHeader}` },
+            cache: "no-store",
+        });
+
+        console.log(response, 'response');
+        
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch payment methods: ${response.status}`);
+        }
+        const data = await response.json();
+        const enabledMethods = data.filter((method) => method.enabled);
+        return enabledMethods;
+    }
+    catch (error) {
+        console.log(error);
+        return error;
+    }
 }

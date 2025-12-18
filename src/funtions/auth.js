@@ -1,6 +1,8 @@
 "use server"
 // app/actions/auth.ts
 import { cookies } from "next/headers";
+import { getWooCommerceCookies } from "./StoreApi/cookie-handler";
+import { getCart } from "./StoreApi/cart";
 
 
 const consumerKey = process.env.WC_CONSUMER_KEY;
@@ -261,6 +263,108 @@ export async function changePasswordAction(data) {
 
 
 
+
+export const updateShippingAndCart = async (shippingData) => {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("auth_token")?.value;
+    if (!token) {
+        return { success: false, error: "Not authenticated" };
+    }
+    const cookieHeader = await getWooCommerceCookies();
+    try {
+        const cartRes = await fetch(
+            `${process.env.WP_BASE_URL}/wp-json/wc/store/v1/cart/update-customer`,
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Cookie': cookieHeader,
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                    shipping_address: {
+                        first_name: shippingData.shipping_first_name || "",
+                        last_name: shippingData.shipping_last_name || "",
+                        company: shippingData.entreprise || "",
+                        address_1: shippingData.adresse || "",
+                        address_2: shippingData.shipping_address_2 || "",
+                        postcode: shippingData.postal || "",
+                        city: shippingData.ville || "",
+                        country: shippingData.country || "FR",
+                    },
+                }),
+                cache: "no-store",
+            }
+        );
+
+        if (!cartRes.ok) {
+            const err = await cartRes.json();
+            console.error("Cart update failed:", err);
+            return { success: false, error: "Failed to update cart address" };
+        }
+        const cart = await getCart();
+        console.log(cart, 'cart');
+        
+        return { success: true, cart: cart };
+
+    } catch (error) {
+        console.error("Error updating shipping and cart:", error);
+        return { success: false, error: "Something went wrong" };
+    }
+}
+
+
+export const updateBillingAndCart = async (billingData) => {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("auth_token")?.value;
+    if (!token) {
+        return { success: false, error: "Not authenticated" };
+    }
+    const cookieHeader = await getWooCommerceCookies();
+    try {
+        const cartRes = await fetch(
+            `${process.env.WP_BASE_URL}/wp-json/wc/store/v1/cart/update-customer`,
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Cookie': cookieHeader,
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                    billing_address: {
+                        first_name: billingData.billing_first_name || "",
+                        last_name: billingData.billing_last_name || "",
+                        company: billingData.billing_company || "",
+                        address_1: billingData.billing_address_1 || "",
+                        address_2: billingData.billing_address_2 || "", // optional
+                        postcode: billingData.billing_postcode || "",
+                        city: billingData.billing_city || "",
+                        phone: billingData.billing_phone || "",
+                        email: billingData.billing_email || "",
+                        country: billingData.country || "FR",
+                    },
+                }),
+                cache: "no-store",
+            }
+        );
+
+        if (!cartRes.ok) {
+            const err = await cartRes.json();
+            console.error("Cart update failed:", err);
+            return { success: false, error: "Failed to update cart address" };
+        }
+        const cart = await getCart();
+        return { success: true, cart: cart };
+
+    } catch (error) {
+        console.error("Error updating shipping and cart:", error);
+        return { success: false, error: "Something went wrong" };
+    }
+}
+
+
+
 export const updateBillingInfo = async (billingData) => {
     const cookieStore = await cookies();
     const token = cookieStore.get("auth_token")?.value;
@@ -271,6 +375,13 @@ export const updateBillingInfo = async (billingData) => {
     }
 
     try {
+
+        const updateCart = await updateBillingAndCart(billingData);
+        if (!updateCart.success) {
+            console.log('ayon');
+            return { success: false, error: updateCart.error };
+        }
+        
         // 1️⃣ Get the WordPress user (to get the ID)
         const wpRes = await fetch(`${process.env.WP_BASE_URL}/wp-json/wp/v2/users/me`, {
             headers: { Authorization: `Bearer ${token}` },
@@ -327,8 +438,13 @@ export const updateShippingInfo = async (shippingData) => {
     if (!token) {
         return { success: false, error: "Not authenticated" };
     }
-
     try {
+        const updateCart = await updateShippingAndCart(shippingData);
+        console.log(updateCart, 'updateCart');
+        if (!updateCart.success) {
+            console.log('ayon');
+            return { success: false, error: updateCart.error };
+        }
         // 1️⃣ Get the WordPress user (to get the ID)
         const wpRes = await fetch(`${process.env.WP_BASE_URL}/wp-json/wp/v2/users/me`, {
             headers: { Authorization: `Bearer ${token}` },
@@ -390,7 +506,7 @@ export async function lostPassword(email) {
             body: formData,
         });
 
-        console.log(res,'res');
+        console.log(res, 'res');
 
 
         if (!res.ok) {

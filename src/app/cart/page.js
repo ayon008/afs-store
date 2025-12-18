@@ -6,11 +6,8 @@ import Cart from './Cart';
 import Link from 'next/link';
 
 const page = async () => {
-  const getAllCartItems = await getCart();
-  console.log(getAllCartItems, 'getAllCartItems');
-  
-  const cartItems = getAllCartItems.data.items || [];
-
+  const getAllCartItems = await getCart(); 
+  const cartItems = getAllCartItems?.data?.items || [];
 
   const BreadCums = () => {
     return (
@@ -48,7 +45,7 @@ const page = async () => {
 
       {
         cartItems.length > 0 ? (
-          <Cart cartItems={cartItems} />
+          <Cart />
         ) : (
           <EmptyCart />
         )

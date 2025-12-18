@@ -13,10 +13,8 @@ import SideCart from '../siteCart/SideCart';
 const Navbar = ({ NAV_LINKS }) => {
     // Search Open
     const [isSearchOpen, setIsSearchOpen] = useState(false);
-    // Shopping Cart
-    const [isCartOpen, setIsCartOpen] = useState(false);
 
-    const { cart } = useCart();
+    const { cart, sideCartOpen, openSideCart, closeSideCart } = useCart();
 
     const totalQty = cart?.items_count;
 
@@ -123,7 +121,7 @@ const Navbar = ({ NAV_LINKS }) => {
                         </Link>
                         {/* Cart */}
                         <button
-                            onClick={() => setIsCartOpen(true)}
+                            onClick={openSideCart}
                             className="flex items-center justify-center relative p-1 md:p-2 rounded-full hover:bg-gray-700 transition-colors duration-200"
                         >
                             <svg width="25" height="24" viewBox="0 0 25 24" fill="none">
@@ -270,7 +268,7 @@ const Navbar = ({ NAV_LINKS }) => {
                                 <div className='grid grid-cols-6 gap-6 text-black/75 global-padding pt-[22px]'>
                                     <div>
                                         <p className='text-[16px] font-semibold tracking-wide'>Choisir</p>
-                                        <ul class="mt-4 text-[16px] font-semibold tracking-wide text-[#111]">
+                                        <ul className="mt-4 text-[16px] font-semibold tracking-wide text-[#111]">
                                             <li className='cursor-pointer'>Configurateur foil</li>
                                             <li className='cursor-pointer'>Best match stab</li>
                                             <li className='cursor-pointer'>Comparateur 3 stabs / aile avant</li>
@@ -511,7 +509,7 @@ const Navbar = ({ NAV_LINKS }) => {
                     </div>
                 }
             </div>
-            <SideCart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+            <SideCart isOpen={sideCartOpen} onClose={closeSideCart} />
         </>
     );
 };

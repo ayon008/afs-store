@@ -2,7 +2,7 @@
 import React from "react";
 import { Check } from "lucide-react";
 
-const CountrySelect = ({ label, id, register, error, value, registerPage = false, countries = [], show = true }) => {
+const CountrySelect = ({ label, id, register, error, value, registerPage = false, countries = [], show = true, checkout = false }) => {
     const showAyon = value && value.length >= 2;
 
     return (
@@ -10,7 +10,7 @@ const CountrySelect = ({ label, id, register, error, value, registerPage = false
             <div className="relative">
                 <label
                     htmlFor={id}
-                    className="bg-[#F0F0F0] absolute left-3 font-semibold -top-[14px] text-[#666] text-sm leading-[28px]"
+                    className={`${checkout ? 'bg-white' : 'bg-[#F0F0F0]'} absolute left-3 font-semibold -top-[14px] text-[#666] text-sm leading-[28px]`}
                 >
                     <span className="uppercase">{label}</span>
                     {registerPage && (

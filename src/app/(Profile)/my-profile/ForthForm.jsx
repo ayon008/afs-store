@@ -95,7 +95,7 @@ const ForthForm = () => {
                     <div>
                         <Input
                             label="Code Postal"
-                            type="number"
+                            type="text"
                             id="postal"
                             register={register("postal", { required: true })}
                             value={watchFields.postal}

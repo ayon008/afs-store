@@ -9,6 +9,7 @@ import {
     applyCoupon,
     removeCoupon
 } from '../funtions/StoreApi/cart';
+import { getUserTaxRate } from '../funtions/getWooCommerce';
 
 // Create the Cart Context
 const CartContext = createContext(null);
@@ -18,6 +19,23 @@ export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [sideCartOpen, setSideCartOpen] = useState(false);
+    const [taxInfo, setTaxInfo] = useState({ rate: 20, country: 'FR' }); // Default France 20%
+
+    // Open/Close side cart
+    const openSideCart = () => setSideCartOpen(true);
+    const closeSideCart = () => setSideCartOpen(false);
+
+    // Load tax rate based on user country
+    const loadTaxRate = async () => {
+        try {
+            const taxData = await getUserTaxRate();
+            setTaxInfo(taxData);
+        } catch (err) {
+            console.error('Error loading tax rate:', err);
+            // Keep default France rate
+        }
+    };
 
     // Load cart data
     const loadCart = async () => {
@@ -40,9 +58,10 @@ export const CartProvider = ({ children }) => {
         }
     };
 
-    // Initial cart load
+    // Initial cart and tax rate load
     useEffect(() => {
         loadCart();
+        loadTaxRate();
     }, []);
 
     // Add item to cart
@@ -62,6 +81,9 @@ export const CartProvider = ({ children }) => {
 
                 // Then refresh full cart data
                 await loadCart();
+
+                // Open side cart on successful add
+                openSideCart();
             } else {
                 setError(result.error);
                 console.error('Add to cart error:', result.error);
@@ -207,8 +229,62 @@ export const CartProvider = ({ children }) => {
 
     // Get total price
     const getTotalPrice = () => {
-        if (!cart || !cart.totals || !cart.totals.total_price) return 0;
-        return (cart.totals.total_price / 100).toFixed(2);
+        if (!cart || !cart.items) return '0.00';
+
+        // Calculate total with tax from cart items
+        let totalWithTax = 0;
+        cart.items.forEach(item => {
+            const unitPrice = parseFloat(item.prices?.price) / 100 || 0;
+            totalWithTax += unitPrice * item.quantity;
+        });
+
+        // Add shipping
+        const shipping = (cart.totals?.total_shipping || 0) / 100;
+        totalWithTax += shipping;
+
+        // Subtract discount
+        const discount = (cart.totals?.total_discount || 0) / 100;
+        totalWithTax -= discount;
+
+        return totalWithTax.toFixed(2);
+    };
+
+    // Get subtotal (items total with tax)
+    const getSubtotal = () => {
+        if (!cart || !cart.items) return '0.00';
+        // Calculate subtotal with tax from cart items
+        let subtotalWithTax = 0;
+        cart.items.forEach(item => {
+            const unitTotalPrice = parseFloat(item?.totals?.line_subtotal) / 100 || 0;
+            // Price + Tax = Price * (1 + rate/100)
+            subtotalWithTax += unitTotalPrice * (1 + taxInfo.rate / 100);
+        });
+
+        return subtotalWithTax.toFixed(2);
+    };
+
+    // Get total tax/VAT
+    const getTotalTax = () => {
+        if (!cart || !cart.items) return '0.00';
+        let totalTax = 0;
+        cart.items.forEach(item => {
+            const unitTotalPrice = parseFloat(item?.totals?.line_subtotal) / 100 || 0;
+            // TVA = Prix HT * (taux / 100)
+            totalTax += unitTotalPrice * (taxInfo.rate / 100);
+        });
+
+        return totalTax.toFixed(2);
+    };
+
+    // Get currency symbol
+    const getCurrencySymbol = () => {
+        return cart?.totals?.currency_symbol || '€';
+    };
+
+    // Get shipping total
+    const getShippingTotal = () => {
+        if (!cart || !cart.totals || !cart.totals.total_shipping) return 0;
+        return (cart.totals.total_shipping / 100).toFixed(2);
     };
 
     // Get item count
@@ -250,6 +326,11 @@ export const CartProvider = ({ children }) => {
         cart,
         loading,
         error,
+        sideCartOpen,
+        openSideCart,
+        closeSideCart,
+        taxInfo,
+        loadTaxRate,
         handleAddToCart,
         handleUpdateCartItem,
         handleRemoveCartItem,
@@ -258,6 +339,10 @@ export const CartProvider = ({ children }) => {
         handleRemoveCoupon,
         loadCart,
         getTotalPrice,
+        getSubtotal,
+        getTotalTax,
+        getCurrencySymbol,
+        getShippingTotal,
         getItemCount,
         isInCart,
         getItemQuantity,

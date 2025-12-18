@@ -1,76 +1,164 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { ArrowUpRight, X } from "lucide-react";
 import PopUp from '../Team/PopUp';
 import { useForm } from "react-hook-form";
 import Image from 'next/image';
 import { getPrice } from '../../funtions/getWooCommerce';
 import useCart from '../../hooks/useCart';
+import { useRef } from 'react';
+
+// Helper function to update price in WooCommerce HTML
+const updatePriceInHtml = (priceHtml, newPrice) => {
+    if (!priceHtml || !newPrice) return priceHtml;
+    
+    // Format the new price (e.g., 374.17 -> "374,17")
+    const formattedPrice = parseFloat(newPrice).toFixed(2).replace('.', ',');
+    
+    // Replace the price inside <bdi> tags, keeping the currency symbol
+    // Pattern: matches content before the currency symbol span
+    const updatedHtml = priceHtml.replace(
+        /(<bdi>)[\d\s,.]+(<span class="woocommerce-Price-currencySymbol">)/g,
+        `$1${formattedPrice}$2`
+    );
+    
+    return updatedHtml;
+};
 
 
 const ProductDetails = ({ data }) => {
 
-
-    const [priceLoading, setLoading] = useState(true);
+    const [priceLoading, setPriceLoading] = useState(false);
+    const [addingToCart, setAddingToCart] = useState(false);
 
     const { register, handleSubmit, watch } = useForm();
     const [variationPrice, setVariationPrice] = useState(null);
-    const [isReady, setIsReady] = useState(true);
+    const [variationTaxAmount, setVariationTaxAmount] = useState(null);
+    const [variationCountry, setVariationCountry] = useState(null);
     const [variationId, setVariationId] = useState(null);
-    const [selectedAttributes, setSelectedAttributes] = useState({});
+    const [variationInStock, setVariationInStock] = useState(true);
     const productId = data?.id;
 
+    // Check if product is in stock (base product)
+    const baseInStock = data?.stock_status === 'instock' || data?.in_stock === true;
+
+    // Final stock check: base product AND selected variation must be in stock
+    const isInStock = baseInStock && variationInStock;
 
     const { handleAddToCart } = useCart();
 
+    const acf = data?.acf;
+    const compatibilite = acf?.compatibilite;
+    const short_description = data?.short_description;
+    const priceHtml = data?.price_html;
+    const priceWithTax = data?.price_with_tax;
+    const attributes = data?.attributes;
+
+    // Update the price HTML with calculated tax price
+    const price = useMemo(() => {
+        return updatePriceInHtml(priceHtml, priceWithTax);
+    }, [priceHtml, priceWithTax]);
+
+    // Watch all form values
+    const watchedValues = watch();
+
+    // Check if product has variations
+    const hasVariations = attributes && attributes.length > 0;
+
+    // Check if all variations are selected
+    const allVariationsSelected = hasVariations
+        ? attributes.every(attr => watchedValues[attr.name])
+        : true;
+
+    // Auto-fetch price when all variations are selected
+    useEffect(() => {
+        if (!attributes || attributes.length === 0) return;
+        if (!allVariationsSelected) {
+            // Reset price when selections change
+            setVariationPrice(null);
+            setVariationTaxAmount(null);
+            setVariationCountry(null);
+            setVariationId(null);
+            setVariationInStock(true);
+            return;
+        }
+
+        const fetchVariationPrice = async () => {
+            setPriceLoading(true);
+            try {
+                const matchedVariation = await getPrice(productId, watchedValues);
+                if (matchedVariation) {
+                    setVariationPrice(matchedVariation.price);
+                    setVariationTaxAmount(matchedVariation.taxAmount);
+                    setVariationCountry(matchedVariation.userCountry);
+                    setVariationId(matchedVariation.id);
+                    // Check if the variation is in stock
+                    const stockStatus = matchedVariation.attributes?.stock_status;
+                    const variationStock = stockStatus
+                        ? stockStatus === 'instock'
+                        : (matchedVariation.attributes?.in_stock === true || matchedVariation.attributes?.is_in_stock === true || matchedVariation.attributes?.purchasable !== false);
+                    setVariationInStock(variationStock);
+                } else {
+                    setVariationPrice(null);
+                    setVariationTaxAmount(null);
+                    setVariationCountry(null);
+                    setVariationId(null);
+                }
+            } catch (error) {
+                console.error('Error fetching variation price:', error);
+                setVariationPrice(null);
+                setVariationTaxAmount(null);
+                setVariationCountry(null);
+            } finally {
+                setPriceLoading(false);
+            }
+        };
+
+        fetchVariationPrice();
+    }, [allVariationsSelected, JSON.stringify(watchedValues), productId, attributes]);
+
+    // Decode HTML entities
+    const decodeHtmlEntities = (text) => {
+        if (!text) return text;
+        const textarea = document.createElement('textarea');
+        textarea.innerHTML = text;
+        return textarea.value;
+    };
+
+    // Handle add to cart
     const onSubmit = async (formData) => {
-        const matchedVariation = await getPrice(productId, formData);
-        setVariationPrice(matchedVariation.price);
-        setVariationId(matchedVariation.id);
-        setSelectedAttributes(formData);
-        setLoading(false);
-        const result = await handleAddToCart(productId, 1, matchedVariation.id || null, formData);
-        console.log(result, 'result');
+        // For variable products: require variationPrice and isInStock
+        // For simple products: only require baseInStock
+        if (hasVariations) {
+            if (!variationPrice || !isInStock) return;
+        } else {
+            if (!baseInStock) return;
+        }
+
+        setAddingToCart(true);
+        try {
+            const result = await handleAddToCart(productId, 1, variationId || null, formData);
+            console.log(result, 'result');
+
+            if (!result?.success) {
+                alert(decodeHtmlEntities(result?.error) || 'Une erreur est survenue lors de l\'ajout au panier.');
+            }
+        } catch (error) {
+            console.error('Error adding to cart:', error);
+            alert(decodeHtmlEntities(error?.message) || 'Une erreur est survenue lors de l\'ajout au panier.');
+        } finally {
+            setAddingToCart(false);
+        }
     };
 
     const [isOpen, setOpen] = useState(false);
 
-
-    const acf = data?.acf;
-
-    // for Pop Up
-    const compatibilite = acf?.compatibilite;
-    const short_description = data?.short_description;
-    const price = data?.price_html;
-    const attributes = data?.attributes;
-
-    // useEffect(() => {
-    //     if (!attributes) return;
-
-    //     // Build selected values object
-    //     const selected = attributes.reduce((acc, attr) => {
-    //         acc[attr.name] = watch(attr.name);
-    //         return acc;
-    //     }, {});
-
-    //     // Check if all fields are selected
-    //     const allSelected = Object.values(selected).every(Boolean);
-
-    //     // Update button state
-    //     setIsReady(allSelected);
-
-    //     // If all selected → auto fetch price
-    //     if (allSelected) {
-    //         onSubmit(selected);
-    //     }
-
-    // }, [watch(), attributes]);
+    // Button is ready only when: all variations selected + price loaded + in stock
+    const isButtonReady = hasVariations
+        ? (allVariationsSelected && variationPrice && !priceLoading && isInStock)
+        : (baseInStock && !priceLoading);
 
 
-    // const handleCart = async () => {
-       
-
-    // }
 
 
 
@@ -80,11 +168,12 @@ const ProductDetails = ({ data }) => {
                 <h1 className="text-[clamp(2rem,1.6547rem+0.7203vw,2.375rem)] font-bold leading-[100%] lg:mt-3">{data?.name}</h1>
                 <div className='mt-2 mb-3 text-[15px] leading-[22px] font-semibold' dangerouslySetInnerHTML={{ __html: short_description }} />
                 <div className='text-lg leading-[29px] font-bold mb-6' dangerouslySetInnerHTML={{ __html: price }} />
-                <button onClick={() => setOpen(true)} className='text-[#1D98FF] text-base leading-[100%] font-semibold cursor-pointer'>
-                    <span>Guide taille</span>
-                    <span className='inline'><ArrowUpRight className='inline ml-1' size={'1.1rem'} strokeWidth={2.5} /></span>
-                </button>
-
+                {
+                    compatibilite && <button onClick={() => setOpen(true)} className='text-[#1D98FF] text-base leading-[100%] font-semibold cursor-pointer'>
+                        <span>Guide taille</span>
+                        <span className='inline'><ArrowUpRight className='inline ml-1' size={'1.1rem'} strokeWidth={2.5} /></span>
+                    </button>
+                }
 
                 {/* Form */}
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-[30px] mt-5">
@@ -138,18 +227,54 @@ const ProductDetails = ({ data }) => {
                     </div>
 
                     <div className='space-y-4'>
+                        {/* Price Loading */}
+                        {priceLoading && allVariationsSelected && (
+                            <span className='text-[#111] font-bold text-[24px] leading-[110%] block opacity-50'>
+                                Chargement du prix...
+                            </span>
+                        )}
+
                         {/* Price */}
-                        {
-                            variationPrice && isReady && <span className={`text-[#111] font-bold text-[24px] leading-[110%] block ${priceLoading ? "opacity-50" : "opacity-100"}`}>{parseFloat(variationPrice)?.toFixed(2)}€</span>
-                        }
+                        {variationPrice && !priceLoading && (
+                            <div className='space-y-1'>
+                                <span className='text-[#111] font-bold text-[24px] leading-[110%] block'>
+                                    {parseFloat(variationPrice)?.toFixed(2)}€
+                                </span>
+                                {/* {variationTaxAmount > 0 && (
+                                    <small className='text-gray-500 text-sm block'>
+                                        (dont {variationTaxAmount?.toFixed(2)}€ de TVA {variationCountry && `- ${variationCountry}`})
+                                    </small>
+                                )} */}
+                            </div>
+                        )}
+
+                        {/* Select variations message */}
+                        {!allVariationsSelected && attributes?.length > 0 && (
+                            <p className='text-gray-500 text-sm'>Veuillez sélectionner toutes les options</p>
+                        )}
+
+                        {/* Out of Stock Message - for variable products */}
+                        {hasVariations && allVariationsSelected && !isInStock && !priceLoading && (
+                            <p className='text-red-500 font-semibold text-sm'>Rupture de stock</p>
+                        )}
+
+                        {/* Out of Stock Message - for simple products */}
+                        {!hasVariations && !baseInStock && (
+                            <p className='text-red-500 font-semibold text-sm'>Rupture de stock</p>
+                        )}
 
                         {/* Button */}
                         <button
-                            disabled={!isReady}
-                            className={`text-base leading-[100%] uppercase font-bold w-full rounded-sm min-h-[46px] flex items-center justify-center cursor-pointer ${isReady ? "bg-[#1D98FF] text-white" : "bg-[#1D98FF]/50 text-white cursor-not-allowed"}`}
+                            disabled={!isButtonReady || addingToCart}
+                            className={`text-base leading-[100%] uppercase font-bold w-full rounded-sm min-h-[46px] flex items-center justify-center cursor-pointer ${isButtonReady && !addingToCart ? "bg-[#1D98FF] text-white" : "bg-[#1D98FF]/50 text-white cursor-not-allowed"}`}
                             type="submit"
                         >
-                            AJOUTER AU PANIER
+                            {addingToCart
+                                ? 'AJOUT EN COURS...'
+                                : (hasVariations ? (!isInStock && allVariationsSelected) : !baseInStock)
+                                    ? 'RUPTURE DE STOCK'
+                                    : 'AJOUTER AU PANIER'
+                            }
                         </button>
 
                     </div>

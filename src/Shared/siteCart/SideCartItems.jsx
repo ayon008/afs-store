@@ -2,23 +2,50 @@
 import { Minus, Plus, Trash2Icon } from 'lucide-react';
 import React, { useState } from 'react'
 import Image from 'next/image'
+import useCart from '../../hooks/useCart'
+
 
 const SideCartItems = ({ item, onUpdateQuantity, onRemove }) => {
+    // const { taxInfo } = useCart();
     const image = item.images?.[0]?.src || item.image;
     const name = item.name || item.title;
-    const price = item?.prices?.price || 0;
-    const total = item?.totals?.line_subtotal || 0;
+
+
+    console.log(item, 'item');
+
+
+    const line_subtotal = parseInt(item?.totals?.line_subtotal || 0);
+    const line_subtotal_tax = parseInt(item?.totals?.line_subtotal_tax || 0);
+    const total = line_subtotal + line_subtotal_tax;
+
+    // Base prices from API without (tax)
+    // const lineSubtotal = parseInt(item?.totals?.line_subtotal || 0);
+    // const line_subtotal_tax = parseInt(item?.totals?.line_subtotal_tax || 0);
+    // const line_subtotal = parseInt(item?.totals?.line_subtotal || 0);
+    // Calculate tax based on user's country (from context)
+    // const taxRate = taxInfo?.rate || 0;
+
+    // const totalWithTax = Math.round(lineSubtotal + (lineSubtotal * taxRate / 100));
+    const basePriceWithTax = item?.prices?.price;
     const currency_symbol = item?.prices?.currency_symbol || '€';
     const total_Currency_Symbol = item?.totals?.currency_symbol || '€';
     const variations = item?.variation || [];
     const itemKey = item?.key;
-    const slug = item?.permalink?.split('/product/')?.[1]?.replace(/\/$/, '') || '';
+
+    // Check if product is in stock
+    const isInStock = item?.stock_status === 'instock' || item?.is_in_stock === true || item?.catalog_visibility !== 'hidden';
+
+    // Get maximum quantity from stock or quantity limits
+    const maxQuantity = item?.quantity_limits?.maximum || item?.stock_quantity || item?.quantity_limit || Infinity;
 
     const [quantity, setQuantity] = useState(parseInt(item.quantity));
     const [updating, setUpdating] = useState(false);
 
+    // Check if maximum quantity reached
+    const isMaxReached = quantity >= maxQuantity;
+
     const handleIncrement = async () => {
-        if (updating) return;
+        if (updating || isMaxReached) return;
         setUpdating(true);
         const newQuantity = quantity + 1;
         setQuantity(newQuantity);
@@ -48,7 +75,6 @@ const SideCartItems = ({ item, onUpdateQuantity, onRemove }) => {
     };
 
 
-
     return (
         <div className='flex items-center gap-8 bg-[#F7F7F7] p-[10px] rounded-sm'>
             <div>
@@ -57,7 +83,7 @@ const SideCartItems = ({ item, onUpdateQuantity, onRemove }) => {
             <div className='flex flex-col gap-[10px] w-full'>
                 <span className='flex items-center justify-between'>
                     <span className='text-sm leading-[130%] capitalize font-bold text-[#111]'>{name}</span>
-                    <span>{`${formatPrice(price)} ${currency_symbol}`}</span>
+                    <span>{`${formatPrice(basePriceWithTax)} ${currency_symbol}`}</span>
                 </span>
                 <span className='text-[#959595] text-sm space-y-2'>
                     {
@@ -77,12 +103,14 @@ const SideCartItems = ({ item, onUpdateQuantity, onRemove }) => {
                         })
                     }
                 </span>
-                <span className='text-base leading-[130%] capitalize font-bold text-[#111]'>{`${formatPrice(total)} ${total_Currency_Symbol}`}</span>
+                <span className='text-base leading-[130%] capitalize font-bold text-[#111]'>
+                    {`${formatPrice(total)} ${total_Currency_Symbol}`}
+                </span>
                 <div className='flex items-center justify-between gap-4'>
                     <span className='flex-[1_0_0] flex items-center gap-2'>
                         <button
                             onClick={handleDecrement}
-                            disabled={quantity <= 1 || updating}
+                            disabled={quantity <= 1 || updating || !isInStock}
                             className='cursor-pointer hover:bg-gray-100 rounded p-1 disabled:opacity-30 disabled:cursor-not-allowed'
                         >
                             <Minus className='w-4 h-4' />
@@ -90,11 +118,17 @@ const SideCartItems = ({ item, onUpdateQuantity, onRemove }) => {
                         <span className='min-w-[20px] text-center'>{quantity}</span>
                         <button
                             onClick={handleIncrement}
-                            disabled={updating}
-                            className='cursor-pointer hover:bg-gray-100 rounded p-1 disabled:opacity-30'
+                            disabled={updating || !isInStock || isMaxReached}
+                            className='cursor-pointer hover:bg-gray-100 rounded p-1 disabled:opacity-30 disabled:cursor-not-allowed'
                         >
                             <Plus className='w-4 h-4' />
                         </button>
+                        {!isInStock && (
+                            <span className='text-red-500 text-xs font-semibold'>Rupture</span>
+                        )}
+                        {isInStock && isMaxReached && (
+                            <span className='text-orange-500 text-xs font-semibold'>Max</span>
+                        )}
                     </span>
                     <button
                         onClick={handleRemoveItem}

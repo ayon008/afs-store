@@ -1,8 +1,6 @@
 "use client"
-import { ArrowUpRight, Minus, Plus, Trash2Icon, X } from 'lucide-react'
+import { ArrowUpRight, X } from 'lucide-react'
 import React from 'react'
-import FormButton from '../Button/FormButton'
-import Image from 'next/image'
 import useCart from '../../hooks/useCart'
 import SideCartItems from './SideCartItems'
 import Skeleton from '../../components/ui/skeleton'
@@ -34,14 +32,22 @@ const CartItemSkeleton = () => (
 
 
 const SideCart = ({ isOpen, onClose }) => {
-
-    const { cart, loading, getTotalPrice, handleUpdateCartItem, handleRemoveCartItem } = useCart();
+    const { cart, loading, handleUpdateCartItem, handleRemoveCartItem } = useCart();
     const cartItems = cart?.items || [];
     const currencySymbol = cart?.totals?.currency_symbol || '€';
-
+    const total = cart?.totals?.total_price / 100;
 
     const sideCartRef = useRef(null);
     const overlayRef = useRef(null);
+
+
+    const sousTotal = cart?.items?.reduce(
+        (acc, item) =>
+            acc +
+            Number(item.totals.line_subtotal) +
+            Number(item.totals.line_subtotal_tax),
+        0
+    ) / 100;
 
     useGSAP(() => {
         if (!sideCartRef.current) return;
@@ -93,7 +99,7 @@ const SideCart = ({ isOpen, onClose }) => {
                             </div>
                         ) : (
                             <div className='space-y-5'>
-                                {cartItems?.map((item, index) => {
+                                {[...cartItems].reverse().map((item, index) => {
                                     return (
                                         <SideCartItems
                                             key={item.key || index}
@@ -110,7 +116,7 @@ const SideCart = ({ isOpen, onClose }) => {
                 <div className='p-5 border-t border-t-[#E6E6E6] flex flex-col items-center justify-center gap-4'>
                     <div className='flex items-end gap-1 flex-wrap'>
                         <span className='text-[15px] uppercase leading-[100%] font-bold'>Sub Total</span>
-                        <span className='text-[28px] uppercase leading-[100%] font-bold'>{currencySymbol}{getTotalPrice()}</span>
+                        <span className='text-[28px] uppercase leading-[100%] font-bold'>{currencySymbol}{sousTotal}</span>
                         <span className='text-[19px] leading-[100%] font-bold'>(incl. VAT)</span>
                     </div>
                     <Link onClick={() => onClose()} href={'/cart'} className='cursor-pointer'>

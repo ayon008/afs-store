@@ -37,6 +37,7 @@
     "react-range-slider-input": "^3.3.2",
     "react-responsive": "^10.0.1",
     "split-type": "^0.3.4",
+    "sweetalert2": "^11.26.10",
     "swiper": "^11.2.10",
     "swr": "latest"
   },

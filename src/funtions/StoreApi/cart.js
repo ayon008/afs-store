@@ -2,9 +2,10 @@
 
 import { revalidatePath } from 'next/cache';
 import { getWooCommerceCookies, setCookiesFromResponse } from './cookie-handler';
+import { getAuthenticatedUser } from '../auth';
 
 // Using your environment variables
-const WP_URL = 'https://staging.afs-foiling.com/fr'; // From your WOO_URL
+const WP_URL = process.env.WP_BASE_URL || 'https://staging.afs-foiling.com/fr';
 const WC_STORE_URL = `${WP_URL}/wp-json/wc/store/v1`;
 
 // Get cart
@@ -28,6 +29,10 @@ export async function getCart() {
         }
 
         const cartData = await response.json();
+
+        console.log(cartData, 'cartData');
+        
+
         return { success: true, data: cartData };
 
     } catch (error) {
@@ -224,13 +229,13 @@ export async function clearCart() {
     }
 }
 
-// Default France location
-const DEFAULT_LOCATION = {
-    country: 'FR',
-    state: '',
-    city: 'Paris',
-    postcode: '75001'
-};
+// // Default France location
+// const DEFAULT_LOCATION = {
+//     country: 'FR',
+//     state: '',
+//     city: 'Paris',
+//     postcode: '75001'
+// };
 
 // Get shipping methods based on location
 export async function getShippingMethods() {
@@ -254,30 +259,41 @@ export async function getShippingMethods() {
         }
 
         const cartData = await cartResponse.json();
-        console.log(cartData, 'cartData');
-        
 
-        // Determine the location with fallbacks: shipping → billing → France
-        const shippingAddress = cartData?.shipping_address;
-        const billingAddress = cartData?.billing_address;
+        // Get authenticated user for their saved addresses
+        const user = await getAuthenticatedUser();
 
+        // Determine the location:
+        // 1. If user is logged in → use their shipping address
+        // 2. If user is logged in but no shipping → use their billing address
+        // 3. If user is NOT logged in → default to France
         let location;
 
-        if (shippingAddress?.country) {
-            location = {
-                country: shippingAddress.country,
-                state: shippingAddress.state || '',
-                city: shippingAddress.city || '',
-                postcode: shippingAddress.postcode || ''
-            };
-        } else if (billingAddress?.country) {
-            location = {
-                country: billingAddress.country,
-                state: billingAddress.state || '',
-                city: billingAddress.city || '',
-                postcode: billingAddress.postcode || ''
-            };
+        if (user) {
+            // User is logged in - use their saved addresses
+            const userShippingAddress = user.shipping;
+            const userBillingAddress = user.billing;
+
+            if (userShippingAddress?.country) {
+                location = {
+                    country: userShippingAddress.country,
+                    state: userShippingAddress.state || '',
+                    city: userShippingAddress.city || '',
+                    postcode: userShippingAddress.postcode || ''
+                };
+            } else if (userBillingAddress?.country) {
+                location = {
+                    country: userBillingAddress.country,
+                    state: userBillingAddress.state || '',
+                    city: userBillingAddress.city || '',
+                    postcode: userBillingAddress.postcode || ''
+                };
+            } else {
+                // User logged in but no address saved - use France
+                location = DEFAULT_LOCATION;
+            }
         } else {
+            // User NOT logged in - use France by default
             location = DEFAULT_LOCATION;
         }
 
@@ -320,6 +336,31 @@ export async function getShippingMethods() {
         return { success: false, error: error.message };
     }
 }
+
+
+
+// export async function getShippingMethods() {
+//     try {
+//         const cookieHeader = await getWooCommerceCookies();
+
+//         const response = await fetch(`${WC_STORE_URL}/shipping-options`, {
+//             method: 'GET',
+//             headers: {
+//                 'Cookie': cookieHeader,
+//                 'Accept': 'application/json',
+//             },
+//         });
+//         const shippingMethods = await response.json();
+//         console.log(shippingMethods, 'shippingMethods');
+//         return {
+//             success: true,
+//             data: shippingMethods
+//         };
+//     } catch (error) {
+//         console.error('Get shipping methods error:', error);
+//         return { success: false, error: error.message };
+//     }
+// }
 
 // Update shipping location and get new rates
 export async function updateShippingLocation(country, state = '', city = '', postcode = '') {
@@ -372,6 +413,7 @@ export async function updateShippingLocation(country, state = '', city = '', pos
 
 // Select a shipping rate
 export async function selectShippingRate(rateId, packageId = 0) {
+    console.log(rateId, packageId, 'rateId, packageId');
     try {
         const cookieHeader = await getWooCommerceCookies();
 
@@ -391,6 +433,8 @@ export async function selectShippingRate(rateId, packageId = 0) {
         await setCookiesFromResponse(response);
 
         const data = await response.json();
+        console.log(data,'shipping_rate_data');
+        
 
         if (!response.ok) {
             throw new Error(data.message || `Failed to select shipping rate: ${response.status}`);

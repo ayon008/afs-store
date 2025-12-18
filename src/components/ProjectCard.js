@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import FormButton from "../Shared/Button/FormButton"
+import { useMemo } from 'react';
 
 // Helper function to format price
 const formatPrice = (price) => {
@@ -45,7 +46,8 @@ export default function ProjectCard({
   hoverImage = null,
   slug,
   category = 'VERSATILITY',
-  price = 1000,
+  price,
+  singlePrice,
   bestseller = "",
   alt,
   type = "simple"
@@ -56,6 +58,31 @@ export default function ProjectCard({
     .replace(/ - Duplicate/g, "")
     .replace(/ - \[#\d+\]/g, "")
     .trim();
+
+
+
+  // Helper function to update price in WooCommerce HTML
+  const updatePriceInHtml = (priceHtml, newPrice) => {
+    if (!priceHtml || !newPrice) return priceHtml;
+
+    // Format the new price (e.g., 374.17 -> "374,17")
+    const formattedPrice = parseFloat(newPrice).toFixed(2).replace('.', ',');
+
+    // Replace the price inside <bdi> tags, keeping the currency symbol
+    // Pattern: matches content before the currency symbol span
+    const updatedHtml = priceHtml.replace(
+      /(<bdi>)[\d\s,.]+(<span class="woocommerce-Price-currencySymbol">)/g,
+      `$1${formattedPrice}$2`
+    );
+
+    return updatedHtml;
+  };
+
+  // Update the price HTML with calculated tax price
+  const changePrice = useMemo(() => {
+    return updatePriceInHtml(price, singlePrice);
+  }, [price, singlePrice]);
+
 
   return (
     <div className="group w-full bg-[#F7F7F7] flex flex-col justify-between mx-auto rounded-[4px] overflow-hidden h-auto">
@@ -120,7 +147,7 @@ export default function ProjectCard({
           </h2>
           <p
             className="text-[clamp(0.8125rem,0.76rem+0.2vw,1rem)] leading-[100%] text-[#111111bf] font-bold mt-1"
-            dangerouslySetInnerHTML={{ __html: price }}
+            dangerouslySetInnerHTML={{ __html: changePrice }}
           />
         </div>
         <div className="">
