@@ -9,7 +9,7 @@ const NAV_ITEMS = [
     { label: "Information", href: "/my-profile", icon: User },
     { label: "Orders", href: "/my-profile/orders", icon: "orders" },
     { label: "Payment Methods", href: "/my-profile/payment-methods", icon: "payment" },
-    { label: "SAV", href: "/my-profile/sav", icon: "sav" },
+    { label: "SAV", href: "/demande-sav", icon: "sav" },
     { label: "Change Password", href: "/my-profile/reinitialiser-mot-de-passe", icon: "password" },
     { label: "Log Out", href: "/my-profile/logout", icon: LogOut }
 ];

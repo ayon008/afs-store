@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function TicketsPage() {
     return (
         <>
-            <div className="bg-black">
+            <div className="bg-black lg:pb-[200px] pb-[80px]">
                 <Head>
                     <title>Besoin de conseils</title>
                 </Head>
