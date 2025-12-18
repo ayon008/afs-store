@@ -26,6 +26,7 @@ const Input = ({ label, type, id, placeholder, register, error, registerPage = f
                     {...register}
                     type={type}
                     id={id}
+                    defaultValue={value}
                     placeholder={placeholder}
                     className={`border border-[#BFBFBF] rounded-[4px] w-full py-3 px-3 focus:outline-none text-lg leading-[23px] text-black font-semibold
                     ${error ? "border-red-500" : ""}`}

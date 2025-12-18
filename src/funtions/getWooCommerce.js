@@ -644,7 +644,7 @@ export const getCountryDetails = async (country) => {
 
 
 export const getPaymentMethods = async () => {
-    const url = `https://staging.afs-foiling.com/wp-json/wc/v3/payment_methods`;
+    const url = `https://staging.afs-foiling.com/wp-json/wc/v3/payment_gateways`;
     try {
         const response = await fetch(url, {
             headers: { Authorization: `Basic ${authHeader}` },
@@ -652,7 +652,7 @@ export const getPaymentMethods = async () => {
         });
 
         console.log(response, 'response');
-        
+
 
         if (!response.ok) {
             throw new Error(`Failed to fetch payment methods: ${response.status}`);
@@ -662,6 +662,22 @@ export const getPaymentMethods = async () => {
         return enabledMethods;
     }
     catch (error) {
+        console.log(error);
+        return error;
+    }
+}
+
+
+export const createOrder = async (orderData) => {
+    const url = `https://staging.afs-foiling.com/wp-json/wc/store/orders`;
+    try {
+        const response = await fetch(url, {
+            headers: { Authorization: `Basic ${authHeader}` },
+            cache: "no-store",
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
         console.log(error);
         return error;
     }

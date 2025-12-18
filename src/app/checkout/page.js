@@ -11,6 +11,7 @@ import CountrySelect from '../../Shared/Input/DropDown';
 import { countriesList } from '../../Shared/Input/countries';
 import { getCountryDetails, getPaymentMethods } from '../../funtions/getWooCommerce';
 import { selectShippingRate } from '../../funtions/StoreApi/cart';
+import Image from 'next/image';
 
 
 const Page = () => {
@@ -25,6 +26,10 @@ const Page = () => {
 
   const cartBillingAddress = cart?.billing_address;
   const cartShippingAddress = cart?.shipping_address;
+
+  console.log(cartShippingAddress, 'cartShippingAddress');
+
+
   const items = cart?.items;
 
   // React Hook Form
@@ -37,7 +42,7 @@ const Page = () => {
     setValue,
     formState: { errors }
   } = useForm({
-    mode: 'onBlur',
+    mode: 'onChange',
     defaultValues: {
       billing_first_name: '',
       billing_last_name: '',
@@ -93,7 +98,6 @@ const Page = () => {
         billing_email: cartBillingAddress.email,
         // survey: cartBillingAddress.survey,
       })
-      trigger();
     }
   }, [reset, cartShippingAddress, cartBillingAddress, trigger]);
 
@@ -107,6 +111,11 @@ const Page = () => {
 
   const [countryDetails, setCountryDetails] = useState(null);
   const [paymentMethods, setPaymentMethods] = useState(null);
+
+
+  console.log(cartShippingAddress, 'cartShippingAddress');
+
+
 
   useEffect(() => {
     const fetchPaymentMethods = async () => {
@@ -147,7 +156,6 @@ const Page = () => {
     })) || []
   ) || [];
 
-
   useEffect(() => {
     const selected = allShippingRates.find(rate => rate.selected);
 
@@ -171,7 +179,6 @@ const Page = () => {
     }
   };
 
-  const payment_method = cart?.payment_methods;
 
 
   return (
@@ -239,13 +246,11 @@ const Page = () => {
                 />
                 <CountrySelect
                   label="Country"
-                  id="billing_country"
-                  value={watchFields.billing_country}
-                  register={register("country", { required: true })}
-                  countries={countriesList}
+                  id="country"
+                  defaultValue={watchFields.billing_country}
+                  register={register("billing_country", { required: true })}
                   checkout={true}
-                  error={showErrorIfMissing(watchFields.billing_country)}
-                  onChange={() => trigger('billing_country')}
+                  countries={countriesList}
                 />
                 <Input
                   label="Street number and name"
@@ -274,6 +279,7 @@ const Page = () => {
                       error={showErrorIfMissing(watchFields.billing_state)}
                       value={watchFields.billing_state}
                       checkout={true}
+                      options={[...(states.map((state) => ({ value: state.code, label: state.name })))]}
                     />
                   )
                 }
@@ -290,6 +296,9 @@ const Page = () => {
                   checkout={true}
                   label='Comment avez-vous entendu parlé de la marque ?'
                   id='survey'
+                  register={register("survey", { required: true })}
+                  error={showErrorIfMissing(watchFields.survey)}
+                  value={watchFields.survey}
                   options={[
                     { value: 'Recherche Google/Bing', label: 'Recherche Google/Bing' },
                     { value: 'facebook', label: 'Facebook' },
@@ -316,15 +325,83 @@ const Page = () => {
                 shippingAddress && (
                   <div className='grid grid-cols-1 gap-5'>
                     <div className='grid grid-cols-2 gap-5'>
-                      <Input checkout={true} label='First Name' type='text' id='first_name' />
-                      <Input checkout={true} label='Last Name' type='text' id='last_name' />
+                      {/*  */}
+                      <Input
+                        checkout={true}
+                        label='First Name'
+                        type='text'
+                        id='shipping_first_name'
+                        register={register("shipping_first_name", { required: true })}
+                        error={showErrorIfMissing(watchFields.shipping_first_name)}
+                        value={watchFields.shipping_first_name}
+                      />
+
+                      <Input
+                        checkout={true}
+                        label='Last Name'
+                        type='text'
+                        id='shipping_last_name'
+                        register={register("shipping_last_name", { required: true })}
+                        error={showErrorIfMissing(watchFields.shipping_last_name)}
+                        value={watchFields.shipping_last_name}
+                      />
                     </div>
-                    <Input checkout={true} label='Company (Optional)' type='text' id='company' />
-                    <Input checkout={true} label='Country' type='text' id='country' />
-                    <Input checkout={true} label='Post Code' type='text' id='zip' />
-                    <Input checkout={true} label='State' type='text' id='state' />
-                    <Input checkout={true} label='City' type='text' id='city' />
-                    <Input checkout={true} label='Street number and name' type='text' id='street_number_and_name' />
+                    <Input
+                      checkout={true}
+                      label='Company (Optional)'
+                      type='text'
+                      id='shipping_company'
+                      register={register("shipping_company", { required: false })}
+                      error={showErrorIfMissing(watchFields.shipping_company)}
+                      value={watchFields.shipping_company}
+                    />
+                    <Input
+                      checkout={true}
+                      label='Country'
+                      type='text'
+                      id='shipping_country'
+                      register={register("shipping_country", { required: true })}
+                      error={showErrorIfMissing(watchFields.shipping_country)}
+                      value={watchFields.shipping_country}
+                    />
+                    <Input
+                      checkout={true}
+                      label='Post Code'
+                      type='text'
+                      id='zip'
+                      register={register("shipping_postcode", { required: true })}
+                      error={showErrorIfMissing(watchFields.shipping_postcode)}
+                      value={watchFields.shipping_postcode}
+                    />
+                    <Input
+                      checkout={true}
+                      label='State'
+                      type='text'
+                      id='state'
+                      register={register("shipping_state", { required: true })}
+                      error={showErrorIfMissing(watchFields.shipping_state)}
+                      value={watchFields.shipping_state}
+                    />
+
+                    <Input
+                      checkout={true}
+                      label='City'
+                      type='text'
+                      id='city'
+                      register={register("shipping_city", { required: true })}
+                      error={showErrorIfMissing(watchFields.shipping_city)}
+                      value={watchFields.shipping_city}
+                    />
+
+                    <Input
+                      checkout={true}
+                      label='Street number and name'
+                      type='text' id='street_number_and_name'
+                      register={register("shipping_address_1", { required: true })}
+                      error={showErrorIfMissing(watchFields.shipping_address_1)}
+                      value={watchFields.shipping_address_1}
+                    />
+
                   </div>
                 )
               }
@@ -424,12 +501,13 @@ const Page = () => {
           <div className='bg-[#F7F7F7]'>
             <ul className='flex flex-col gap-2 p-4 border-b border-[#DDD8E3]'>
               {
-                payment_method?.map((method, i) => {
+                paymentMethods?.map((method, i) => {
                   return (
                     <li key={i} className='flex flex-col gap-3'>
                       <div className='flex items-center gap-1'>
-                        <input type="radio" name="" id="" />
-                        <label htmlFor="" className=''>{method}</label>
+                        <input type="radio" name="payment_method" value={method?.id} id="" />
+                        <label htmlFor="" className=''>{method?.title}</label>
+                        {/* <Image/> */}
                       </div>
                       <div className='bg-[#DDD8E3] rounded-sm p-3 hidden'>
                         <p>Payer avec Paypal</p>

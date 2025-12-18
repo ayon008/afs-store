@@ -121,7 +121,7 @@ const ThirdForm = () => {
                     <CountrySelect
                         label="Country"
                         id="country"
-                        value={watchFields.country}
+                        defaultValue={watchFields.country}
                         register={register("country", { required: true })}
                         registerPage={true}
                         countries={countriesList}
