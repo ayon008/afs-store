@@ -3,11 +3,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./src/*"
-      ], // Use @ to point inside src/
-      "#/*": [
-        "./*"
-      ] // Use # to point to project root
+        "src/*"
+      ] // ✅ @ points to src folder
     }
   }
 }
